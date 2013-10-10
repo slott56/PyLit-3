@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>setup.py &mdash; PyLit</title>
+    
+    <link rel="stylesheet" href="../_static/pylit-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="PyLit" href="../index.html" />
+    <link rel="up" title="Examples" href="index.html" />
+    <link rel="next" title="Literate Programming" href="../literate-programming.html" />
+    <link rel="prev" title="conf.py – Sphinx configuration for PyLit" href="../conf.py.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../literate-programming.html" title="Literate Programming"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../conf.py.html" title="conf.py – Sphinx configuration for PyLit"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Home</a> / </li>
+          <li><a href="index.html" accesskey="U">Examples</a> / </li>
+  <li>setup.py</li>
+  <!-- <li>examples/setup.py</li> -->
+<!-- Does not work: places the up link on the next line    -->
+  <!-- 								        -->
+  <!--   <li class="right"><a href="index.html">up</a>  |</li> -->
+  <!-- 								        -->
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="setup-py">
+<h1>setup.py<a class="headerlink" href="#setup-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="literate-programming-with-restructuredtext">
+<h2>Literate programming with reStructuredText<a class="headerlink" href="#literate-programming-with-restructuredtext" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">$Date$</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Revision:</th><td class="field-body">$Revision$</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">URL:</th><td class="field-body">$URL$</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Copyright:</th><td class="field-body">© 2005, 2007 Günter Milde.
+Released without warranty under the terms of the
+GNU General Public License (v. 2 or later)</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;pylit: bidirectional text &lt;-&gt; code converter</span>
+
+<span class="sd">Covert between a *text source* with embedded computer code and a *code source*</span>
+<span class="sd">with embedded documentation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Requirements for installation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
+</pre></div>
+</div>
+<p>Module Definition:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;PyLit&#39;</span><span class="p">,</span>
+      <span class="n">version</span><span class="o">=</span><span class="s">&#39;3.1&#39;</span><span class="p">,</span>
+      <span class="n">description</span><span class="o">=</span><span class="s">&#39;Python Literate Programming&#39;</span><span class="p">,</span>
+      <span class="n">author</span><span class="o">=</span><span class="s">&#39;S.Lott&#39;</span><span class="p">,</span>
+      <span class="n">author_email</span><span class="o">=</span><span class="s">&#39;slott56@gmail.com&#39;</span><span class="p">,</span>
+      <span class="n">url</span><span class="o">=</span><span class="s">&#39;http://developer.berlios.de/svn/?group_id=7974&#39;</span><span class="p">,</span>
+      <span class="n">py_modules</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;pylit&#39;</span><span class="p">],</span>
+     <span class="p">)</span>
+</pre></div>
+</div>
+<p>And that&#8217;s it. This will be installed into the site-packages directory.</p>
+<p>Technically, this isn&#8217;t necessary.  A simple copy will do.
+Further, the <span class="target" id="index-0"></span><tt class="xref std std-envvar docutils literal"><span class="pre">PYTHONPATH</span></tt> environment variable can name a directory
+that has PyLit.py in it.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/pylit-bold-framed.svg" alt="Logo"/>
+            </a></p>
+    <h3>Contents</h3>
+    <!-- Contents of current page -->
+    <ul>
+<li><a class="reference internal" href="#">setup.py</a><ul>
+<li><a class="reference internal" href="#literate-programming-with-restructuredtext">Literate programming with reStructuredText</a></li>
+</ul>
+</li>
+</ul>
+
+    <!-- Site Contents -->
+    <!-- <ul>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literate-programming.html">Literate Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filename-extensions.html">Finding a Filename Extension for Literate Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#download">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#installation">Installation</a></li>
+</ul>
+ -->
+    <hr />
+    <h4>Previous Page</h4>
+    <p class="topless">
+      <a href="../conf.py.html" title="previous section">conf.py &#8211; Sphinx configuration for PyLit</a>
+    </p>
+    <h4>Next Page</h4>
+    <p class="topless">
+      <a href="../literate-programming.html" title="next section">Literate Programming</a>
+    </p>
+    <h4>Up</h4>
+    <p class="topless">
+       <a href="index.html" title="up">Examples</a>
+    </p>
+  <hr />
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/examples/setup.py.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+    <h3>Search this site</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="12" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../literate-programming.html" title="Literate Programming"
+             >next</a></li>
+        <li class="right" >
+          <a href="../conf.py.html" title="conf.py – Sphinx configuration for PyLit"
+             >previous</a> |</li>
+        <li><a href="../index.html">Home</a> / </li>
+          <li><a href="index.html" >Examples</a> / </li>
+  <li>setup.py</li>
+  <!-- <li>examples/setup.py</li> -->
+<!-- Does not work: places the up link on the next line    -->
+  <!-- 								        -->
+  <!--   <li class="right"><a href="index.html">up</a>  |</li> -->
+  <!-- 								        -->
+
+      </ul>
+    </div>
+ <p class="thanks">
+  Thanks to
+  <a href="http://developer.berlios.de">
+    <img src="http://developer.berlios.de/bslogo.php?group_id=0"
+    width="124" height="32" border="0" alt="BerliOS" />
+  </a>
+  for hosting this site.
+ </p>
+
+  </body>
+</html>

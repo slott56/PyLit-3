@@ -1,0 +1,159 @@
+listings-tex-options.sty
+************************
+highlight LaTeX code with lstlistings
+=====================================
+
+:Author:    Günter Milde
+:Contact:   milde@users.berlios.de
+:Revision:  $Revision: 5534 $
+:Date:      $Date: 2005-06-28$
+:Copyright: © 2007, 2009 G. Milde,
+            Released  without warranties or conditions of any kind
+            under the terms of the Apache License, Version 2.0
+            http://www.apache.org/licenses/LICENSE-2.0
+
+Usage
+-----
+
+For syntax highlight of literal blocks with the `listings` LaTeX package,
+call ``rst2latex.py`` with the options
+``--stylesheet=listings-tex-options.sty --literal-block-env=lstlisting``.
+
+Adapt the settings to your needs by either
+
+* modifying a copy of this file under a different name, or
+* copy parts of this file into your custom style sheet.
+
+See listings.pdf_ for configuration and usage of the listings package.
+
+Implementation
+--------------
+
+.. highlight:: latex
+
+Identification::
+
+  \ProvidesPackage{listings-tex-options}
+  [2009/03/02 v0.1 highlight LaTeX with lstlistings]
+
+Of course, we need to load the listings package itself::
+
+  \RequirePackage{listings}
+
+In a document with lots of lists and listings, separating paragraphs by
+vertical seems appropriate::
+
+  \RequirePackage{parskip}
+
+load hyperref with blue citation colour::
+
+  \RequirePackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]
+  {hyperref}
+
+In the References/Bibliography section,
+avoid holes in the title due to block alignment::
+
+  \renewcommand{\titlereference}[1]{\raggedright\textsl{#1}}
+
+Omit the auto-inserted "References" heading, to be compatible with HTML
+output also if use latex references is set::
+
+  \AtBeginDocument{\renewcommand{\refname}{\vspace{-2em}}}
+
+Font settings
+~~~~~~~~~~~~~
+
+Times, Helvetica, Courier::
+
+  %\RequirePackage{mathptmx}
+  %\RequirePackage[scaled=.90]{helvet}  % scaled to fit Times
+  %\RequirePackage{courier}
+
+Palatino, Helvetica, Courier::
+
+  \RequirePackage[sc]{mathpazo}         % with small caps
+  % \RequirePackage[sc,osf]{mathpazo}   % with small caps and old style figures
+  \RequirePackage[scaled=.95]{helvet}   % scaled to fit Palatino
+  \RequirePackage{courier}
+
+(The TX typewriter font comes with bold, slanted, and small-caps variants
+and without the problems of `txfonts`' math fonts). However, `txfonts` is
+a contributed package, not necessarily available::
+
+  %\renewcommand{\ttdefault}{txtt}
+
+
+Default language
+~~~~~~~~~~~~~~~~
+
+Highlight literal blocks as TeX::
+
+  \lstset{language=[LaTeX]TeX}
+
+pre-load the language::
+
+  \lstloadlanguages{[LaTeX]TeX} %  comma separated list of languages
+
+Style
+~~~~~
+
+Typeface settings::
+
+  \lstset{
+    basicstyle=\ttfamily,           % print whole listing in tt
+    % basicstyle=\ttfamily\small,
+    keywordstyle={},                % do not highlight keywords
+    % identifierstyle=\slshape,     % macros that are not keywords, args
+    commentstyle=\rmfamily\itshape, % italic comments
+    % stringstyle=\ttfamily,        % typewriter type for strings
+    % texcsstyle=\slshape,
+  }
+
+Visible whitespace::
+
+  \lstset{showstringspaces=false}  % no visible spaces in strings
+  %\lstset{showspaces=true,
+  %        showtabs=true,
+  %        tab=\rightarrowfill}
+
+Line numbers::
+
+  %\lstset{numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt}
+
+Frames around listings::
+
+  %\lstset{frame=single}
+
+
+Extended characters in listings::
+
+  %extendedchars=true
+  %extendedchars=false
+
+Column alignment
+~~~~~~~~~~~~~~~~
+
+(for typesetting with variable width fonts)
+
+``columns=[c|l|r] <alignment>``
+  <alignment> in [fixed, flexible, spaceflexible, or fullflexible]
+
+  The optional c, l, or r controls the horizontal orientation of smallest
+  output units (keywords, identifiers, etc.).
+
+  default: [c]fixed
+
+``basewidth={fixed, flexible}``
+  ..
+
+  sets the width of a single character box for fixed and flexible column
+  mode (both to the same value or individually).
+
+  default: {0.6em,0.45em}
+
+Free spacing for comments::
+
+  \lstset{columns=fullflexible, basewidth={0.5em,0.4em}}
+
+.. _listings.pdf:
+   ftp://dante.ctan.org/tex-archive/macros/latex/contrib/listings/listings.pdf

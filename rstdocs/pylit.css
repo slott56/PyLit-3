@@ -1,0 +1,137 @@
+/* Stylesheet for the PyLit site (for use with rest2web)
+
+:Author:    Guenter Milde
+:Copyright: 2007 G. Milde
+            This stylesheet is released under the GPL v. 2 or later
+
+*/
+
+@import url("html4css1.css");         /* docutils style sheet */
+/* @import url("pygments-default.css"); */  /* code syntax highlight */
+
+/* r2w stylesheet variants and expamples */
+
+/* @import url('pysrc.css'); */    /* Python code syntax highlight */
+/* @import url("voidspace_docutils2.css"); */  /* rounded boxes around headers */
+/* @import url("rest2web.css"); */             /* ditto */
+/* @import url("test.css"); */                 /* greyish background */
+/* @import url("rest.css"); */
+
+/* PyLit customizations */
+/* -------------------- */
+
+div#Inhalt {
+  margin-left: 0em;
+  /* padding-left: 0.5em; */
+  /* border: 1px dashed silver; */
+  /* border-left-width: 1px */
+  /* border-color: silver */
+  min-width: 16em; /* Mindestbreite verhindert Anzeigefehler in modernen Browsern */
+}
+h1.title { 
+  text-align: left;
+  background-color: silver;
+  padding: 5px;
+}
+h1 {
+  font-size: 1.5em;
+  /* padding-left: 0.5em; */
+}
+h2 {
+  font-size: 1.2em;
+}
+/* bold definition terms */
+dt { 
+  font-weight: bold; 
+}
+
+/* background colour for literal blocks*/
+pre.literal-block, pre.doctest-block {
+  background-color: #FEFDD8; }
+/* ... and inline literal */
+tt.docutils {
+  background-color: white; }
+
+/* last line with Berlios logo */
+p.thanks { 
+  text-align: right; 
+  background-color: silver;
+  }    
+
+/* div.contents { margin: 5px } */
+
+.logo  { 
+  vertical-align:middle;
+  background-color: white;  
+  }
+
+/* Breadcrumps list as top bar: from the r2w standard functions doc */
+#crumbs {
+  background-color: #db8;
+  padding: 3px;
+  text-align: left;
+  /* font-size:15pt; */
+  font-weight:bold;
+}
+
+#crumbs .top-navigation {
+  margin: 0.5em;
+  color: black
+  background-color: silver
+
+
+/* #crumbs li {         */
+/*     display:inline;  */
+/*     list-style:none; */
+/*     margin:0;        */
+/*     padding:5px;     */
+/* }                    */
+/*                      */
+/* #crumbs ul {         */
+/*     margin:0;        */
+/*     padding:0        */
+/* }                    */
+
+
+/* Navigation sidebar (currently not used)
+(from http://de.selfhtml.org/css/layouts/mehrspaltige.htm ) */
+
+ul#Navigation {
+  /* font-size: 0.8em; */
+  float: left; width: 13em;
+  margin: 0; 
+  padding: 0;
+  /* border: 1px dashed silver; */
+  /* background-color: #eee; */
+  background-color: #fee;
+}
+ul#Navigation li {
+  list-style: none;
+  margin: 0; 
+  padding: 0.2em;
+  /* border: 1px grey; */
+}
+ul#Navigation a {
+  display: block;
+  /* padding: 0.2em; */
+  font-weight: bold;
+}
+ul#Navigation a:link {
+  color: black; 
+}
+ul#Navigation a:visited {
+  color: #666; 
+}
+ul#Navigation a:hover {
+  color: black; 
+  background-color: #ffe;
+}
+ul#Navigation a:active {
+  color: white; 
+  background-color: gray;
+}
+div.sidebar-links{
+  margin-left: 0.5em
+}
+
+img { border:none }
