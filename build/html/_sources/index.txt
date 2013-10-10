@@ -50,7 +50,14 @@ Download
 Project page
 ------------
 
-The PyLit project is hosted at `BerliOS`_. The `project page`_
+The PyLit3 project is hosted on GitHub.
+
+https://github.com/slott56/PyLit-3
+
+Legacy
+---------
+
+The original PyLit project is still hosted at `BerliOS`_. The `project page`_
 provides project statistics and info as well as links to the
 
 * Bugtracker_,
@@ -67,7 +74,7 @@ provides project statistics and info as well as links to the
 
 
 Changes
--------
+~~~~~~~~~
 
 PyLit `versions`_ and `SVN log`_.
 
@@ -82,7 +89,7 @@ The `PyLit source`_ has a chapter on `open questions`_ and ideas.
 .. _open questions: examples/pylit.py.html#open-questions
 
 Copyright
----------
+~~~~~~~~~~
 
 Copyright
   © 2005, 2009 Günter Milde.
