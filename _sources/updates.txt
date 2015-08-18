@@ -1,0 +1,37 @@
+Updates
+********
+
+The PyLit documentation itself is built with Sphinx. It includes the text
+version of several modules.
+
+Here's the test procedure. Note the ``cd`` to change directories. This
+assures that PyLit is found in the ``../src`` directory.
+
+..  parsed-literal::
+
+    cd test
+    python3 pylit_test.py
+    python3 pylit_ui_test.py
+
+Here's part of the documentation build procedure. It uses PyLit to create source for the documentation.
+
+-   Create an document from ``rstdocs/conf.py``
+
+-   Create an example from ``src/pylit.py``
+
+-   Create an example from ``test/pylit_test.py``
+
+..  parsed-literal::
+
+    python3 src/pylit.py rstdocs/conf.py
+    python3 src/pylit.py src/pylit.py rstdocs/examples/pylit.py.txt
+    python3 src/pylit.py --comment-string='## ' test/pylit_test.py rstdocs/examples/pylit_test.py.txt
+
+After this, we can run Sphinx to rebuild the documentation.
+
+..  parsed-literal::
+
+    sphinx-build rstdocs build/html
+
+We can do this wih the included Makefile, which also converts all of the
+tutorials and examples.

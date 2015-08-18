@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>conf.py – Sphinx configuration for PyLit &mdash; PyLit</title>
+    
+    <link rel="stylesheet" href="_static/pylit-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="PyLit" href="index.html" />
+    <link rel="up" title="Examples" href="examples/index.html" />
+    <link rel="next" title="setup.py" href="examples/setup.py.html" />
+    <link rel="prev" title="Stylesheet for reStructured Text code blocks" href="examples/pygments-default.css.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="conf-py-sphinx-configuration-for-pylit">
+<h1>conf.py &#8211; Sphinx configuration for PyLit<a class="headerlink" href="#conf-py-sphinx-configuration-for-pylit" title="Permalink to this headline">¶</a></h1>
+<p>Documentation build configuration file</p>
+<p>This file is execfile()d with the current directory set to its containing
+dir.</p>
+<p>The contents of this file are pickled, so don&#8217;t put values in the namespace
+that aren&#8217;t pickleable (module imports are okay, they&#8217;re removed
+automatically).</p>
+<p>All configuration values have a default value; values that are commented out
+serve to show the default value.</p>
+<p>You can use the following modules in your definitions (or add more):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+</pre></div>
+</div>
+<p>If your extensions are in another directory, add it here. If the directory
+is relative to the documentation root, use <code class="docutils literal"><span class="pre">os.path.abspath</span></code> to make it
+absolute, like shown here:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#sys.path.append(os.path.abspath(&#39;some/directory&#39;))</span>
+</pre></div>
+</div>
+<div class="section" id="general-configuration">
+<h2>General configuration<a class="headerlink" href="#general-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Add any Sphinx extension module names here, as strings. They can be extensions
+coming with Sphinx (named &#8216;sphinx.ext.*&#8217;) or your custom ones.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">extensions</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>Add any paths that contain templates here, relative to this directory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">templates_path</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;.templates&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The suffix of source filenames:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">source_suffix</span> <span class="o">=</span> <span class="s">&#39;.txt&#39;</span>
+</pre></div>
+</div>
+<p>The master toctree document:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">master_doc</span> <span class="o">=</span> <span class="s">&#39;index&#39;</span>
+</pre></div>
+</div>
+<p>General substitutions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">project</span> <span class="o">=</span> <span class="s">&#39;PyLit&#39;</span>
+<span class="n">copyright</span> <span class="o">=</span> <span class="s">u&#39;2009, Günter Milde&#39;</span>
+</pre></div>
+</div>
+<p>The default replacements for <code class="docutils literal"><span class="pre">|version|</span></code> and <code class="docutils literal"><span class="pre">|release|</span></code>, also used in
+various other places throughout the built documents.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># The short X.Y version.</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s">&#39;3.1&#39;</span>
+<span class="c"># The full version, including alpha/beta/rc tags.</span>
+<span class="n">release</span> <span class="o">=</span> <span class="s">&#39;3.1&#39;</span>
+</pre></div>
+</div>
+<p>There are two options for replacing <code class="docutils literal"><span class="pre">|today|</span></code>: either, you set today to
+some non-false value, then it is used:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#today = &#39;&#39;</span>
+</pre></div>
+</div>
+<p>Else, today_fmt is used as the format for a strftime call:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">today_fmt</span> <span class="o">=</span> <span class="s">&#39;%B </span><span class="si">%d</span><span class="s">, %Y&#39;</span>
+</pre></div>
+</div>
+<p>List of documents that shouldn&#8217;t be included in the build:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#unused_docs = [&quot;rstdocs/download/index.txt&quot;, &quot;tutorial/*.py.txt&quot;]</span>
+</pre></div>
+</div>
+<p>A list of glob-style patterns that should be excluded when looking for
+source files. [1] They are matched against the source file names relative
+to the source directory, using slashes as directory separators on all
+platforms.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">exclude_patterns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;**/.svn&#39;</span><span class="p">,</span>
+    <span class="s">&#39;tutorial/*.py.txt&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Deprecated since version 1.0: Use exclude_patterns instead.
+exclude_dirnames = [&#8221;.svn&#8221;]</p>
+<p>The name of the default domain. Can also be None to disable a default
+domain. The default is &#8216;py&#8217;. Those objects in other domains (whether the
+domain name is given explicitly, or selected by a default-domain directive)
+require the domain name explicitly prepended when named.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># primary_domain = &#39;py&#39;</span>
+<span class="n">primary_domain</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+</div>
+<p>The reST default role (used for this markup: <code class="docutils literal"><span class="pre">`text`</span></code>) to use for all
+documents:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#default_role = None</span>
+</pre></div>
+</div>
+<p>If true, &#8216;()&#8217; will be appended to :func: etc. cross-reference text.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">add_function_parentheses</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>If true, the current module name will be prepended to all description
+unit titles (such as .. function::)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#add_module_names = True</span>
+</pre></div>
+</div>
+<p>If true, sectionauthor and moduleauthor directives will be shown in the
+output. They are ignored by default.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#show_authors = False</span>
+</pre></div>
+</div>
+<p>The name of the Pygments (syntax highlighting) style to use.
+Can be any registered pygments-style or &#8216;sphinx&#8217;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pygments.styles</span> <span class="kn">import</span> <span class="n">STYLE_MAP</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">STYLE_MAP</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[&#39;manni&#39;, &#39;perldoc&#39;, &#39;borland&#39;, &#39;colorful&#39;, &#39;default&#39;, &#39;murphy&#39;, &#39;trac&#39;,</span>
+<span class="go"> &#39;fruity&#39;, &#39;autumn&#39;, &#39;bw&#39;, &#39;emacs&#39;, &#39;pastie&#39;, &#39;friendly&#39;, &#39;native&#39;]</span>
+</pre></div>
+</div>
+<p>You can try the styles with the  <a class="reference external" href="http://pygments.org/demo/">pygments demo</a> pages that offer a drop-down list to select
+the style, e.g. <a class="reference external" href="http://pygments.org/demo/1444/">http://pygments.org/demo/1444/</a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#pygments_style = &#39;sphinx&#39;</span>
+<span class="n">pygments_style</span> <span class="o">=</span> <span class="s">&#39;friendly&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="options-for-html-output">
+<h2>Options for HTML output<a class="headerlink" href="#options-for-html-output" title="Permalink to this headline">¶</a></h2>
+<p>The style sheet to use for HTML and HTML Help pages. A file of that name
+must exist either in Sphinx&#8217; static/ path, or in one of the custom paths
+given in html_static_path:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_style</span> <span class="o">=</span> <span class="s">&#39;pylit-sphinx.css&#39;</span>
+<span class="c"># html_style = &#39;sphinxdoc.css&#39;</span>
+</pre></div>
+</div>
+<p>Options to the theme, like a sidebar that is visible even when
+scrolling (TODO: how to get this to work (maybe just update Spinx)?):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#html_theme_options = {&#39;stickysidebar&#39;: &#39;true&#39;}</span>
+</pre></div>
+</div>
+<p>The name for this set of Sphinx documents.  If None, it defaults to
+&#8220;&lt;project&gt; v&lt;release&gt; documentation&#8221;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_title</span> <span class="o">=</span> <span class="s">&quot;PyLit&quot;</span>
+</pre></div>
+</div>
+<p>A shorter title for the navigation bar.  Default is the same as html_title.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_short_title</span> <span class="o">=</span> <span class="s">&quot;Home&quot;</span>
+</pre></div>
+</div>
+<p>The name of an image file (within the static path) to place at the top of
+the sidebar.
+Korrektion [GM]: path is relative to source (not static)
+(Bug or config issue?).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_logo</span> <span class="o">=</span> <span class="s">&quot;logo/pylit-bold-framed.svg&quot;</span>
+<span class="c"># html_logo = &quot;pylit-bold-framed.svg&quot;</span>
+</pre></div>
+</div>
+<p>The name of an image file (within the static path) to use as favicon of the
+docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
+pixels large.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_favicon</span> <span class="o">=</span> <span class="s">&quot;favicon.ico&quot;</span>
+</pre></div>
+</div>
+<p>Add any paths that contain custom static files (such as style sheets) here,
+relative to this directory. They are copied after the builtin static files,
+so a file named &#8220;default.css&#8221; will overwrite the builtin &#8220;default.css&#8221;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_static_path</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;_static&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If not &#8216;&#8217;, a &#8216;Last updated on:&#8217; timestamp is inserted at every page bottom,
+using the given strftime format:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_last_updated_fmt</span> <span class="o">=</span> <span class="s">&#39;%b </span><span class="si">%d</span><span class="s">, %Y&#39;</span>
+</pre></div>
+</div>
+<p>If true, SmartyPants will be used to convert quotes and dashes to
+typographically correct entities:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#html_use_smartypants = True</span>
+</pre></div>
+</div>
+<p>Custom sidebar templates, maps document names to template names:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#html_sidebars = {}</span>
+</pre></div>
+</div>
+<p>Additional templates that should be rendered to pages, maps page names to
+template names:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#html_additional_pages = {}</span>
+</pre></div>
+</div>
+<p>If false, no module index is generated:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_use_modindex</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>If false, no index is generated:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">html_use_index</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>If true, the index is split into individual pages for each letter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#html_split_index = False</span>
+</pre></div>
+</div>
+<p>If true, the reST sources are included in the HTML build as _sources/&lt;name&gt;.
+(needed for the search feature):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#html_copy_source = True</span>
+</pre></div>
+</div>
+<p>If true, an OpenSearch description file will be output, and all pages will
+contain a &lt;link&gt; tag referring to it.  The value of this option must be the
+base URL from which the finished HTML is served.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#html_use_opensearch = &#39;&#39;</span>
+</pre></div>
+</div>
+<p>If nonempty, this is the file name suffix for HTML files
+(e.g. &#8221;.xhtml&#8221; for correct MathML rendering in Firefox):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#html_file_suffix = &#39;&#39;</span>
+</pre></div>
+</div>
+<p>Output file base name for HTML help builder:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">htmlhelp_basename</span> <span class="o">=</span> <span class="s">&#39;PyLit-doc&#39;</span>
+</pre></div>
+</div>
+<p>Delimiter in the relbar: Fallback: &#8216; &amp;raquo;&#8217;</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">reldelim1</span> <span class="o">=</span> <span class="s">&#39; / &#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="options-for-latex-output">
+<h2>Options for LaTeX output<a class="headerlink" href="#options-for-latex-output" title="Permalink to this headline">¶</a></h2>
+<p>The paper size (&#8216;letter&#8217; or &#8216;a4&#8217;):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#latex_paper_size = &#39;letter&#39;</span>
+</pre></div>
+</div>
+<p>The font size (&#8216;10pt&#8217;, &#8216;11pt&#8217; or &#8216;12pt&#8217;):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#latex_font_size = &#39;10pt&#39;</span>
+</pre></div>
+</div>
+<p>Grouping the document tree into LaTeX files. List of tuples (source start
+file, target name, title, author, document class [howto/manual]):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">latex_documents</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="s">&#39;index&#39;</span><span class="p">,</span> <span class="s">&#39;PyLit.tex&#39;</span><span class="p">,</span> <span class="s">&#39;PyLit Documentation&#39;</span><span class="p">,</span>
+   <span class="s">u&#39;Günter Milde&#39;</span><span class="p">,</span> <span class="s">&#39;manual&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The name of an image file (relative to this directory) to place at the top
+of the title page:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#latex_logo = None</span>
+</pre></div>
+</div>
+<p>For &#8220;manual&#8221; documents, if this is true, then toplevel headings are parts,
+not chapters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#latex_use_parts = False</span>
+</pre></div>
+</div>
+<p>Additional stuff for the LaTeX preamble:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#latex_preamble = &#39;&#39;</span>
+</pre></div>
+</div>
+<p>Documents to append as an appendix to all manuals:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#latex_appendices = []</span>
+</pre></div>
+</div>
+<p>If false, no module index is generated:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#latex_use_modindex = True</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/pylit-bold-framed.svg" alt="Logo"/>
+            </a></p>
+    <h3>Contents</h3>
+    <!-- Contents of current page -->
+    <ul>
+<li><a class="reference internal" href="#">conf.py &#8211; Sphinx configuration for PyLit</a><ul>
+<li><a class="reference internal" href="#general-configuration">General configuration</a></li>
+<li><a class="reference internal" href="#options-for-html-output">Options for HTML output</a></li>
+<li><a class="reference internal" href="#options-for-latex-output">Options for LaTeX output</a></li>
+</ul>
+</li>
+</ul>
+
+    <!-- Site Contents -->
+    <!-- <ul>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="literate-programming.html">Literate Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filename-extensions.html">Finding a Filename Extension for Literate Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="download/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download/index.html#download">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download/index.html#installation">Installation</a></li>
+</ul>
+ -->
+    <hr />
+    <h4>Previous Page</h4>
+    <p class="topless">
+      <a href="examples/pygments-default.css.html" title="previous section">Stylesheet for reStructured Text code blocks</a>
+    </p>
+    <h4>Next Page</h4>
+    <p class="topless">
+      <a href="examples/setup.py.html" title="next section">setup.py</a>
+    </p>
+    <h4>Up</h4>
+    <p class="topless">
+       <a href="examples/index.html" title="up">Examples</a>
+    </p>
+  <hr />
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/conf.py.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+    <h3>Search this site</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="12" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ <p class="thanks">
+  Thanks to
+  <a href="http://developer.berlios.de">
+    <img src="http://developer.berlios.de/bslogo.php?group_id=0"
+    width="124" height="32" border="0" alt="BerliOS" />
+  </a>
+  for hosting this site.
+ </p>
+
+  </body>
+</html>
