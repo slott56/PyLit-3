@@ -17,7 +17,7 @@
 
 """pylit: bidirectional text <-> code converter
 
-Covert between a *text source* with embedded computer code and a *code source*
+Convert between a *text source* with embedded computer code and a *code source*
 with embedded documentation.
 """
 
@@ -32,12 +32,13 @@ setup(name='PyLit',
       description='Python Literate Programming',
       author='S.Lott',
       author_email='slott56@gmail.com',
-      url='http://developer.berlios.de/svn/?group_id=7974',
+      url='https://github.com/slott56/PyLit-3',
       py_modules=['pylit'],
+      license='GNU General Public License (v. 2 or later)',
      )
 
 # And that's it. This will be installed into the site-packages directory.
 
 # Technically, this isn't necessary.  A simple copy will do.
 # Further, the :envvar:`PYTHONPATH` environment variable can name a directory
-# that has PyLit.py in it.
+# that has :file:`pylit.py` in it.

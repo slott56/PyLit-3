@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>listings-tex-options.sty &mdash; PyLit</title>
+    
+    <link rel="stylesheet" href="../_static/pylit-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="PyLit" href="../index.html" />
+    <link rel="up" title="Examples" href="index.html" />
+    <link rel="next" title="palatino-helvetica-courier.sty" href="palatino-helvetica-courier.sty.html" />
+    <link rel="prev" title="listings-python-options.sty" href="listings-python-options.sty.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="listings-tex-options-sty">
+<h1>listings-tex-options.sty<a class="headerlink" href="#listings-tex-options-sty" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="highlight-latex-code-with-lstlistings">
+<h2>highlight LaTeX code with lstlistings<a class="headerlink" href="#highlight-latex-code-with-lstlistings" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Günter Milde</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Contact:</th><td class="field-body"><a class="reference external" href="mailto:milde&#37;&#52;&#48;users&#46;berlios&#46;de">milde<span>&#64;</span>users<span>&#46;</span>berlios<span>&#46;</span>de</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Revision:</th><td class="field-body">$Revision: 5534 $</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">$Date: 2005-06-28$</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Copyright:</th><td class="field-body">© 2007, 2009 G. Milde,
+Released  without warranties or conditions of any kind
+under the terms of the Apache License, Version 2.0
+<a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>For syntax highlight of literal blocks with the <cite>listings</cite> LaTeX package,
+call <code class="docutils literal"><span class="pre">rst2latex.py</span></code> with the options
+<code class="docutils literal"><span class="pre">--stylesheet=listings-tex-options.sty</span> <span class="pre">--literal-block-env=lstlisting</span></code>.</p>
+<p>Adapt the settings to your needs by either</p>
+<ul class="simple">
+<li>modifying a copy of this file under a different name, or</li>
+<li>copy parts of this file into your custom style sheet.</li>
+</ul>
+<p>See <a class="reference external" href="ftp://dante.ctan.org/tex-archive/macros/latex/contrib/listings/listings.pdf">listings.pdf</a> for configuration and usage of the listings package.</p>
+</div>
+<div class="section" id="implementation">
+<h3>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h3>
+<p>Identification:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\ProvidesPackage</span><span class="nb">{</span>listings-tex-options<span class="nb">}</span>
+[2009/03/02 v0.1 highlight LaTeX with lstlistings]
+</pre></div>
+</div>
+<p>Of course, we need to load the listings package itself:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\RequirePackage</span><span class="nb">{</span>listings<span class="nb">}</span>
+</pre></div>
+</div>
+<p>In a document with lots of lists and listings, separating paragraphs by
+vertical seems appropriate:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\RequirePackage</span><span class="nb">{</span>parskip<span class="nb">}</span>
+</pre></div>
+</div>
+<p>load hyperref with blue citation colour:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\RequirePackage</span><span class="na">[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]</span>
+<span class="nb">{</span>hyperref<span class="nb">}</span>
+</pre></div>
+</div>
+<p>In the References/Bibliography section,
+avoid holes in the title due to block alignment:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\renewcommand</span><span class="nb">{</span><span class="k">\titlereference</span><span class="nb">}</span>[1]<span class="nb">{</span><span class="k">\raggedright\textsl</span><span class="nb">{</span>#1<span class="nb">}}</span>
+</pre></div>
+</div>
+<p>Omit the auto-inserted &#8220;References&#8221; heading, to be compatible with HTML
+output also if use latex references is set:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\AtBeginDocument</span><span class="nb">{</span><span class="k">\renewcommand</span><span class="nb">{</span><span class="k">\refname</span><span class="nb">}{</span><span class="k">\vspace</span><span class="nb">{</span>-2em<span class="nb">}}}</span>
+</pre></div>
+</div>
+<div class="section" id="font-settings">
+<h4>Font settings<a class="headerlink" href="#font-settings" title="Permalink to this headline">¶</a></h4>
+<p>Times, Helvetica, Courier:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="c">%\RequirePackage{mathptmx}</span>
+<span class="c">%\RequirePackage[scaled=.90]{helvet}  % scaled to fit Times</span>
+<span class="c">%\RequirePackage{courier}</span>
+</pre></div>
+</div>
+<p>Palatino, Helvetica, Courier:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\RequirePackage</span><span class="na">[sc]</span><span class="nb">{</span>mathpazo<span class="nb">}</span>         <span class="c">% with small caps</span>
+<span class="c">% \RequirePackage[sc,osf]{mathpazo}   % with small caps and old style figures</span>
+<span class="k">\RequirePackage</span><span class="na">[scaled=.95]</span><span class="nb">{</span>helvet<span class="nb">}</span>   <span class="c">% scaled to fit Palatino</span>
+<span class="k">\RequirePackage</span><span class="nb">{</span>courier<span class="nb">}</span>
+</pre></div>
+</div>
+<p>(The TX typewriter font comes with bold, slanted, and small-caps variants
+and without the problems of <cite>txfonts</cite>&#8216; math fonts). However, <cite>txfonts</cite> is
+a contributed package, not necessarily available:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="c">%\renewcommand{\ttdefault}{txtt}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="default-language">
+<h4>Default language<a class="headerlink" href="#default-language" title="Permalink to this headline">¶</a></h4>
+<p>Highlight literal blocks as TeX:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\lstset</span><span class="nb">{</span>language=[LaTeX]TeX<span class="nb">}</span>
+</pre></div>
+</div>
+<p>pre-load the language:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\lstloadlanguages</span><span class="nb">{</span>[LaTeX]TeX<span class="nb">}</span> <span class="c">%  comma separated list of languages</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="style">
+<h4>Style<a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h4>
+<p>Typeface settings:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\lstset</span><span class="nb">{</span>
+  basicstyle=<span class="k">\ttfamily</span>,           <span class="c">% print whole listing in tt</span>
+  <span class="c">% basicstyle=\ttfamily\small,</span>
+  keywordstyle=<span class="nb">{}</span>,                <span class="c">% do not highlight keywords</span>
+  <span class="c">% identifierstyle=\slshape,     % macros that are not keywords, args</span>
+  commentstyle=<span class="k">\rmfamily\itshape</span>, <span class="c">% italic comments</span>
+  <span class="c">% stringstyle=\ttfamily,        % typewriter type for strings</span>
+  <span class="c">% texcsstyle=\slshape,</span>
+<span class="nb">}</span>
+</pre></div>
+</div>
+<p>Visible whitespace:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\lstset</span><span class="nb">{</span>showstringspaces=false<span class="nb">}</span>  <span class="c">% no visible spaces in strings</span>
+<span class="c">%\lstset{showspaces=true,</span>
+<span class="c">%        showtabs=true,</span>
+<span class="c">%        tab=\rightarrowfill}</span>
+</pre></div>
+</div>
+<p>Line numbers:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="c">%\lstset{numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt}</span>
+</pre></div>
+</div>
+<p>Frames around listings:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="c">%\lstset{frame=single}</span>
+</pre></div>
+</div>
+<p>Extended characters in listings:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="c">%extendedchars=true</span>
+<span class="c">%extendedchars=false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="column-alignment">
+<h4>Column alignment<a class="headerlink" href="#column-alignment" title="Permalink to this headline">¶</a></h4>
+<p>(for typesetting with variable width fonts)</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">columns=[c|l|r]</span> <span class="pre">&lt;alignment&gt;</span></code></dt>
+<dd><p class="first">&lt;alignment&gt; in [fixed, flexible, spaceflexible, or fullflexible]</p>
+<p>The optional c, l, or r controls the horizontal orientation of smallest
+output units (keywords, identifiers, etc.).</p>
+<p class="last">default: [c]fixed</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">basewidth={fixed,</span> <span class="pre">flexible}</span></code></dt>
+<dd><p class="first">sets the width of a single character box for fixed and flexible column
+mode (both to the same value or individually).</p>
+<p class="last">default: {0.6em,0.45em}</p>
+</dd>
+</dl>
+<p>Free spacing for comments:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\lstset</span><span class="nb">{</span>columns=fullflexible, basewidth=<span class="nb">{</span>0.5em,0.4em<span class="nb">}}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/pylit-bold-framed.svg" alt="Logo"/>
+            </a></p>
+    <h3>Contents</h3>
+    <!-- Contents of current page -->
+    <ul>
+<li><a class="reference internal" href="#">listings-tex-options.sty</a><ul>
+<li><a class="reference internal" href="#highlight-latex-code-with-lstlistings">highlight LaTeX code with lstlistings</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#implementation">Implementation</a><ul>
+<li><a class="reference internal" href="#font-settings">Font settings</a></li>
+<li><a class="reference internal" href="#default-language">Default language</a></li>
+<li><a class="reference internal" href="#style">Style</a></li>
+<li><a class="reference internal" href="#column-alignment">Column alignment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    <!-- Site Contents -->
+    <!-- <ul>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literate-programming.html">Literate Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filename-extensions.html">Finding a Filename Extension for Literate Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#download">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#installation">Installation</a></li>
+</ul>
+ -->
+    <hr />
+    <h4>Previous Page</h4>
+    <p class="topless">
+      <a href="listings-python-options.sty.html" title="previous section">listings-python-options.sty</a>
+    </p>
+    <h4>Next Page</h4>
+    <p class="topless">
+      <a href="palatino-helvetica-courier.sty.html" title="next section">palatino-helvetica-courier.sty</a>
+    </p>
+    <h4>Up</h4>
+    <p class="topless">
+       <a href="index.html" title="up">Examples</a>
+    </p>
+  <hr />
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples/listings-tex-options.sty.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+    <h3>Search this site</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="12" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ <p class="thanks">
+  Thanks to
+  <a href="http://developer.berlios.de">
+    <img src="http://developer.berlios.de/bslogo.php?group_id=0"
+    width="124" height="32" border="0" alt="BerliOS" />
+  </a>
+  for hosting this site.
+ </p>
+
+  </body>
+</html>
