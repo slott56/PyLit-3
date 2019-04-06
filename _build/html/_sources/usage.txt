@@ -15,7 +15,7 @@ Command line use
   Convert between (reStructured) text source with embedded code, and code
   source with embedded documentation (comment blocks)
 
-  The special file name '-' stands for standard in and output.
+  The special file name ``'-'`` stands for standard in or standard out.
 
 Find more details in the tutorial_.
 

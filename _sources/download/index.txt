@@ -36,8 +36,6 @@ Tools
 
 * `pylit functions`_ for the `JED editor`_
 
-.. _`SVN repository`:
-   http://developer.berlios.de/svn/?group_id=7974
 .. _`GitHub repository`:
    https://github.com/slott56/PyLit-3
 

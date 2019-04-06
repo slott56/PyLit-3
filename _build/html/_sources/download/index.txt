@@ -17,7 +17,7 @@ PyLit
 -----
 `pylit.py`_
   There are no file releases yet. You get the most up to date version from
-  the `SVN repository`_.
+  the `GitHub repository`_.
 
 pylit_
   A simple starter and configuration wrapper (see installation_).
@@ -36,12 +36,13 @@ Tools
 
 * `pylit functions`_ for the `JED editor`_
 
-.. _`SVN repository`:
-   http://developer.berlios.de/svn/?group_id=7974
+.. _`GitHub repository`:
+   https://github.com/slott56/PyLit-3
+
 .. _`pylit.py`:
-   http://svn.berlios.de/svnroot/repos/pylit/trunk/src/pylit.py
+   https://github.com/slott56/PyLit-3/blob/gh-pages/src/pylit.py
 .. _pylit_test.py:
-   http://svn.berlios.de/svnroot/repos/pylit/trunk/test/pylit_test.py
+   https://github.com/slott56/PyLit-3/blob/gh-pages/test/pylit_test.py
 
 .. _Docutils: http://docutils.sourceforge.net/
 .. _Sphinx: http://sphinx.pocoo.org/

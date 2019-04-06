@@ -5,7 +5,7 @@ Summary: Python Literate Programming
 Home-page: UNKNOWN
 Author: S.Lott
 Author-email: slott56@gmail.com
-License: UNKNOWN
+License: GNU General Public License (v. 2 or later)
 Project-URL: Documentation, http://developer.berlios.de/svn/?group_id=7974
 Project-URL: Source Code, https://github.com/slott56/PyLit-3
 Project-URL: Bug Tracker, https://github.com/slott56/PyLit-3/issues
