@@ -389,7 +389,7 @@ class test_Main(IOTests):
     def test_text_to_code_twice(self):
         """conversion should work a second time"""
         main(infile=self.txtpath, outfile=self.outpath)
-        main(infile=self.txtpath, outfile=self.outpath)
+        self.assertRaises(SystemExit, main, kwargs=dict(infile=self.txtpath, outfile=self.outpath))
         output = self.get_output()
         print( repr(output) )
         self.assertMultiLineEqual( output, code )
@@ -409,7 +409,7 @@ class test_Main(IOTests):
     def test_code_to_text_twice(self):
         """conversion should work also a second time"""
         main(infile=self.codepath, outfile=self.outpath)
-        main(infile=self.codepath, outfile=self.outpath)
+        self.assertRaises(SystemExit, main, kwargs=dict(infile=self.codepath, outfile=self.outpath))
         output = self.get_output()
         self.assertMultiLineEqual( output, text )
 

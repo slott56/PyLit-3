@@ -1,0 +1,220 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>How to write literate doctests with PyLit &#8212; PyLit</title>
+    <link rel="stylesheet" href="../_static/pylit-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="testfile_literate" href="testfile_literate.py.html" />
+    <link rel="prev" title="simplestates.py" href="simplestates.py.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-write-literate-doctests-with-pylit">
+<h1>How to write literate doctests with PyLit<a class="headerlink" href="#how-to-write-literate-doctests-with-pylit" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="python-doctest-module">
+<h2>Python Doctest Module<a class="headerlink" href="#python-doctest-module" title="Permalink to this headline">¶</a></h2>
+<p><em>Doctests</em> are a literate way of testing a Python script.  They are
+supported by the <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#doctest-blocks">doctest block</a> syntax in reStructuredText.</p>
+<blockquote>
+<div><p>The <a class="reference external" href="http://docs.python.org/library/doctest.html">doctest module</a> searches strings for pieces of text that look like
+interactive Python sessions, and then executes those sessions to verify
+that they work exactly as shown.</p>
+<p>There are several common ways to use doctest:</p>
+<ul class="simple">
+<li>To check that a module’s docstrings are up-to-date by verifying that all
+interactive examples still work as documented.</li>
+<li>To perform regression testing by verifying that interactive examples
+from a test file or a test object work as expected.</li>
+<li>To write tutorial documentation for a package, liberally illustrated
+with input-output examples. Depending on whether the examples or the
+expository text are emphasised, this has the flavor of “literate
+testing” or “executable documentation”.</li>
+</ul>
+<p class="attribution">&mdash;Python Library Reference for the <a class="reference external" href="http://docs.python.org/library/doctest.html">doctest module</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="doctest-and-pylit">
+<h2>Doctest and PyLit<a class="headerlink" href="#doctest-and-pylit" title="Permalink to this headline">¶</a></h2>
+<p>The most common way to use the doctest module is to check examples in all
+<em>docstrings</em> of a module with <code class="docutils literal notranslate"><span class="pre">doctest.testmod()</span></code>, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can also check a <em>text</em> file as if it were a docstring by calling
+doctest from the command line, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span><span class="o">&gt;</span> <span class="n">python3</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import doctest; doctest.testfile(&#39;example.py.txt&#39;)&quot;</span>
+</pre></div>
+</div>
+<p>Or, even simpler:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span><span class="o">&gt;</span> <span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">doctest</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>However, none of these methods will not check doctest blocks in comments. This is
+why they will fail to find doctests in the text blocks of a literate source
+in code format. (See the <a class="reference external" href="../tutorial/index.html#doctests">tutorial</a> for discussion.)</p>
+<p>You can of course convert your source to text form and run
+<cite>doctest.testfile</cite> on it. To simplify the task, Pylit supports
+<a class="reference external" href="http://docs.python.org/library/doctest.html">Python doctests</a> in a literate source with an option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span><span class="o">&gt;</span> <span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pylit</span> <span class="o">--</span><span class="n">doctest</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>will check a literate source file for all doctests regardless of their
+location in docstrings or text parts. It can work with both, text or code
+format.</p>
+<p>In order to do this, it will read the file, transform a code source to text
+format on-the-fly and feed the result to a <a class="reference external" href="http://docs.python.org/library/doctest.html#doctestparser-objects">DocTestParser</a> object.
+I.e., no text source file will be created if <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">pylit</span> <span class="pre">--doctest</span></code> is
+called on a code source file.</p>
+<p>This way, it is possible to separate basic examples in doc strings from
+additional test in the literate source.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference external" href="testmod_literate.py.html">testmod_literate</a></dt>
+<dd><p class="first">is a “literate version” of the example in the <a class="reference external" href="http://docs.python.org/library/doctest.html">doctest module</a> doc that
+does a self test when called as <cite>__main__</cite>.</p>
+<p>It calls <cite>pylit.run_doctest</cite> to find tests in both docstrings and
+documentation blocks.</p>
+<p>Test this file with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#&gt; python3 testmod_literate.py</span>
+<span class="mi">0</span> <span class="n">failures</span> <span class="ow">in</span> <span class="mi">11</span> <span class="n">tests</span>
+</pre></div>
+</div>
+<p class="last">Sources: <a class="reference external" href="testmod_literate.py">testmod_literate.py</a>, <a class="reference external" href="testmod_literate.py.txt">testmod_literate.py.txt</a></p>
+</dd>
+<dt><a class="reference external" href="testfile_literate.py.html">testfile_literate</a></dt>
+<dd><p class="first">is a “literate version” of the example in the <a class="reference external" href="http://docs.python.org/library/doctest.html">doctest module</a> doc
+adapted for being tested with <code class="docutils literal notranslate"><span class="pre">pylit</span> <span class="pre">--doctest</span></code>.</p>
+<p>Test this file with:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span> MacBookPro-SLott:examples slott$ python3 ../../src/pylit.py --doctest testfile_literate.py
+ ../../src/pylit.py:1644: UserWarning: data encoding=UTF-8 != docencoding=iso-8859-1
+   warnings.warn( &quot;data encoding={0} != docencoding={1}&quot;.format(data.encoding, docencoding) )
+ 0 failures in 19 tests
+
+It imports itself in the usage example and has a non-testing (albeit
+silly) default action if called from the command line.
+
+Note the warning for a confused data encoding string. This is mostly
+irrelevant, since most modern OS&#39;s don&#39;t really need the encoding hints any more.
+
+Sources: `&lt;testfile_literate.py&gt;`_, `&lt;testfile_literate.py.txt&gt;`_
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/pylit-bold-framed.svg" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">PyLit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literate-programming.html">Literate Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filename-extensions.html">Finding a Filename Extension for Literate Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#download">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#installation">Installation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Examples</a><ul>
+      <li>Previous: <a href="simplestates.py.html" title="previous chapter">simplestates.py</a></li>
+      <li>Next: <a href="testfile_literate.py.html" title="next chapter">testfile_literate</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ <p class="thanks">
+  Thanks to
+  <a href="http://developer.berlios.de">
+    <img src="http://developer.berlios.de/bslogo.php?group_id=0"
+    width="124" height="32" border="0" alt="BerliOS" />
+  </a>
+  for hosting this site.
+ </p>
+
+  </body>
+</html>

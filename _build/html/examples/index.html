@@ -1,0 +1,302 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Examples &#8212; PyLit</title>
+    <link rel="stylesheet" href="../_static/pylit-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pylit.py" href="pylit.py.html" />
+    <link rel="prev" title="Tutorial" href="../tutorial/index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <blockquote>
+<div></div></blockquote>
+<div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>The following examples illustrate use cases for “literate programming with
+PyLit”.</p>
+<p>Generally, the literate source will not substitute a user guide, but can
+serve as base documentation as well as reference.</p>
+<p>The text parts can be used to structure the document, for additional
+explanations, documentation of variants and discussion why a specific
+approach was chosen.</p>
+<div class="section" id="pylit-py">
+<h2>pylit.py<a class="headerlink" href="#pylit-py" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pylit.py.html">PyLit itself</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pylit.py.html#literate-programming-with-restructuredtext">Literate programming with reStructuredText</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="python-modules">
+<h2>Python Modules<a class="headerlink" href="#python-modules" title="Permalink to this headline">¶</a></h2>
+<p>Typically, most of a Python module’s documentation is in docstrings.
+Currently, docstrings are treated as code parts by PyLit.</p>
+<p>However, literate comments can be used to add structure and documentation
+that is not intended for the end user of a module but for people trying to
+maintain or extend it (including the original author).</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="99bottles.py.html">99bottles.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="99bottles.py.html#introductory-example-to-literate-programming">Introductory Example to Literate Programming</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simplestates.py.html">simplestates.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simplestates.py.html#generic-state-machine-class-using-iterators">Generic state machine class using iterators</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="doctests">
+<h2>Doctests<a class="headerlink" href="#doctests" title="Permalink to this headline">¶</a></h2>
+<p>Python’s <a class="reference external" href="http://docs.python.org/library/doctest.html">doctest</a> module runs tests on usage examples.
+However, running <code class="docutils literal notranslate"><span class="pre">doctest</span></code> on the code source will only run doctests
+within docstrings. In contrast, <code class="docutils literal notranslate"><span class="pre">pylit</span> <span class="pre">--doctest</span></code> will detect all
+doctests, in docstrings as well as in text blocks.</p>
+<p>This way, the docstrings can be kept concise while comprehensive tests can
+be placed in the code file without taking up precious resources and loading
+time (as they will be stripped from the byte-compiled module).</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="literate-doctests.html">How to write literate doctests with PyLit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testfile_literate.py.html">testfile_literate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testmod_literate.py.html">testmod_literate</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="test-scripts">
+<h2>Test Scripts<a class="headerlink" href="#test-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Test suites are a good example for the advantages of literate programming.
+Documenting the rationale and design as well as test considerations can help
+a lot when maintaining and extending the tests.</p>
+<p>The following unit test modules are tested using the <a class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/">nose</a> unit
+test discovery &amp; execution framework. (They should be compatible to
+<a class="reference external" href="http://codespeak.net/py/dist/doc/test.html">py.test</a>.)</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pylit_test.py.html">pylit_test.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pylit_test.py.html#test-pylit-py-python-module">Test pylit.py Python Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simplestates_test.py.html">simplestates_test.py:</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simplestates_test.py.html#test-the-simplestates-py-generic-state-machine">Test the simplestates.py generic state machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="iterqueue_test.py.html">iterqueue_test.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="iterqueue_test.py.html#test-the-iterator-wrappers-from-iterqueue-py">Test the iterator wrappers from iterqueue.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="iterqueue_speed_test.py.html">iterqueue_speed_test.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="iterqueue_speed_test.py.html#profiling-the-iterqueue-extended-iterator-classes">Profiling the iterqueue extended iterator classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="articles-and-tutorials">
+<h2>Articles and Tutorials<a class="headerlink" href="#articles-and-tutorials" title="Permalink to this headline">¶</a></h2>
+<p>This survey over the various options and attempts to extend an iterator with
+methods for <cite>peek</cite>, <cite>pushback</cite> or <cite>test of emptiness</cite> is also a Python
+module defining several examples of such rich iterators.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="iterqueue.py.html">Extending Iterators for use as Queue</a></li>
+</ul>
+</div>
+<p>A tutorial is clearly more of a text document than a program. But usually, a
+lot of example code gets included. Converting the text source to commented
+code, it is easier to copy or paste code examples to and from scripts or an
+interactive program session. Re-converting indents the code snippets
+correctly so they will be literal blocks in the pretty print.</p>
+<p>In Python, code examples can be given as both, code blocks and <a class="reference external" href="http://docs.python.org/library/doctest.html">doctest</a>
+blocks.  With a ‘usage’ example that imports the code source as module,
+doctest blocks can also test examples from literal code blocks.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://swiginac.berlios.de/ginac-tutorial.py.html">swiginac_tutorial</a><ul>
+<li>An adaption of the <a class="reference external" href="http://www.ginac.de/tutorial/">GiNaC tutorial</a> for doing Computer algebra with
+<a class="reference external" href="http://www.ginac.de">GiNaC</a> and the Python programming language using the <a class="reference external" href="http://swiginac.berlios.de">swiginac</a> wrapper
+package. (incomplete.)</li>
+<li>The most current version and sources are in the <a class="reference external" href="http://svn.berlios.de/svnroot/repos/swiginac/trunk/doc/">documentation folder</a>
+of the swiginac SVN repository.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="latex-packages">
+<h2>LaTeX Packages<a class="headerlink" href="#latex-packages" title="Permalink to this headline">¶</a></h2>
+<p>The “orthogonal” syntax of reStructuredText and LaTeX makes the documentation
+of a LaTeX package in the source document far more readable than using LaTeX
+markup.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="listings-python-options.sty.html">listings-python-options.sty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="listings-python-options.sty.html#configure-listings-to-highlight-python-code">Configure <cite>listings</cite> to highlight Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="listings-tex-options.sty.html">listings-tex-options.sty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="listings-tex-options.sty.html#highlight-latex-code-with-lstlistings">highlight LaTeX code with lstlistings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="palatino-helvetica-courier.sty.html">palatino-helvetica-courier.sty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="palatino-helvetica-courier.sty.html#recommended-font-settings-for-palatino-helvetica-and-courier">Recommended Font Settings for Palatino, Helvetica, and Courier</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="simple">
+<li><a class="reference external" href="http://dante.ctan.org/CTAN/macros/latex/contrib/isomath/isomath.sty.html">isomath</a> (<a class="reference external" href="ftp://dante.ctan.org/tex-archive/macros/latex/contrib/isomath/isomath.sty.pdf">PDF</a>): Math for scientists<ul>
+<li>LaTeX package for typesetting math according to International
+Standard ISO 31 <cite>Quantities and units</cite>.</li>
+</ul>
+</li>
+</ul>
+<p>Sources:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docutils.sf.net/sandbox/stylesheets/listings-python-options.sty">listings-python-options.sty</a>, <a class="reference external" href="http://docutils.sf.net/sandbox/stylesheets/listings-tex-options.sty">listings-tex-options.sty</a>,
+<a class="reference external" href="http://docutils.sf.net/sandbox/stylesheets/palatino-helvetica-courier.sty">palatino-helvetica-courier.sty</a></li>
+<li><a class="reference external" href="ftp://dante.ctan.org/tex-archive/macros/latex/contrib/isomath/isomath.sty">isomath.sty</a>, <a class="reference external" href="ftp://dante.ctan.org/tex-archive/macros/latex/contrib/isomath/isomath.sty.txt">isomath.sty.txt</a>.</li>
+</ul>
+</div>
+<div class="section" id="css-style-sheets">
+<h2>CSS Style Sheets<a class="headerlink" href="#css-style-sheets" title="Permalink to this headline">¶</a></h2>
+<p>Also cascading style sheets can gain from being made literate documents.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pygments-default.css.html">Stylesheet for reStructured Text code blocks</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="configuration-files">
+<h2>Configuration Files<a class="headerlink" href="#configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>Generating a template as well as user documentation from the same
+source helps to keep them synchronised:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../conf.py.html">The Sphinx ``conf.py``</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-setup-file">
+<h2>The Setup File<a class="headerlink" href="#the-setup-file" title="Permalink to this headline">¶</a></h2>
+<p>Generating a setup file from a a literate source can provide additional
+clarification or documentation.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup.py.html">setup.py</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/pylit-bold-framed.svg" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">PyLit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literate-programming.html">Literate Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filename-extensions.html">Finding a Filename Extension for Literate Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#download">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#installation">Installation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../tutorial/index.html" title="previous chapter">Tutorial</a></li>
+      <li>Next: <a href="pylit.py.html" title="next chapter">pylit.py</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ <p class="thanks">
+  Thanks to
+  <a href="http://developer.berlios.de">
+    <img src="http://developer.berlios.de/bslogo.php?group_id=0"
+    width="124" height="32" border="0" alt="BerliOS" />
+  </a>
+  for hosting this site.
+ </p>
+
+  </body>
+</html>

@@ -1,0 +1,381 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>conf.py – Sphinx configuration for PyLit &#8212; PyLit</title>
+    <link rel="stylesheet" href="_static/pylit-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="setup.py" href="examples/setup.py.html" />
+    <link rel="prev" title="Stylesheet for reStructured Text code blocks" href="examples/pygments-default.css.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="conf-py-sphinx-configuration-for-pylit">
+<h1>conf.py – Sphinx configuration for PyLit<a class="headerlink" href="#conf-py-sphinx-configuration-for-pylit" title="Permalink to this headline">¶</a></h1>
+<p>Documentation build configuration file</p>
+<p>This file is execfile()d with the current directory set to its containing
+dir.</p>
+<p>The contents of this file are pickled, so don’t put values in the namespace
+that aren’t pickleable (module imports are okay, they’re removed
+automatically).</p>
+<p>All configuration values have a default value; values that are commented out
+serve to show the default value.</p>
+<p>You can use the following modules in your definitions (or add more):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+</pre></div>
+</div>
+<p>If your extensions are in another directory, add it here. If the directory
+is relative to the documentation root, use <code class="docutils literal notranslate"><span class="pre">os.path.abspath</span></code> to make it
+absolute, like shown here:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#sys.path.append(os.path.abspath(&#39;some/directory&#39;))</span>
+</pre></div>
+</div>
+<div class="section" id="general-configuration">
+<h2>General configuration<a class="headerlink" href="#general-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Add any Sphinx extension module names here, as strings. They can be extensions
+coming with Sphinx (named ‘sphinx.ext.*’) or your custom ones.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>Add any paths that contain templates here, relative to this directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">templates_path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.templates&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The suffix of source filenames:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source_suffix</span> <span class="o">=</span> <span class="s1">&#39;.txt&#39;</span>
+</pre></div>
+</div>
+<p>The master toctree document:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">master_doc</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span>
+</pre></div>
+</div>
+<p>General substitutions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="s1">&#39;PyLit&#39;</span>
+<span class="n">copyright</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;2009, Günter Milde&#39;</span>
+</pre></div>
+</div>
+<p>The default replacements for <code class="docutils literal notranslate"><span class="pre">|version|</span></code> and <code class="docutils literal notranslate"><span class="pre">|release|</span></code>, also used in
+various other places throughout the built documents.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># The short X.Y version.</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;3.1&#39;</span>
+<span class="c1"># The full version, including alpha/beta/rc tags.</span>
+<span class="n">release</span> <span class="o">=</span> <span class="s1">&#39;3.1.1&#39;</span>
+</pre></div>
+</div>
+<p>There are two options for replacing <code class="docutils literal notranslate"><span class="pre">|today|</span></code>: either, you set today to
+some non-false value, then it is used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#today = &#39;&#39;</span>
+</pre></div>
+</div>
+<p>Else, today_fmt is used as the format for a strftime call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">today_fmt</span> <span class="o">=</span> <span class="s1">&#39;%B </span><span class="si">%d</span><span class="s1">, %Y&#39;</span>
+</pre></div>
+</div>
+<p>List of documents that shouldn’t be included in the build:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#unused_docs = [&quot;docs/download/index.txt&quot;, &quot;tutorial/*.py.txt&quot;]</span>
+</pre></div>
+</div>
+<p>A list of glob-style patterns that should be excluded when looking for
+source files. [1] They are matched against the source file names relative
+to the source directory, using slashes as directory separators on all
+platforms.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exclude_patterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;tutorial/*.py.txt&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Deprecated since version 1.0: Use exclude_patterns instead.
+exclude_dirnames = [“.svn”]</p>
+<p>The name of the default domain. Can also be None to disable a default
+domain. The default is ‘py’. Those objects in other domains (whether the
+domain name is given explicitly, or selected by a default-domain directive)
+require the domain name explicitly prepended when named.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># primary_domain = &#39;py&#39;</span>
+<span class="n">primary_domain</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>The reST default role (used for this markup: <code class="docutils literal notranslate"><span class="pre">`text`</span></code>) to use for all
+documents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#default_role = None</span>
+</pre></div>
+</div>
+<p>If true, ‘()’ will be appended to :func: etc. cross-reference text.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">add_function_parentheses</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>If true, the current module name will be prepended to all description
+unit titles (such as .. function::)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#add_module_names = True</span>
+</pre></div>
+</div>
+<p>If true, sectionauthor and moduleauthor directives will be shown in the
+output. They are ignored by default.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#show_authors = False</span>
+</pre></div>
+</div>
+<p>The name of the Pygments (syntax highlighting) style to use.
+Can be any registered pygments-style or ‘sphinx’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pygments.styles</span> <span class="k">import</span> <span class="n">STYLE_MAP</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">STYLE_MAP</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[&#39;manni&#39;, &#39;perldoc&#39;, &#39;borland&#39;, &#39;colorful&#39;, &#39;default&#39;, &#39;murphy&#39;, &#39;trac&#39;,</span>
+<span class="go"> &#39;fruity&#39;, &#39;autumn&#39;, &#39;bw&#39;, &#39;emacs&#39;, &#39;pastie&#39;, &#39;friendly&#39;, &#39;native&#39;]</span>
+</pre></div>
+</div>
+<p>You can try the styles with the  <a class="reference external" href="http://pygments.org/demo/">pygments demo</a> pages that offer a drop-down list to select
+the style, e.g. <a class="reference external" href="http://pygments.org/demo/1444/">http://pygments.org/demo/1444/</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pygments_style = &#39;sphinx&#39;</span>
+<span class="n">pygments_style</span> <span class="o">=</span> <span class="s1">&#39;friendly&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="options-for-html-output">
+<h2>Options for HTML output<a class="headerlink" href="#options-for-html-output" title="Permalink to this headline">¶</a></h2>
+<p>The style sheet to use for HTML and HTML Help pages. A file of that name
+must exist either in Sphinx’ static/ path, or in one of the custom paths
+given in html_static_path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">html_style</span> <span class="o">=</span> <span class="s1">&#39;pylit-sphinx.css&#39;</span>
+<span class="c1"># html_style = &#39;sphinxdoc.css&#39;</span>
+</pre></div>
+</div>
+<p>Options to the theme, like a sidebar that is visible even when
+scrolling (TODO: how to get this to work (maybe just update Spinx)?):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#html_theme_options = {&#39;stickysidebar&#39;: &#39;true&#39;}</span>
+</pre></div>
+</div>
+<p>The name for this set of Sphinx documents.  If None, it defaults to
+“&lt;project&gt; v&lt;release&gt; documentation”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">html_title</span> <span class="o">=</span> <span class="s2">&quot;PyLit&quot;</span>
+</pre></div>
+</div>
+<p>A shorter title for the navigation bar.  Default is the same as html_title.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">html_short_title</span> <span class="o">=</span> <span class="s2">&quot;Home&quot;</span>
+</pre></div>
+</div>
+<p>The name of an image file (within the static path) to place at the top of
+the sidebar.
+Korrektion [GM]: path is relative to source (not static)
+(Bug or config issue?).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">html_logo</span> <span class="o">=</span> <span class="s2">&quot;logo/pylit-bold-framed.svg&quot;</span>
+<span class="c1"># html_logo = &quot;pylit-bold-framed.svg&quot;</span>
+</pre></div>
+</div>
+<p>The name of an image file (within the static path) to use as favicon of the
+docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
+pixels large.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">html_favicon</span> <span class="o">=</span> <span class="s2">&quot;favicon.ico&quot;</span>
+</pre></div>
+</div>
+<p>Add any paths that contain custom static files (such as style sheets) here,
+relative to this directory. They are copied after the builtin static files,
+so a file named “default.css” will overwrite the builtin “default.css”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">html_static_path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_static&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If not ‘’, a ‘Last updated on:’ timestamp is inserted at every page bottom,
+using the given strftime format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">html_last_updated_fmt</span> <span class="o">=</span> <span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">, %Y&#39;</span>
+</pre></div>
+</div>
+<p>If true, SmartyPants will be used to convert quotes and dashes to
+typographically correct entities:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#html_use_smartypants = True</span>
+</pre></div>
+</div>
+<p>Custom sidebar templates, maps document names to template names:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#html_sidebars = {}</span>
+</pre></div>
+</div>
+<p>Additional templates that should be rendered to pages, maps page names to
+template names:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#html_additional_pages = {}</span>
+</pre></div>
+</div>
+<p>If false, no module index is generated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">html_use_modindex</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>If false, no index is generated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">html_use_index</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>If true, the index is split into individual pages for each letter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#html_split_index = False</span>
+</pre></div>
+</div>
+<p>If true, the reST sources are included in the HTML build as _sources/&lt;name&gt;.
+(needed for the search feature):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#html_copy_source = True</span>
+</pre></div>
+</div>
+<p>If true, an OpenSearch description file will be output, and all pages will
+contain a &lt;link&gt; tag referring to it.  The value of this option must be the
+base URL from which the finished HTML is served.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#html_use_opensearch = &#39;&#39;</span>
+</pre></div>
+</div>
+<p>If nonempty, this is the file name suffix for HTML files
+(e.g. “.xhtml” for correct MathML rendering in Firefox):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#html_file_suffix = &#39;&#39;</span>
+</pre></div>
+</div>
+<p>Output file base name for HTML help builder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">htmlhelp_basename</span> <span class="o">=</span> <span class="s1">&#39;PyLit-doc&#39;</span>
+</pre></div>
+</div>
+<p>Delimiter in the relbar: Fallback: ‘ &amp;raquo;’</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reldelim1</span> <span class="o">=</span> <span class="s1">&#39; / &#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="options-for-latex-output">
+<h2>Options for LaTeX output<a class="headerlink" href="#options-for-latex-output" title="Permalink to this headline">¶</a></h2>
+<p>The paper size (‘letter’ or ‘a4’):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#latex_paper_size = &#39;letter&#39;</span>
+</pre></div>
+</div>
+<p>The font size (‘10pt’, ‘11pt’ or ‘12pt’):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#latex_font_size = &#39;10pt&#39;</span>
+</pre></div>
+</div>
+<p>Grouping the document tree into LaTeX files. List of tuples (source start
+file, target name, title, author, document class [howto/manual]):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">latex_documents</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;PyLit.tex&#39;</span><span class="p">,</span> <span class="s1">&#39;PyLit Documentation&#39;</span><span class="p">,</span>
+   <span class="sa">u</span><span class="s1">&#39;Günter Milde&#39;</span><span class="p">,</span> <span class="s1">&#39;manual&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The name of an image file (relative to this directory) to place at the top
+of the title page:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#latex_logo = None</span>
+</pre></div>
+</div>
+<p>For “manual” documents, if this is true, then toplevel headings are parts,
+not chapters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#latex_use_parts = False</span>
+</pre></div>
+</div>
+<p>Additional stuff for the LaTeX preamble:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#latex_preamble = &#39;&#39;</span>
+</pre></div>
+</div>
+<p>Documents to append as an appendix to all manuals:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#latex_appendices = []</span>
+</pre></div>
+</div>
+<p>If false, no module index is generated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#latex_use_modindex = True</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/pylit-bold-framed.svg" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="index.html">PyLit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="literate-programming.html">Literate Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filename-extensions.html">Finding a Filename Extension for Literate Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="download/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download/index.html#download">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download/index.html#installation">Installation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="examples/index.html">Examples</a><ul>
+      <li>Previous: <a href="examples/pygments-default.css.html" title="previous chapter">Stylesheet for reStructured Text code blocks</a></li>
+      <li>Next: <a href="examples/setup.py.html" title="next chapter">setup.py</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ <p class="thanks">
+  Thanks to
+  <a href="http://developer.berlios.de">
+    <img src="http://developer.berlios.de/bslogo.php?group_id=0"
+    width="124" height="32" border="0" alt="BerliOS" />
+  </a>
+  for hosting this site.
+ </p>
+
+  </body>
+</html>

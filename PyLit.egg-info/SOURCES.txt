@@ -1,0 +1,6 @@
+README
+setup.py
+PyLit.egg-info/PKG-INFO
+PyLit.egg-info/SOURCES.txt
+PyLit.egg-info/dependency_links.txt
+PyLit.egg-info/top_level.txt

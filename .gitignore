@@ -1,3 +1,9 @@
 *.pyc
+.idea/*
+.tox/*
+*.pickle
+*.buildinfo
+*.doctrees
+*.komodo*
 .buildinfo
 objects.inv

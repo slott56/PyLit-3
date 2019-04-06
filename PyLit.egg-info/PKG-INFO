@@ -1,0 +1,19 @@
+Metadata-Version: 1.2
+Name: PyLit
+Version: 3.1.1
+Summary: Python Literate Programming
+Home-page: UNKNOWN
+Author: S.Lott
+Author-email: slott56@gmail.com
+License: UNKNOWN
+Project-URL: Documentation, http://developer.berlios.de/svn/?group_id=7974
+Project-URL: Source Code, https://github.com/slott56/PyLit-3
+Project-URL: Bug Tracker, https://github.com/slott56/PyLit-3/issues
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 6 - Mature
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Software Development :: Build Tools
+Requires-Python: >=3.4

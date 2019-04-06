@@ -115,6 +115,8 @@ with embedded documentation.
 #                     Cleanup ``DefaultDict`` to be more easily replaced.
 #                     Adjust trailing space handling to match unit tests better.
 #                     Provide ``with`` statements for all file contexts.
+# 3.1.1   2019-04-05  Add tox version checking. Change distribution sightly to
+#                     fit better with PyPA standards
 # ======  ==========  ===========================================================
 #
 # To Do List
@@ -128,7 +130,7 @@ with embedded documentation.
 #
 # ::
 
-_version = "3.1"
+_version = "3.1.1"
 
 __docformat__ = 'restructuredtext'
 
@@ -478,7 +480,7 @@ class TextCodeConverter:
             self.comment_string = self.comment_strings[self.language]
         self.stripped_comment_string = self.comment_string.rstrip()
 
-# Pre- and postprocessing filters are set (with
+# Pre- and post-processing filters are set (with
 # `TextCodeConverter.get_filter`_)::
 
         self.preprocessor = self.get_filter("preprocessors", self.language)
@@ -512,7 +514,7 @@ class TextCodeConverter:
 # * text<->code format conversion
 # * postprocessing
 #
-# Pre- and postprocessing are only performed if filters for the current
+# Pre- and post- processing are only performed if filters for the current
 # language are registered in `defaults.preprocessors`_ and|or
 # `defaults.postprocessors`_. The filters must accept an iterable as first
 # argument and yield the processed input data line-wise.
@@ -620,7 +622,10 @@ class TextCodeConverter:
 # Determine the state of the block and convert with the matching "handler"::
 
         for block in collect_blocks(expandtabs_filter(lines)):
-            self.set_state(block)
+            try:
+                self.set_state(block)
+            except StopIteration:
+                return
             for line in getattr(self, self.state+"_handler")(block):
                 yield line
 
@@ -690,11 +695,11 @@ class Text2Code(TextCodeConverter):
 # ::
 
     def set_state(self, block):
-        """Determine state of `block`. Set `self.state`
+        """Determine state of `block`. Set `self.state`.
         """
 
-# `set_state` is used inside an iteration. Hence, if we are out of data, a
-# StopItertion exception should be raised::
+# ``set_state()`` is used inside an iteration. Hence, if we are out of data, a
+# ``StopItertion`` exception should be raised::
 
         if not block:
             raise StopIteration
