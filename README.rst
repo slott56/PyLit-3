@@ -9,7 +9,7 @@ The ``Makefile`` is used via ``make html`` to rebuild the code and documentation
 
 The ``docs`` directory contains the documentation, plus many examples.
 
-The ``src`` directory contains the installable module.
+The ``pylit.py`` is the module.  Once you've installed it, use ``python -m pylit`` to run it.
 
 The ``test`` directory contains the unit test suite.
 

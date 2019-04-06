@@ -40,9 +40,9 @@ Tools
    https://github.com/slott56/PyLit-3
 
 .. _`pylit.py`:
-   https://github.com/slott56/PyLit-3/blob/gh-pages/src/pylit.py
+   https://raw.githubusercontent.com/slott56/PyLit-3/master/pylit.py
 .. _pylit_test.py:
-   https://github.com/slott56/PyLit-3/blob/gh-pages/test/pylit_test.py
+   https://raw.githubusercontent.com/slott56/PyLit-3/master/test/pylit_test.py
 
 .. _Docutils: http://docutils.sourceforge.net/
 .. _Sphinx: http://sphinx.pocoo.org/

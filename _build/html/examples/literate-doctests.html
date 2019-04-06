@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="testfile_literate" href="testfile_literate.py.html" />
@@ -116,8 +116,8 @@ documentation blocks.</p>
 <dd><p class="first">is a “literate version” of the example in the <a class="reference external" href="http://docs.python.org/library/doctest.html">doctest module</a> doc
 adapted for being tested with <code class="docutils literal notranslate"><span class="pre">pylit</span> <span class="pre">--doctest</span></code>.</p>
 <p>Test this file with:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span> MacBookPro-SLott:examples slott$ python3 ../../src/pylit.py --doctest testfile_literate.py
- ../../src/pylit.py:1644: UserWarning: data encoding=UTF-8 != docencoding=iso-8859-1
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span> MacBookPro-SLott:examples slott$ python3 pylit.py --doctest testfile_literate.py
+ pylit.py:1644: UserWarning: data encoding=UTF-8 != docencoding=iso-8859-1
    warnings.warn( &quot;data encoding={0} != docencoding={1}&quot;.format(data.encoding, docencoding) )
  0 failures in 19 tests
 

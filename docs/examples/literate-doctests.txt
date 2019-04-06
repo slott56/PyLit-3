@@ -94,8 +94,8 @@ Examples
 
   Test this file with::
 
-    MacBookPro-SLott:examples slott$ python3 ../../src/pylit.py --doctest testfile_literate.py
-    ../../src/pylit.py:1644: UserWarning: data encoding=UTF-8 != docencoding=iso-8859-1
+    MacBookPro-SLott:examples slott$ python3 pylit.py --doctest testfile_literate.py
+    pylit.py:1644: UserWarning: data encoding=UTF-8 != docencoding=iso-8859-1
       warnings.warn( "data encoding={0} != docencoding={1}".format(data.encoding, docencoding) )
     0 failures in 19 tests
 

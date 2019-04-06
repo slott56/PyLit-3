@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# ********
 # setup.py
 # ********
-# Literate programming with reStructuredText
-# ++++++++++++++++++++++++++++++++++++++++++
 #
-# :Date:      $Date$
-# :Revision:  $Revision$
-# :URL:       $URL$
-# :Copyright: © 2005, 2007 Günter Milde.
-#             Released without warranty under the terms of the
-#             GNU General Public License (v. 2 or later)
+# Literate programming with reStructuredText
 #
 # ::
 
@@ -24,22 +18,26 @@ with embedded documentation.
 # Requirements for installation::
 
 from setuptools import setup, find_packages
+import pathlib
 
 # Module Definition::
 
 setup(
-      name='PyLit',
+      name='pylit',
       version='3.1.1',
       description='Python Literate Programming',
+      long_description=pathlib.Path('README.rst').read_text(),
       author='S.Lott',
       author_email='slott56@gmail.com',
       python_requires=">=3.5",
+      url='https://github.com/slott56/PyLit-3',
       project_urls={
             "Documentation": 'https://slott56.github.io/PyLit-3/index.html',
             "Source Code": 'https://github.com/slott56/PyLit-3',
             "Bug Tracker": 'https://github.com/slott56/PyLit-3/issues',
       },
-      py_modules=find_packages(),
+      provides='pylit',
+      py_modules=['pylit'],
       classifiers=[
             "Development Status :: 6 - Mature",
             "Intended Audience :: Developers",

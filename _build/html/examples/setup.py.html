@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Literate Programming" href="../literate-programming.html" />
@@ -38,24 +38,7 @@
             
   <div class="section" id="setup-py">
 <h1>setup.py<a class="headerlink" href="#setup-py" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="literate-programming-with-restructuredtext">
-<h2>Literate programming with reStructuredText<a class="headerlink" href="#literate-programming-with-restructuredtext" title="Permalink to this headline">¶</a></h2>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">$Date$</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Revision:</th><td class="field-body">$Revision$</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">URL:</th><td class="field-body">$URL$</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Copyright:</th><td class="field-body">© 2005, 2007 Günter Milde.
-Released without warranty under the terms of the
-GNU General Public License (v. 2 or later)</td>
-</tr>
-</tbody>
-</table>
+<p>Literate programming with reStructuredText</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;pylit: bidirectional text &lt;-&gt; code converter</span>
 
 <span class="sd">Convert between a *text source* with embedded computer code and a *code source*</span>
@@ -65,22 +48,26 @@ GNU General Public License (v. 2 or later)</td>
 </div>
 <p>Requirements for installation:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="k">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
 </pre></div>
 </div>
 <p>Module Definition:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span>
-      <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PyLit&#39;</span><span class="p">,</span>
+      <span class="n">name</span><span class="o">=</span><span class="s1">&#39;pylit&#39;</span><span class="p">,</span>
       <span class="n">version</span><span class="o">=</span><span class="s1">&#39;3.1.1&#39;</span><span class="p">,</span>
       <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Python Literate Programming&#39;</span><span class="p">,</span>
+      <span class="n">long_description</span><span class="o">=</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;README.rst&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(),</span>
       <span class="n">author</span><span class="o">=</span><span class="s1">&#39;S.Lott&#39;</span><span class="p">,</span>
       <span class="n">author_email</span><span class="o">=</span><span class="s1">&#39;slott56@gmail.com&#39;</span><span class="p">,</span>
-      <span class="n">python_requires</span><span class="o">=</span><span class="s2">&quot;&gt;=3.4&quot;</span><span class="p">,</span>
+      <span class="n">python_requires</span><span class="o">=</span><span class="s2">&quot;&gt;=3.5&quot;</span><span class="p">,</span>
+      <span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://github.com/slott56/PyLit-3&#39;</span><span class="p">,</span>
       <span class="n">project_urls</span><span class="o">=</span><span class="p">{</span>
             <span class="s2">&quot;Documentation&quot;</span><span class="p">:</span> <span class="s1">&#39;https://slott56.github.io/PyLit-3/index.html&#39;</span><span class="p">,</span>
             <span class="s2">&quot;Source Code&quot;</span><span class="p">:</span> <span class="s1">&#39;https://github.com/slott56/PyLit-3&#39;</span><span class="p">,</span>
             <span class="s2">&quot;Bug Tracker&quot;</span><span class="p">:</span> <span class="s1">&#39;https://github.com/slott56/PyLit-3/issues&#39;</span><span class="p">,</span>
       <span class="p">},</span>
-      <span class="n">py_modules</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(),</span>
+      <span class="n">provides</span><span class="o">=</span><span class="s1">&#39;pylit&#39;</span><span class="p">,</span>
+      <span class="n">py_modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pylit&#39;</span><span class="p">],</span>
       <span class="n">classifiers</span><span class="o">=</span><span class="p">[</span>
             <span class="s2">&quot;Development Status :: 6 - Mature&quot;</span><span class="p">,</span>
             <span class="s2">&quot;Intended Audience :: Developers&quot;</span><span class="p">,</span>
@@ -96,7 +83,6 @@ GNU General Public License (v. 2 or later)</td>
 <p>Technically, this isn’t necessary.  A simple copy will do.
 Further, the <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> environment variable can name a directory
 that has <code class="file docutils literal notranslate"><span class="pre">pylit.py</span></code> in it.</p>
-</div>
 </div>
 
 
