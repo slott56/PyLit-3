@@ -37,7 +37,7 @@ Be sure that we're working with a development copy of PyLit.
 ::
 
   import sys, os
-  sys.path.insert( 0, os.path.abspath("../src") )
+  sys.path.insert( 0, os.path.abspath("..") )
   from pylit import *
 
 Test DefaultDict
@@ -1259,6 +1259,6 @@ The shell command looks like this.
 
 ..   parsed-literal::
 
-    python3 src/pylit.py --comment-string='## ' test/pylit_test.py docs/examples/pylit_test.py.txt
+    python3 pylit.py --comment-string='## ' test/pylit_test.py docs/examples/pylit_test.py.txt
 
 The use of ## comments makes it possible to handle "::" in the code.

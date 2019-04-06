@@ -5,7 +5,7 @@ The PyLit documentation itself is built with Sphinx. It includes the text
 version of several modules.
 
 Here's the test procedure. Note the ``cd`` to change directories. This
-assures that PyLit is found in the ``../src`` directory.
+assures that PyLit is found in the ``..`` directory.
 
 ..  parsed-literal::
 
@@ -23,15 +23,15 @@ Here's part of the documentation build procedure. It uses PyLit to create source
 
 -   Clone a new document from ``docs/index.txt``
 
--   Clone a new example from ``src/pylit.py``
+-   Clone a new example from a file in ``docs/examples``
 
--   Clone a new example from ``test/pylit_test.py``
+-   Clone a new example from a file in  ``test``
 
 ..  parsed-literal::
 
-    python3 src/pylit.py docs/conf.py
-    python3 src/pylit.py src/pylit.py docs/examples/pylit.py.txt
-    python3 src/pylit.py --comment-string='## ' test/pylit_test.py docs/examples/pylit_test.py.txt
+    python3 pylit.py docs/conf.py
+    python3 pylit.py pylit.py docs/examples/pylit.py.txt
+    python3 pylit.py --comment-string='## ' test/pylit_test.py docs/examples/pylit_test.py.txt
 
 After this, we can manually run Sphinx to rebuild the documentation.
 

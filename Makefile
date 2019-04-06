@@ -25,66 +25,66 @@ help:
 	@echo "  linkcheck to check all external links for integrity"
 
 docs/conf.py.txt: docs/conf.py
-	python3 src/pylit.py docs/conf.py
+	python3 pylit.py docs/conf.py
 
 docs/examples/setup.py.txt: setup.py
-	python3 src/pylit.py setup.py docs/examples/setup.py.txt
+	python3 pylit.py setup.py docs/examples/setup.py.txt
 
-docs/examples/pylit.py.txt: src/pylit.py
-	python3 src/pylit.py src/pylit.py docs/examples/pylit.py.txt
+docs/examples/pylit.py.txt: pylit.py
+	python3 pylit.py pylit.py docs/examples/pylit.py.txt
 
 docs/examples/pylit_test.py.txt: test/pylit_test.py
-	python3 src/pylit.py --comment-string='## ' test/pylit_test.py docs/examples/pylit_test.py.txt
+	python3 pylit.py --comment-string='## ' test/pylit_test.py docs/examples/pylit_test.py.txt
 
 docs/tutorial/hello.py.txt: docs/tutorial/hello.py
-	python3 src/pylit.py docs/tutorial/hello.py
+	python3 pylit.py docs/tutorial/hello.py
 
 docs/tutorial/hello_2.py: docs/tutorial/hello_2.py.txt
-	python3 src/pylit.py docs/tutorial/hello_2.py.txt
+	python3 pylit.py docs/tutorial/hello_2.py.txt
 
 docs/tutorial/hello_with_header.py: docs/tutorial/hello_with_header.py.txt
-	python3 src/pylit.py docs/tutorial/hello_with_header.py.txt
+	python3 pylit.py docs/tutorial/hello_with_header.py.txt
 
 docs/tutorial/hello_with_doctest.py.txt: docs/tutorial/hello_with_doctest.py
-	python3 src/pylit.py --doctest docs/tutorial/hello_with_doctest.py
-	python3 src/pylit.py docs/tutorial/hello_with_doctest.py
+	python3 pylit.py --doctest docs/tutorial/hello_with_doctest.py
+	python3 pylit.py docs/tutorial/hello_with_doctest.py
 
 docs/tutorial/hello_with_doctest_2.py.txt: docs/tutorial/hello_with_doctest_2.py
-	python3 src/pylit.py --doctest docs/tutorial/hello_with_doctest_2.py
-	python3 src/pylit.py docs/tutorial/hello_with_doctest_2.py
+	python3 pylit.py --doctest docs/tutorial/hello_with_doctest_2.py
+	python3 pylit.py docs/tutorial/hello_with_doctest_2.py
 
 docs/tutorial/greeting.py.txt: docs/tutorial/greeting.py
-	python3 src/pylit.py docs/tutorial/greeting.py
+	python3 pylit.py docs/tutorial/greeting.py
 
 docs/tutorial/hello_multifile.py.txt: docs/tutorial/hello_multifile.py docs/tutorial/greeting.py.txt
-	python3 src/pylit.py docs/tutorial/hello_multifile.py
+	python3 pylit.py docs/tutorial/hello_multifile.py
 
 docs/examples/simplestates.py: docs/examples/simplestates.py.txt
-	python3 src/pylit.py docs/examples/simplestates.py.txt
+	python3 pylit.py docs/examples/simplestates.py.txt
 
 docs/examples/simplestates_test.py: docs/examples/simplestates_test.py.txt
-	python3 src/pylit.py docs/examples/simplestates_test.py.txt
+	python3 pylit.py docs/examples/simplestates_test.py.txt
 	(cd docs/examples; python3 simplestates_test.py)
 
 docs/examples/iterqueue.py: docs/examples/iterqueue.py.txt
-	python3 src/pylit.py docs/examples/iterqueue.py.txt
-	(cd docs/examples; python3 ../../src/pylit.py --doctest iterqueue.py.txt)
+	python3 pylit.py docs/examples/iterqueue.py.txt
+	(cd docs/examples; python3 ../../pylit.py --doctest iterqueue.py.txt)
 
 docs/examples/iterqueue_test.py: docs/examples/iterqueue_test.py.txt
-	python3 src/pylit.py docs/examples/iterqueue_test.py.txt
+	python3 pylit.py docs/examples/iterqueue_test.py.txt
 	(cd docs/examples; python3 iterqueue_test.py)
 
 docs/examples/iterqueue_speed_test.py: docs/examples/iterqueue_speed_test.py.txt
-	python3 src/pylit.py docs/examples/iterqueue_speed_test.py.txt
+	python3 pylit.py docs/examples/iterqueue_speed_test.py.txt
 	(cd docs/examples; python3 iterqueue_speed_test.py)
 
 docs/examples/testfile_literate.py: docs/examples/testfile_literate.py.txt
-	python3 src/pylit.py docs/examples/testfile_literate.py.txt
+	python3 pylit.py docs/examples/testfile_literate.py.txt
 	(cd docs/examples; python3 -m doctest -v testfile_literate.py.txt )
 
 docs/examples/testmod_literate.py: docs/examples/testmod_literate.py.txt
-	python3 src/pylit.py docs/examples/testmod_literate.py.txt
-	(cd docs/examples; PYTHONPATH=../../src python3 testmod_literate.py )
+	python3 pylit.py docs/examples/testmod_literate.py.txt
+	(cd docs/examples; PYTHONPATH=../.. python3 testmod_literate.py )
 
 OTHERS = docs/conf.py.txt \
 	docs/examples/pylit.py.txt \

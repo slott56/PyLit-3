@@ -15,7 +15,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Requirements" href="download/index.html" />
@@ -41,7 +41,7 @@
 <p>The PyLit documentation itself is built with Sphinx. It includes the text
 version of several modules.</p>
 <p>Here’s the test procedure. Note the <code class="docutils literal notranslate"><span class="pre">cd</span></code> to change directories. This
-assures that PyLit is found in the <code class="docutils literal notranslate"><span class="pre">../src</span></code> directory.</p>
+assures that PyLit is found in the <code class="docutils literal notranslate"><span class="pre">..</span></code> directory.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">test</span>
 <span class="n">python3</span> <span class="n">pylit_test</span><span class="o">.</span><span class="n">py</span>
 <span class="n">python3</span> <span class="n">pylit_ui_test</span><span class="o">.</span><span class="n">py</span>
@@ -54,12 +54,12 @@ assures that PyLit is found in the <code class="docutils literal notranslate"><s
 <p>Here’s part of the documentation build procedure. It uses PyLit to create source for the documentation.</p>
 <ul class="simple">
 <li>Clone a new document from <code class="docutils literal notranslate"><span class="pre">docs/index.txt</span></code></li>
-<li>Clone a new example from <code class="docutils literal notranslate"><span class="pre">src/pylit.py</span></code></li>
-<li>Clone a new example from <code class="docutils literal notranslate"><span class="pre">test/pylit_test.py</span></code></li>
+<li>Clone a new example from a file in <code class="docutils literal notranslate"><span class="pre">docs/examples</span></code></li>
+<li>Clone a new example from a file in  <code class="docutils literal notranslate"><span class="pre">test</span></code></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">src</span><span class="o">/</span><span class="n">pylit</span><span class="o">.</span><span class="n">py</span> <span class="n">docs</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">py</span>
-<span class="n">python3</span> <span class="n">src</span><span class="o">/</span><span class="n">pylit</span><span class="o">.</span><span class="n">py</span> <span class="n">src</span><span class="o">/</span><span class="n">pylit</span><span class="o">.</span><span class="n">py</span> <span class="n">docs</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">pylit</span><span class="o">.</span><span class="n">py</span><span class="o">.</span><span class="n">txt</span>
-<span class="n">python3</span> <span class="n">src</span><span class="o">/</span><span class="n">pylit</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">comment</span><span class="o">-</span><span class="n">string</span><span class="o">=</span><span class="s1">&#39;## &#39;</span> <span class="n">test</span><span class="o">/</span><span class="n">pylit_test</span><span class="o">.</span><span class="n">py</span> <span class="n">docs</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">pylit_test</span><span class="o">.</span><span class="n">py</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">pylit</span><span class="o">.</span><span class="n">py</span> <span class="n">docs</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">py</span>
+<span class="n">python3</span> <span class="n">pylit</span><span class="o">.</span><span class="n">py</span> <span class="n">pylit</span><span class="o">.</span><span class="n">py</span> <span class="n">docs</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">pylit</span><span class="o">.</span><span class="n">py</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">python3</span> <span class="n">pylit</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">comment</span><span class="o">-</span><span class="n">string</span><span class="o">=</span><span class="s1">&#39;## &#39;</span> <span class="n">test</span><span class="o">/</span><span class="n">pylit_test</span><span class="o">.</span><span class="n">py</span> <span class="n">docs</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">pylit_test</span><span class="o">.</span><span class="n">py</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>After this, we can manually run Sphinx to rebuild the documentation.</p>

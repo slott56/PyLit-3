@@ -9,3 +9,5 @@
 objects.inv
 _build/doctrees/*.doctree
 _build/doctrees/*.pickle
+_build/doctrees/*/*.doctree
+_build/doctrees/*/*.pickle
