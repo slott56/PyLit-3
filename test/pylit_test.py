@@ -51,11 +51,11 @@ import operator
 import unittest
 from functools import reduce
 
-## Be sure that we're working with a development copy of PyLit.
+## Be sure that we're working with the development copy of PyLit.
 ## ::
 
 import sys, os
-sys.path.insert( 0, os.path.abspath("../src") )
+sys.path.insert(0, os.path.abspath("../src"))
 from pylit import *
 
 ## Test DefaultDict
@@ -224,11 +224,11 @@ def make_Text2Code_samples():
     suite= unittest.TestSuite()
     for key, sample in textsamples.items():
         t= Check_Converter()
-        suite.addTest( t.args( "Text2Code " + key,
+        suite.addTest( t.args("Text2Code " + key,
                Text2Code(sample[0].splitlines(True)), sample[1]) )
         if len(sample) == 3:
             t= Check_Converter()
-            suite.addTest( t.args( "Text2Code " + key,
+            suite.addTest( t.args("Text2Code " + key,
                    Text2Code(sample[0].splitlines(True), strip=True),
                    sample[2]) )
     return suite
@@ -1273,6 +1273,6 @@ if __name__ == "__main__":
 ##
 ## ..   parsed-literal::
 ##
-##     python3 src/pylit.py --comment-string='## ' test/pylit_test.py rstdocs/examples/pylit_test.py.txt
+##     python3 src/pylit.py --comment-string='## ' test/pylit_test.py docs/examples/pylit_test.py.txt
 ##
 ## The use of ## comments makes it possible to handle "::" in the code.

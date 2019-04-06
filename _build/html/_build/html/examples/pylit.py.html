@@ -1,0 +1,2178 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pylit.py &#8212; PyLit</title>
+    <link rel="stylesheet" href="../../../_static/pylit-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pylit-py">
+<h1><a class="toc-backref" href="#id16">pylit.py</a><a class="headerlink" href="#pylit-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="literate-programming-with-restructuredtext">
+<h2><a class="toc-backref" href="#id17">Literate programming with reStructuredText</a><a class="headerlink" href="#literate-programming-with-restructuredtext" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">$Date$</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Revision:</th><td class="field-body">$Revision$</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">URL:</th><td class="field-body">$URL$</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Copyright:</th><td class="field-body">© 2005, 2007 Günter Milde.
+Released without warranty under the terms of the
+GNU General Public License (v. 2 or later)</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;pylit: bidirectional text &lt;-&gt; code converter</span>
+
+<span class="sd">Covert between a *text source* with embedded computer code and a *code source*</span>
+<span class="sd">with embedded documentation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#pylit-py" id="id16">pylit.py</a><ul>
+<li><a class="reference internal" href="#literate-programming-with-restructuredtext" id="id17">Literate programming with reStructuredText</a><ul>
+<li><a class="reference internal" href="#frontmatter" id="id18">Frontmatter</a><ul>
+<li><a class="reference internal" href="#changelog" id="id19">Changelog</a></li>
+<li><a class="reference internal" href="#to-do-list" id="id20">To Do List</a></li>
+<li><a class="reference internal" href="#introduction" id="id21">Introduction</a></li>
+<li><a class="reference internal" href="#requirements" id="id22">Requirements</a><ul>
+<li><a class="reference internal" href="#defaultdict" id="id23">DefaultDict</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#defaults" id="id24">Defaults</a><ul>
+<li><a class="reference internal" href="#languages" id="id25">languages</a></li>
+<li><a class="reference internal" href="#text-extensions" id="id26">text_extensions</a></li>
+<li><a class="reference internal" href="#fs" id="id27">fs</a></li>
+<li><a class="reference internal" href="#header-string" id="id28">header_string</a></li>
+<li><a class="reference internal" href="#code-block-markers" id="id29">code_block_markers</a></li>
+<li><a class="reference internal" href="#strip" id="id30">strip</a></li>
+<li><a class="reference internal" href="#strip-marker" id="id31">strip_marker</a></li>
+<li><a class="reference internal" href="#add-missing-marker" id="id32">add_missing_marker</a></li>
+<li><a class="reference internal" href="#preprocessors" id="id33">preprocessors</a></li>
+<li><a class="reference internal" href="#postprocessors" id="id34">postprocessors</a></li>
+<li><a class="reference internal" href="#codeindent" id="id35">codeindent</a></li>
+<li><a class="reference internal" href="#overwrite" id="id36">overwrite</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#extensions" id="id37">Extensions</a></li>
+<li><a class="reference internal" href="#converter-classes" id="id38">Converter Classes</a><ul>
+<li><a class="reference internal" href="#textcodeconverter" id="id39">TextCodeConverter</a><ul>
+<li><a class="reference internal" href="#data-attributes" id="id40">Data attributes</a></li>
+<li><a class="reference internal" href="#interface-methods" id="id41">Interface methods</a><ul>
+<li><a class="reference internal" href="#init" id="id42">__init__</a></li>
+<li><a class="reference internal" href="#iter" id="id43">__iter__</a></li>
+<li><a class="reference internal" href="#call" id="id44">__call__</a></li>
+<li><a class="reference internal" href="#str" id="id45">__str__</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#helpers-and-convenience-methods" id="id46">Helpers and convenience methods</a><ul>
+<li><a class="reference internal" href="#convert" id="id47">convert</a></li>
+<li><a class="reference internal" href="#get-filter" id="id48">get_filter</a></li>
+<li><a class="reference internal" href="#get-indent" id="id49">get_indent</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#text2code" id="id50">Text2Code</a><ul>
+<li><a class="reference internal" href="#set-state" id="id51">set_state</a></li>
+<li><a class="reference internal" href="#header-handler" id="id52">header_handler</a></li>
+<li><a class="reference internal" href="#documentation-handler" id="id53">documentation_handler</a></li>
+<li><a class="reference internal" href="#code-block-handler" id="id54">code_block_handler</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#code2text" id="id55">Code2Text</a><ul>
+<li><a class="reference internal" href="#id7" id="id56">set_state</a></li>
+<li><a class="reference internal" href="#id8" id="id57">header_handler</a></li>
+<li><a class="reference internal" href="#code2text-documentation-handler" id="id58">documentation_handler</a></li>
+<li><a class="reference internal" href="#uncomment-line" id="id59">uncomment_line</a></li>
+<li><a class="reference internal" href="#code2text-code-block-handler" id="id60">code_block_handler</a></li>
+<li><a class="reference internal" href="#strip-code-block-marker" id="id61">strip_code_block_marker</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#filters" id="id62">Filters</a><ul>
+<li><a class="reference internal" href="#identity-filter" id="id63">identity_filter</a></li>
+<li><a class="reference internal" href="#expandtabs-filter" id="id64">expandtabs_filter</a></li>
+<li><a class="reference internal" href="#collect-blocks" id="id65">collect_blocks</a></li>
+<li><a class="reference internal" href="#dumb-c-preprocessor" id="id66">dumb_c_preprocessor</a></li>
+<li><a class="reference internal" href="#dumb-c-postprocessor" id="id67">dumb_c_postprocessor</a></li>
+<li><a class="reference internal" href="#register-filters" id="id68">register filters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#command-line-use" id="id69">Command line use</a><ul>
+<li><a class="reference internal" href="#dual-source-handling" id="id70">Dual source handling</a><ul>
+<li><a class="reference internal" href="#how-to-determine-which-source-is-up-to-date" id="id71">How to determine which source is up-to-date?</a></li>
+<li><a class="reference internal" href="#recognised-filename-extensions" id="id72">Recognised Filename Extensions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optionvalues" id="id73">OptionValues</a><ul>
+<li><a class="reference internal" href="#as-dict" id="id74">as_dict</a></li>
+<li><a class="reference internal" href="#complete" id="id75">complete</a></li>
+<li><a class="reference internal" href="#getattr" id="id76">__getattr__</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pylitoptions" id="id77">PylitOptions</a><ul>
+<li><a class="reference internal" href="#instantiation" id="id78">Instantiation</a></li>
+<li><a class="reference internal" href="#parse-args" id="id79">parse_args</a></li>
+<li><a class="reference internal" href="#complete-values" id="id80">complete_values</a></li>
+<li><a class="reference internal" href="#get-outfile-name" id="id81">_get_outfile_name</a></li>
+<li><a class="reference internal" href="#pylitoptions-call" id="id82">__call__</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#helper-functions" id="id83">Helper functions</a><ul>
+<li><a class="reference internal" href="#open-streams" id="id84">open_streams</a></li>
+<li><a class="reference internal" href="#is-newer" id="id85">is_newer</a></li>
+<li><a class="reference internal" href="#get-converter" id="id86">get_converter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#use-cases" id="id87">Use cases</a><ul>
+<li><a class="reference internal" href="#run-doctest" id="id88">run_doctest</a></li>
+<li><a class="reference internal" href="#diff" id="id89">diff</a></li>
+<li><a class="reference internal" href="#execute" id="id90">execute</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#main" id="id91">main</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#open-questions" id="id92">Open questions</a><ul>
+<li><a class="reference internal" href="#clean-code" id="id93">Clean code</a></li>
+<li><a class="reference internal" href="#options" id="id94">Options</a></li>
+<li><a class="reference internal" href="#treatment-of-blank-lines" id="id95">treatment of blank lines</a></li>
+<li><a class="reference internal" href="#parsing-problems" id="id96">Parsing Problems</a></li>
+<li><a class="reference internal" href="#docstrings-in-code-blocks" id="id97">docstrings in code blocks</a></li>
+<li><a class="reference internal" href="#plug-ins" id="id98">Plug-ins</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="frontmatter">
+<h3><a class="toc-backref" href="#id18">Frontmatter</a><a class="headerlink" href="#frontmatter" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="changelog">
+<h4><a class="toc-backref" href="#id19">Changelog</a><a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="borderless docutils">
+<colgroup>
+<col width="8%" />
+<col width="13%" />
+<col width="79%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>0.1</td>
+<td>2005-06-29</td>
+<td>Initial version.</td>
+</tr>
+<tr class="row-even"><td>0.1.1</td>
+<td>2005-06-30</td>
+<td>First literate version.</td>
+</tr>
+<tr class="row-odd"><td>0.1.2</td>
+<td>2005-07-01</td>
+<td>Object orientated script using generators.</td>
+</tr>
+<tr class="row-even"><td>0.1.3</td>
+<td>2005-07-10</td>
+<td>Two state machine (later added ‘header’ state).</td>
+</tr>
+<tr class="row-odd"><td>0.2b</td>
+<td>2006-12-04</td>
+<td>Start of work on version 0.2 (code restructuring).</td>
+</tr>
+<tr class="row-even"><td>0.2</td>
+<td>2007-01-23</td>
+<td>Published at <a class="reference external" href="http://pylit.berlios.de">http://pylit.berlios.de</a>.</td>
+</tr>
+<tr class="row-odd"><td>0.2.1</td>
+<td>2007-01-25</td>
+<td>Outsourced non-core documentation to the PyLit pages.</td>
+</tr>
+<tr class="row-even"><td>0.2.2</td>
+<td>2007-01-26</td>
+<td>New behaviour of <cite>diff</cite> function.</td>
+</tr>
+<tr class="row-odd"><td>0.2.3</td>
+<td>2007-01-29</td>
+<td>New <cite>header</cite> methods after suggestion by Riccardo Murri.</td>
+</tr>
+<tr class="row-even"><td>0.2.4</td>
+<td>2007-01-31</td>
+<td>Raise Error if code indent is too small.</td>
+</tr>
+<tr class="row-odd"><td>0.2.5</td>
+<td>2007-02-05</td>
+<td>New command line option –comment-string.</td>
+</tr>
+<tr class="row-even"><td>0.2.6</td>
+<td>2007-02-09</td>
+<td>Add section with open questions,
+Code2Text: let only blank lines (no comment str)
+separate text and code,
+fix <cite>Code2Text.header</cite>.</td>
+</tr>
+<tr class="row-odd"><td>0.2.7</td>
+<td>2007-02-19</td>
+<td>Simplify <cite>Code2Text.header</cite>,
+new <cite>iter_strip</cite> method replacing a lot of <code class="docutils literal notranslate"><span class="pre">if</span></code>-s.</td>
+</tr>
+<tr class="row-even"><td>0.2.8</td>
+<td>2007-02-22</td>
+<td>Set <cite>mtime</cite> of outfile to the one of infile.</td>
+</tr>
+<tr class="row-odd"><td>0.3</td>
+<td>2007-02-27</td>
+<td>New <cite>Code2Text</cite> converter after an idea by Riccardo Murri,
+explicit <cite>option_defaults</cite> dict for easier customisation.</td>
+</tr>
+<tr class="row-even"><td>0.3.1</td>
+<td>2007-03-02</td>
+<td>Expand hard-tabs to prevent errors in indentation,
+<cite>Text2Code</cite> now also works on blocks,
+removed dependency on SimpleStates module.</td>
+</tr>
+<tr class="row-odd"><td>0.3.2</td>
+<td>2007-03-06</td>
+<td>Bug fix: do not set <cite>language</cite> in <cite>option_defaults</cite>
+renamed <cite>code_languages</cite> to <cite>languages</cite>.</td>
+</tr>
+<tr class="row-even"><td>0.3.3</td>
+<td>2007-03-16</td>
+<td>New language css,
+option_defaults -&gt; defaults = optparse.Values(),
+simpler PylitOptions: don’t store parsed values,
+don’t parse at initialisation,
+OptionValues: return <cite>None</cite> for non-existing attributes,
+removed -infile and -outfile, use positional arguments.</td>
+</tr>
+<tr class="row-odd"><td>0.3.4</td>
+<td><p class="first">2007-03-19</p>
+<p class="last">2007-03-21</p>
+</td>
+<td>Documentation update,
+separate <cite>execute</cite> function.
+Code cleanup in <cite>Text2Code.__iter__</cite>.</td>
+</tr>
+<tr class="row-even"><td>0.3.5</td>
+<td>2007-03-23</td>
+<td>Removed “css” from known languages after learning that
+there is no C++ style “// ” comment string in CSS2.</td>
+</tr>
+<tr class="row-odd"><td>0.3.6</td>
+<td>2007-04-24</td>
+<td>Documentation update.</td>
+</tr>
+<tr class="row-even"><td>0.4</td>
+<td>2007-05-18</td>
+<td>Implement Converter.__iter__ as stack of iterator
+generators. Iterating over a converter instance now
+yields lines instead of blocks.
+Provide “hooks” for pre- and postprocessing filters.
+Rename states to reduce confusion with formats:
+“text” -&gt; “documentation”, “code” -&gt; “code_block”.</td>
+</tr>
+<tr class="row-odd"><td>0.4.1</td>
+<td>2007-05-22</td>
+<td>Converter.__iter__: cleanup and reorganisation,
+rename parent class Converter -&gt; TextCodeConverter.</td>
+</tr>
+<tr class="row-even"><td>0.4.2</td>
+<td>2007-05-23</td>
+<td>Merged Text2Code.converter and Code2Text.converter into
+TextCodeConverter.converter.</td>
+</tr>
+<tr class="row-odd"><td>0.4.3</td>
+<td>2007-05-30</td>
+<td>Replaced use of defaults.code_extensions with
+values.languages.keys().
+Removed spurious <cite>print</cite> statement in code_block_handler.
+Added basic support for ‘c’ and ‘css’ languages
+with <a class="reference internal" href="#dumb-c-preprocessor">dumb_c_preprocessor</a> and <a class="reference internal" href="#dumb-c-postprocessor">dumb_c_postprocessor</a>.</td>
+</tr>
+<tr class="row-even"><td>0.5</td>
+<td>2007-06-06</td>
+<td>Moved <a class="reference internal" href="#collect-blocks">collect_blocks</a> out of <a class="reference internal" href="#textcodeconverter">TextCodeConverter</a>,
+bug fix: collect all trailing blank lines into a block.
+Expand tabs with <a class="reference internal" href="#expandtabs-filter">expandtabs_filter</a>.</td>
+</tr>
+<tr class="row-odd"><td>0.6</td>
+<td>2007-06-20</td>
+<td>Configurable code-block marker (default <code class="docutils literal notranslate"><span class="pre">::</span></code>)</td>
+</tr>
+<tr class="row-even"><td>0.6.1</td>
+<td>2007-06-28</td>
+<td>Bug fix: reset self.code_block_marker_missing.</td>
+</tr>
+<tr class="row-odd"><td>0.7</td>
+<td>2007-12-12</td>
+<td>prepending an empty string to sys.path in run_doctest()
+to allow imports from the current working dir.</td>
+</tr>
+<tr class="row-even"><td>0.7.1</td>
+<td>2008-01-07</td>
+<td>If outfile does not exist, do a round-trip conversion
+and report differences (as with outfile==’-‘).</td>
+</tr>
+<tr class="row-odd"><td>0.7.2</td>
+<td>2008-01-28</td>
+<td>Do not add missing code-block separators with
+<cite>doctest_run</cite> on the code source. Keeps lines consistent.</td>
+</tr>
+<tr class="row-even"><td>0.7.3</td>
+<td>2008-04-07</td>
+<td>Use value of code_block_marker for insertion of missing
+transition marker in Code2Text.code_block_handler
+Add “shell” to defaults.languages</td>
+</tr>
+<tr class="row-odd"><td>0.7.4</td>
+<td>2008-06-23</td>
+<td>Add “latex” to defaults.languages</td>
+</tr>
+<tr class="row-even"><td>0.7.5</td>
+<td>2009-05-14</td>
+<td>Bugfix: ignore blank lines in test for end of code block</td>
+</tr>
+<tr class="row-odd"><td>0.7.6</td>
+<td>2009-12-15</td>
+<td>language-dependent code-block markers (after a
+<a class="reference external" href="http://developer.berlios.de/feature/?func=detailfeature&amp;feature_id=4890&amp;group_id=7974">feature request and patch by jrioux</a>),
+use DefaultDict for language-dependent defaults,
+new defaults setting <a class="reference internal" href="#add-missing-marker">add_missing_marker</a>.</td>
+</tr>
+<tr class="row-even"><td>0.7.7</td>
+<td>2010-06-23</td>
+<td>New command line option –codeindent.</td>
+</tr>
+<tr class="row-odd"><td>0.7.8</td>
+<td>2011-03-30</td>
+<td>bugfix: do not overwrite custom <cite>add_missing_marker</cite> value,
+allow directive options following the ‘code’ directive.</td>
+</tr>
+<tr class="row-even"><td>0.7.9</td>
+<td>2011-04-05</td>
+<td>Decode doctest string if ‘magic comment’ gives encoding.</td>
+</tr>
+<tr class="row-odd"><td>3.1</td>
+<td>2013-09-16</td>
+<td>Change to Python3: print statement and exec statements
+removed. String formatting % changed to .format().
+Replaced raise statements and except statements.
+Upgrade for <code class="docutils literal notranslate"><span class="pre">dict</span></code> method changes.
+Cleanup <code class="docutils literal notranslate"><span class="pre">DefaultDict</span></code> to be more easily replaced.
+Adjust trailing space handling to match unit tests better.
+Provide <code class="docutils literal notranslate"><span class="pre">with</span></code> statements for all file contexts.</td>
+</tr>
+<tr class="row-even"><td>3.1.1</td>
+<td>2019-04-05</td>
+<td>Add tox version checking. Change distribution sightly to
+fit better with PyPA standards</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="to-do-list">
+<h4><a class="toc-backref" href="#id20">To Do List</a><a class="headerlink" href="#to-do-list" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first">Replace home-brewed DefaultDict with collections.defaultdict.</p>
+</li>
+<li><p class="first">Replace optparse with argparse.</p>
+<p><a class="reference external" href="file:///Library/Frameworks/Python.framework/Versions/3.2/Resources/English.lproj/Documentation/library/argparse.html#upgrading-optparse-code">Documentation/library/argparse.html#upgrading-optparse-code</a></p>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_version</span> <span class="o">=</span> <span class="s2">&quot;3.1.1&quot;</span>
+
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s1">&#39;restructuredtext&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="introduction">
+<h4><a class="toc-backref" href="#id21">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h4>
+<p>PyLit is a bidirectional converter between two formats of a computer
+program source:</p>
+<ul class="simple">
+<li>a (reStructured) text document with program code embedded in
+<em>code blocks</em>, and</li>
+<li>a compilable (or executable) code source with <em>documentation</em>
+embedded in comment blocks</li>
+</ul>
+</div>
+<div class="section" id="requirements">
+<h4><a class="toc-backref" href="#id22">Requirements</a><a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="c1">#from collections import defaultdict # TODO</span>
+<span class="kn">import</span> <span class="nn">optparse</span>
+<span class="c1">#import argparse # TODO</span>
+</pre></div>
+</div>
+<div class="section" id="defaultdict">
+<h5><a class="toc-backref" href="#id23">DefaultDict</a><a class="headerlink" href="#defaultdict" title="Permalink to this headline">¶</a></h5>
+<p>As <cite>collections.defaultdict</cite> is only introduced in Python 2.5, we
+define a Python3 compatible version of the dictionary with default from
+<a class="reference external" href="http://code.activestate.com/recipes/389639/">http://code.activestate.com/recipes/389639/</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DefaultDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Minimalistic Dictionary with default value.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_factory</span> <span class="o">=</span> <span class="n">default_factory</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_factory</span><span class="p">()</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>TODO: Replace with proper Python3 <code class="docutils literal notranslate"><span class="pre">collections.defaultdict</span></code></p>
+</div>
+</div>
+</div>
+<div class="section" id="defaults">
+<h3><a class="toc-backref" href="#id24">Defaults</a><a class="headerlink" href="#defaults" title="Permalink to this headline">¶</a></h3>
+<p>The <cite>defaults</cite> object provides a central repository for default
+values and their customisation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">Values</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>It is used for</p>
+<ul class="simple">
+<li>the initialisation of data arguments in <a class="reference internal" href="#textcodeconverter">TextCodeConverter</a> and
+<a class="reference internal" href="#pylitoptions">PylitOptions</a></li>
+<li>completion of command line options in <a class="reference internal" href="#pylitoptions-complete-values">PylitOptions.complete_values</a>.</li>
+</ul>
+<p>This allows the easy creation of back-ends that customise the
+defaults and then call <a class="reference internal" href="#main">main</a> e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pylit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pylit</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">comment_string</span> <span class="o">=</span> <span class="s2">&quot;## &quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pylit</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">codeindent</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pylit</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The following default values are defined in pylit.py:</p>
+<div class="section" id="languages">
+<h4><a class="toc-backref" href="#id25">languages</a><a class="headerlink" href="#languages" title="Permalink to this headline">¶</a></h4>
+<p>Mapping of code file extensions to code language:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">languages</span>  <span class="o">=</span> <span class="n">DefaultDict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="c1"># fallback language</span>
+                                  <span class="p">{</span><span class="s2">&quot;.c&quot;</span><span class="p">:</span>   <span class="s2">&quot;c&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;.cc&quot;</span><span class="p">:</span>  <span class="s2">&quot;c++&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;.css&quot;</span><span class="p">:</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;.py&quot;</span><span class="p">:</span>  <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;.sh&quot;</span><span class="p">:</span>  <span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;.sl&quot;</span><span class="p">:</span>  <span class="s2">&quot;slang&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;.sty&quot;</span><span class="p">:</span> <span class="s2">&quot;latex&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;.tex&quot;</span><span class="p">:</span> <span class="s2">&quot;latex&quot;</span>
+                                  <span class="p">})</span>
+</pre></div>
+</div>
+<p>Will be overridden by the <code class="docutils literal notranslate"><span class="pre">--language</span></code> command line option.</p>
+<p>The first argument is the fallback language, used if there is no
+matching extension (e.g. if pylit is used as filter) and no
+<code class="docutils literal notranslate"><span class="pre">--language</span></code> is specified. It can be changed programmatically by
+assignment to the <code class="docutils literal notranslate"><span class="pre">.default</span></code> attribute, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">languages</span><span class="o">.</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;c++&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="text-extensions">
+<span id="text-extension"></span><h4><a class="toc-backref" href="#id26">text_extensions</a><a class="headerlink" href="#text-extensions" title="Permalink to this headline">¶</a></h4>
+<p>List of known extensions of (reStructured) text files. The first
+extension in this list is used by the <a class="reference internal" href="#get-outfile-name">_get_outfile_name</a> method to
+generate a text output filename:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">text_extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;.rst&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fs">
+<h4><a class="toc-backref" href="#id27">fs</a><a class="headerlink" href="#fs" title="Permalink to this headline">¶</a></h4>
+<p>Comment strings for known languages. Used in <a class="reference internal" href="#code2text">Code2Text</a> to recognise
+text blocks and in <a class="reference internal" href="#text2code">Text2Code</a> to format text blocks as comments.
+Defaults to <code class="docutils literal notranslate"><span class="pre">'#</span> <span class="pre">'</span></code>.</p>
+<p><strong>Comment strings include trailing whitespace.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">comment_strings</span> <span class="o">=</span> <span class="n">DefaultDict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span><span class="s1">&#39;# &#39;</span><span class="p">,</span>
+                                       <span class="p">{</span><span class="s2">&quot;css&quot;</span><span class="p">:</span>    <span class="s1">&#39;// &#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;c&quot;</span><span class="p">:</span>      <span class="s1">&#39;// &#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;c++&quot;</span><span class="p">:</span>    <span class="s1">&#39;// &#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;latex&quot;</span><span class="p">:</span>  <span class="s1">&#39;% &#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;python&quot;</span><span class="p">:</span> <span class="s1">&#39;# &#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;shell&quot;</span><span class="p">:</span>  <span class="s1">&#39;# &#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;slang&quot;</span><span class="p">:</span>  <span class="s1">&#39;% &#39;</span>
+                                       <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="header-string">
+<h4><a class="toc-backref" href="#id28">header_string</a><a class="headerlink" href="#header-string" title="Permalink to this headline">¶</a></h4>
+<p>Marker string for a header code block in the text source. No trailing
+whitespace needed as indented code follows.
+Must be a valid rst directive that accepts code on the same line, e.g.
+<code class="docutils literal notranslate"><span class="pre">'..admonition::'</span></code>.</p>
+<p>Default is a comment marker:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">header_string</span> <span class="o">=</span> <span class="s1">&#39;..&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="code-block-markers">
+<span id="code-block-marker"></span><h4><a class="toc-backref" href="#id29">code_block_markers</a><a class="headerlink" href="#code-block-markers" title="Permalink to this headline">¶</a></h4>
+<p>Markup at the end of a documentation block.
+Default is Docutils’ marker for a <a class="reference external" href="http://docutils.sf.net/docs/ref/rst/restructuredtext.html#literal-blocks">literal block</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">code_block_markers</span> <span class="o">=</span> <span class="n">DefaultDict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span><span class="s1">&#39;::&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <cite>code_block_marker</cite> string is <a class="reference internal" href="#inserted-into-a-regular-expression">inserted into a regular expression</a>.
+Language-specific markers can be defined programmatically, e.g. in a
+wrapper script.</p>
+<p>In a document where code examples are only one of several uses of
+literal blocks, it is more appropriate to single out the source code
+,e.g. with the double colon at a separate line (“expanded form”)</p>
+<blockquote>
+<div><code class="docutils literal notranslate"><span class="pre">defaults.code_block_marker.default</span> <span class="pre">=</span> <span class="pre">'::</span> <span class="pre">*'</span></code></div></blockquote>
+<p>or a dedicated <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">code-block::</span></code> directive <a class="footnote-reference" href="#id2" id="id1">[1]</a></p>
+<blockquote>
+<div><code class="docutils literal notranslate"><span class="pre">defaults.code_block_marker['c++']</span> <span class="pre">=</span> <span class="pre">'..</span> <span class="pre">code-block::</span> <span class="pre">*c++'</span></code></div></blockquote>
+<p>The latter form also allows code in different languages kept together
+in one literate source file.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">code-block::</span></code> directive is not (yet) supported by
+standard Docutils.  It is provided by several add-ons, including
+the <a class="reference external" href="http://docutils.sourceforge.net/sandbox/code-block-directive/">code-block directive</a> project in the Docutils Sandbox and
+<a class="reference external" href="http://sphinx.pocoo.org">Sphinx</a>.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="strip">
+<h4><a class="toc-backref" href="#id30">strip</a><a class="headerlink" href="#strip" title="Permalink to this headline">¶</a></h4>
+<p>Export to the output format stripping documentation or code blocks:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">strip</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="strip-marker">
+<h4><a class="toc-backref" href="#id31">strip_marker</a><a class="headerlink" href="#strip-marker" title="Permalink to this headline">¶</a></h4>
+<p>Strip literal marker from the end of documentation blocks when
+converting  to code format. Makes the code more concise but looses the
+synchronisation of line numbers in text and code formats. Can also be used
+(together with the auto-completion of the code-text conversion) to change
+the <cite>code_block_marker</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">strip_marker</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-missing-marker">
+<h4><a class="toc-backref" href="#id32">add_missing_marker</a><a class="headerlink" href="#add-missing-marker" title="Permalink to this headline">¶</a></h4>
+<p>When converting from code format to text format, add a <cite>code_block_marker</cite>
+at the end of documentation blocks if it is missing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">add_missing_marker</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>Keep this at <code class="docutils literal notranslate"><span class="pre">True</span></code>, if you want to re-convert to code format later!</p>
+</div>
+<div class="section" id="preprocessors">
+<span id="defaults-preprocessors"></span><h4><a class="toc-backref" href="#id33">preprocessors</a><a class="headerlink" href="#preprocessors" title="Permalink to this headline">¶</a></h4>
+<p>Preprocess the data with language-specific <a class="reference internal" href="#filters">filters</a>
+Set below in <a class="reference internal" href="#filters">Filters</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">preprocessors</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="postprocessors">
+<span id="defaults-postprocessors"></span><h4><a class="toc-backref" href="#id34">postprocessors</a><a class="headerlink" href="#postprocessors" title="Permalink to this headline">¶</a></h4>
+<p>Postprocess the data with language-specific <a class="reference internal" href="#filters">filters</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">postprocessors</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="codeindent">
+<span id="defaults-codeindent"></span><h4><a class="toc-backref" href="#id35">codeindent</a><a class="headerlink" href="#codeindent" title="Permalink to this headline">¶</a></h4>
+<p>Number of spaces to indent code blocks in <a class="reference internal" href="#code2text-code-block-handler">Code2Text.code_block_handler</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">codeindent</span> <span class="o">=</span>  <span class="mi">2</span>
+</pre></div>
+</div>
+<p>In <a class="reference internal" href="#text2code-code-block-handler">Text2Code.code_block_handler</a>, the codeindent is determined by the
+first recognised code line (header or first indented literal block
+of the text source).</p>
+</div>
+<div class="section" id="overwrite">
+<h4><a class="toc-backref" href="#id36">overwrite</a><a class="headerlink" href="#overwrite" title="Permalink to this headline">¶</a></h4>
+<p>What to do if the outfile already exists? (ignored if <cite>outfile</cite> == ‘-‘):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">overwrite</span> <span class="o">=</span> <span class="s1">&#39;update&#39;</span>
+</pre></div>
+</div>
+<p>Recognised values:</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">‘yes’:</th><td class="field-body">overwrite eventually existing <cite>outfile</cite>,</td>
+</tr>
+<tr class="field-even field"><th class="field-name">‘update’:</th><td class="field-body">fail if the <cite>outfile</cite> is newer than <cite>infile</cite>,</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">‘no’:</th><td class="field-body">fail if <cite>outfile</cite> exists.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="extensions">
+<h3><a class="toc-backref" href="#id37">Extensions</a><a class="headerlink" href="#extensions" title="Permalink to this headline">¶</a></h3>
+<p>Try to import optional extensions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pylit_elisp</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="converter-classes">
+<h3><a class="toc-backref" href="#id38">Converter Classes</a><a class="headerlink" href="#converter-classes" title="Permalink to this headline">¶</a></h3>
+<p>The converter classes implement a simple state machine to separate and
+transform documentation and code blocks. For this task, only a very limited
+parsing is needed. PyLit’s parser assumes:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docutils.sf.net/docs/ref/rst/restructuredtext.html#indented-literal-blocks">indented literal blocks</a> in a text source are code blocks.</li>
+<li>comment blocks in a code source where every line starts with a matching
+comment string are documentation blocks.</li>
+</ul>
+<div class="section" id="textcodeconverter">
+<h4><a class="toc-backref" href="#id39">TextCodeConverter</a><a class="headerlink" href="#textcodeconverter" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TextCodeConverter</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Parent class for the converters `Text2Code` and `Code2Text`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The parent class defines data attributes and functions used in both
+<a class="reference internal" href="#text2code">Text2Code</a> converting a text source to executable code source, and
+<a class="reference internal" href="#code2text">Code2Text</a> converting commented code to a text source.</p>
+<div class="section" id="data-attributes">
+<h5><a class="toc-backref" href="#id40">Data attributes</a><a class="headerlink" href="#data-attributes" title="Permalink to this headline">¶</a></h5>
+<p>Class default values are fetched from the <a class="reference internal" href="#defaults">defaults</a> object and can be
+overridden by matching keyword arguments during class instantiation. This
+also works with keyword arguments to <a class="reference internal" href="#get-converter">get_converter</a> and <a class="reference internal" href="#main">main</a>, as these
+functions pass on unused keyword args to the instantiation of a converter
+class.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">language</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">languages</span><span class="o">.</span><span class="n">default_factory</span><span class="p">()</span>
+<span class="n">comment_strings</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">comment_strings</span>
+<span class="n">comment_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># set in __init__ (if empty)</span>
+<span class="n">codeindent</span> <span class="o">=</span>  <span class="n">defaults</span><span class="o">.</span><span class="n">codeindent</span>
+<span class="n">header_string</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">header_string</span>
+<span class="n">code_block_markers</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">code_block_markers</span>
+<span class="n">code_block_marker</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># set in __init__ (if empty)</span>
+<span class="n">strip</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">strip</span>
+<span class="n">strip_marker</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">strip_marker</span>
+<span class="n">add_missing_marker</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">add_missing_marker</span>
+<span class="n">directive_option_regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; +:(\w|[-._+:])+:( |$)&#39;</span><span class="p">)</span>
+<span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># type of current block, see `TextCodeConverter.convert`_</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interface-methods">
+<h5><a class="toc-backref" href="#id41">Interface methods</a><a class="headerlink" href="#interface-methods" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="init">
+<span id="textcodeconverter-init"></span><h6><a class="toc-backref" href="#id42">__init__</a><a class="headerlink" href="#init" title="Permalink to this headline">¶</a></h6>
+<p>Initialising sets the <cite>data</cite> attribute, an iterable object yielding lines of
+the source to convert. <a class="footnote-reference" href="#id4" id="id3">[2]</a></p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td><p class="first">The most common choice of data is a <cite>file</cite> object with the text
+or code source.</p>
+<p class="last">To convert a string into a suitable object, use its splitlines method
+like <code class="docutils literal notranslate"><span class="pre">&quot;2</span> <span class="pre">lines\nof</span> <span class="pre">source&quot;.splitlines(True)</span></code>.</p>
+</td></tr>
+</tbody>
+</table>
+<p>Additional keyword arguments are stored as instance variables,
+overwriting the class defaults:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;data   --  iterable data object</span>
+<span class="sd">                  (list, file, generator, string, ...)</span>
+<span class="sd">       **keyw --  remaining keyword arguments are</span>
+<span class="sd">                  stored as data-attributes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">keyw</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If empty, <cite>code_block_marker</cite> and <cite>comment_string</cite> are set according
+to the <cite>language</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">code_block_marker</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">code_block_marker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code_block_markers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">language</span><span class="p">]</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment_string</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">comment_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment_strings</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">language</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">stripped_comment_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment_string</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Pre- and post-processing filters are set (with
+<a class="reference internal" href="#textcodeconverter-get-filter">TextCodeConverter.get_filter</a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">preprocessor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filter</span><span class="p">(</span><span class="s2">&quot;preprocessors&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">postprocessor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filter</span><span class="p">(</span><span class="s2">&quot;postprocessors&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+</pre></div>
+</div>
+<p id="inserted-into-a-regular-expression">Finally, a regular_expression for the <cite>code_block_marker</cite> is compiled
+to find valid cases of <cite>code_block_marker</cite> in a given line and return
+the groups: <code class="docutils literal notranslate"><span class="pre">\1</span> <span class="pre">prefix,</span> <span class="pre">\2</span> <span class="pre">code_block_marker,</span> <span class="pre">\3</span> <span class="pre">remainder</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">marker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code_block_marker</span>
+<span class="k">if</span> <span class="n">marker</span> <span class="o">==</span> <span class="s1">&#39;::&#39;</span><span class="p">:</span>
+    <span class="c1"># the default marker may occur at the end of a text line</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">marker_regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^( *(?!\.\.).*)(::)([ </span><span class="se">\n</span><span class="s1">]*)$&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># marker must be on a separate line</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">marker_regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^( *)(</span><span class="si">%s</span><span class="s1">)(.*</span><span class="se">\n</span><span class="s1">?)$&#39;</span> <span class="o">%</span> <span class="n">marker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iter">
+<span id="textcodeconverter-iter"></span><h6><a class="toc-backref" href="#id43">__iter__</a><a class="headerlink" href="#iter" title="Permalink to this headline">¶</a></h6>
+<p>Return an iterator for the instance. Iteration yields lines of converted
+data.</p>
+<p>The iterator is a chain of iterators acting on <cite>self.data</cite> that does</p>
+<ul class="simple">
+<li>preprocessing</li>
+<li>text&lt;-&gt;code format conversion</li>
+<li>postprocessing</li>
+</ul>
+<p>Pre- and post- processing are only performed if filters for the current
+language are registered in <a class="reference internal" href="#defaults-preprocessors">defaults.preprocessors</a> and|or
+<a class="reference internal" href="#defaults-postprocessors">defaults.postprocessors</a>. The filters must accept an iterable as first
+argument and yield the processed input data line-wise.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Iterate over input data source and yield converted lines</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">postprocessor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preprocessor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="call">
+<span id="textcodeconverter-call"></span><h6><a class="toc-backref" href="#id44">__call__</a><a class="headerlink" href="#call" title="Permalink to this headline">¶</a></h6>
+<p>The special <cite>__call__</cite> method allows the use of class instances as callable
+objects. It returns the converted data as list of lines:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Iterate over state-machine and return results as list of lines&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="str">
+<span id="textcodeconverter-str"></span><h6><a class="toc-backref" href="#id45">__str__</a><a class="headerlink" href="#str" title="Permalink to this headline">¶</a></h6>
+<p>Return converted data as string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="helpers-and-convenience-methods">
+<h5><a class="toc-backref" href="#id46">Helpers and convenience methods</a><a class="headerlink" href="#helpers-and-convenience-methods" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="convert">
+<span id="textcodeconverter-convert"></span><h6><a class="toc-backref" href="#id47">convert</a><a class="headerlink" href="#convert" title="Permalink to this headline">¶</a></h6>
+<p>The <cite>convert</cite> method generates an iterator that does the actual  code &lt;–&gt;
+text format conversion. The converted data is yielded line-wise and the
+instance’s <cite>status</cite> argument indicates whether the current line is “header”,
+“documentation”, or “code_block”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Iterate over lines of a program document and convert</span>
+<span class="sd">    between &quot;text&quot; and &quot;code&quot; format</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Initialise internal data arguments. (Done here, so that every new iteration
+re-initialises them.)</p>
+<dl class="docutils">
+<dt><cite>state</cite></dt>
+<dd><p class="first">the “type” of the currently processed block of lines. One of</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">“”:</th><td class="field-body">initial state: check for header,</td>
+</tr>
+<tr class="field-even field"><th class="field-name">“header”:</th><td class="field-body">leading code block: strip <cite>header_string</cite>,</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">“documentation”:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">documentation part: comment out,</td>
+</tr>
+<tr class="field-even field"><th class="field-name">“code_block”:</th><td class="field-body">literal blocks containing source code: unindent.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><cite>_codeindent</cite></dt>
+<dd><ul class="first last simple">
+<li>Do not confuse the internal attribute <cite>_codeindent</cite> with the configurable
+<cite>codeindent</cite> (without the leading underscore).</li>
+<li><cite>_codeindent</cite> is set in <a class="reference internal" href="#text2code-code-block-handler">Text2Code.code_block_handler</a> to the indent of
+first non-blank “code_block” line and stripped from all “code_block” lines
+in the text-to-code conversion,</li>
+<li><cite>codeindent</cite> is set in <cite>__init__</cite> to <a class="reference internal" href="#defaults-codeindent">defaults.codeindent</a> and added to
+“code_block” lines in the code-to-text conversion.</li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">_codeindent</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><cite>_textindent</cite></dt>
+<dd><ul class="first last simple">
+<li>set by <a class="reference internal" href="#text2code-documentation-handler">Text2Code.documentation_handler</a> to the minimal indent of a
+documentation block,</li>
+<li>used in <a class="reference internal" href="#text2code-set-state">Text2Code.set_state</a> to find the end of a code block.</li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">_textindent</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><cite>_add_code_block_marker</cite></dt>
+<dd><p class="first">If the last paragraph of a documentation block does not end with a
+<a class="reference internal" href="#code-block-marker">code_block_marker</a>, it should be added (otherwise, the back-conversion
+fails.).</p>
+<p class="last"><cite>_add_code_block_marker</cite> is set by <a class="reference internal" href="#code2text-documentation-handler">Code2Text.documentation_handler</a>
+and evaluated by <a class="reference internal" href="#code2text-code-block-handler">Code2Text.code_block_handler</a>, because the
+documentation_handler does not know whether the next block will be
+documentation (with no need for a code_block_marker) or a code block.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">_add_code_block_marker</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Determine the state of the block and convert with the matching “handler”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">collect_blocks</span><span class="p">(</span><span class="n">expandtabs_filter</span><span class="p">(</span><span class="n">lines</span><span class="p">)):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">+</span><span class="s2">&quot;_handler&quot;</span><span class="p">)(</span><span class="n">block</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-filter">
+<span id="textcodeconverter-get-filter"></span><h6><a class="toc-backref" href="#id48">get_filter</a><a class="headerlink" href="#get-filter" title="Permalink to this headline">¶</a></h6>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_set</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return language specific filter&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="n">Text2Code</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;text2&quot;</span><span class="o">+</span><span class="n">language</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="n">Code2Text</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">language</span><span class="o">+</span><span class="s2">&quot;2text&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">defaults</span><span class="p">,</span> <span class="n">filter_set</span><span class="p">)[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+        <span class="c1"># print( &quot;there is no {0!r} filter in {1!r}&quot;.format(key, filter_set) )</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">identity_filter</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-indent">
+<h6><a class="toc-backref" href="#id49">get_indent</a><a class="headerlink" href="#get-indent" title="Permalink to this headline">¶</a></h6>
+<p>Return the number of leading spaces in <cite>line</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_indent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the indentation of `string`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="text2code">
+<h4><a class="toc-backref" href="#id50">Text2Code</a><a class="headerlink" href="#text2code" title="Permalink to this headline">¶</a></h4>
+<p>The <cite>Text2Code</cite> converter separates <em>code-blocks</em> <a class="footnote-reference" href="#id6" id="id5">[3]</a> from <em>documentation</em>.
+Code blocks are unindented, documentation is commented (or filtered, if the
+<code class="docutils literal notranslate"><span class="pre">strip</span></code> option is True).</p>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[3]</a></td><td><p class="first">Only <a class="reference external" href="http://docutils.sf.net/docs/ref/rst/restructuredtext.html#indented-literal-blocks">indented literal blocks</a> are considered code-blocks. <a class="reference external" href="http://docutils.sf.net/docs/ref/rst/restructuredtext.html#quoted-literal-blocks">quoted
+literal blocks</a>, <a class="reference external" href="http://docutils.sf.net/docs/ref/rst/directives.html#parsed-literal-block">parsed-literal blocks</a>, and <a class="reference external" href="http://docutils.sf.net/docs/ref/rst/restructuredtext.html#doctest-blocks">doctest blocks</a> are
+treated as part of the documentation. This allows the inclusion of
+examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">23</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="go">26</span>
+</pre></div>
+</div>
+<p class="last">Mark that there is no double colon before the doctest block in the
+text source.</p>
+</td></tr>
+</tbody>
+</table>
+<p>The class inherits the interface and helper functions from
+<a class="reference internal" href="#textcodeconverter">TextCodeConverter</a> and adds functions specific to the text-to-code format
+conversion:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Text2Code</span><span class="p">(</span><span class="n">TextCodeConverter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert a (reStructured) text source to code source</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="section" id="set-state">
+<span id="text2code-set-state"></span><h5><a class="toc-backref" href="#id51">set_state</a><a class="headerlink" href="#set-state" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Determine state of `block`. Set `self.state`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">set_state()</span></code> is used inside an iteration. Hence, if we are out of data, a
+<code class="docutils literal notranslate"><span class="pre">StopItertion</span></code> exception should be raised:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">StopIteration</span>
+</pre></div>
+</div>
+<p>The new state depends on the active state (from the last block) and
+features of the current block. It is either “header”, “documentation”, or
+“code_block”.</p>
+<p>If the current state is “” (first block), check for
+the  <cite>header_string</cite> indicating a leading code block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+    <span class="c1"># print( &quot;set state for {0!r}&quot;.format(block) )</span>
+    <span class="k">if</span> <span class="n">block</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_string</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;header&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;documentation&quot;</span>
+</pre></div>
+</div>
+<p>If the current state is “documentation”, the next block is also
+documentation. The end of a documentation part is detected in the
+<a class="reference internal" href="#text2code-documentation-handler">Text2Code.documentation_handler</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># elif self.state == &quot;documentation&quot;:</span>
+<span class="c1">#    self.state = &quot;documentation&quot;</span>
+</pre></div>
+</div>
+<p>A “code_block” ends with the first less indented, non-blank line.
+<cite>_textindent</cite> is set by the documentation handler to the indent of the
+preceding documentation block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;code_block&quot;</span><span class="p">,</span> <span class="s2">&quot;header&quot;</span><span class="p">]:</span>
+    <span class="n">indents</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_indent</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">block</span>
+               <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()]</span>
+    <span class="c1"># print &quot;set_state:&quot;, indents, self._textindent</span>
+    <span class="k">if</span> <span class="n">indents</span> <span class="ow">and</span> <span class="nb">min</span><span class="p">(</span><span class="n">indents</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_textindent</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;documentation&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;code_block&#39;</span>
+</pre></div>
+</div>
+<p>TODO: (or not to do?) insert blank line before the first line with too-small
+codeindent using self.ensure_trailing_blank_line(lines, line) (would need
+split and push-back of the documentation part)?</p>
+</div>
+<div class="section" id="header-handler">
+<span id="text2code-header-handler"></span><h5><a class="toc-backref" href="#id52">header_handler</a><a class="headerlink" href="#header-handler" title="Permalink to this headline">¶</a></h5>
+<p>Sometimes code needs to remain on the first line(s) of the document to be
+valid. The most common example is the “shebang” line that tells a POSIX
+shell how to process an executable file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+</pre></div>
+</div>
+<p>In Python, the special comment to indicate the encoding, e.g.
+<code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">-*-</span> <span class="pre">coding:</span> <span class="pre">iso-8859-1</span> <span class="pre">-*-</span></code>, must occur before any other comment
+or code too.</p>
+<p>If we want to keep the line numbers in sync for text and code source, the
+reStructured Text markup for these header lines must start at the same line
+as the first header line. Therefore, header lines could not be marked as
+literal block (this would require the <code class="docutils literal notranslate"><span class="pre">::</span></code> and an empty line above the
+code_block).</p>
+<p>OTOH, a comment may start at the same line as the comment marker and it
+includes subsequent indented lines. Comments are visible in the reStructured
+Text source but hidden in the pretty-printed output.</p>
+<p>With a header converted to comment in the text source, everything before
+the first documentation block (i.e. before the first paragraph using the
+matching comment string) will be hidden away (in HTML or PDF output).</p>
+<p>This seems a good compromise, the advantages</p>
+<ul class="simple">
+<li>line numbers are kept</li>
+<li>the “normal” code_block conversion rules (indent/unindent by <cite>codeindent</cite> apply</li>
+<li>greater flexibility: you can hide a repeating header in a project
+consisting of many source files.</li>
+</ul>
+<p>set off the disadvantages</p>
+<ul class="simple">
+<li>it may come as surprise if a part of the file is not “printed”,</li>
+<li>one more syntax element to learn for rst newbies to start with pylit,
+(however, starting from the code source, this will be auto-generated)</li>
+</ul>
+<p>In the case that there is no matching comment at all, the complete code
+source will become a comment – however, in this case it is not very likely
+the source is a literate document anyway.</p>
+<p>If needed for the documentation, it is possible to quote the header in (or
+after) the first documentation block, e.g. as <cite>parsed literal</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">header_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Format leading code block&quot;&quot;&quot;</span>
+    <span class="c1"># strip header string from first line</span>
+    <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_string</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># yield remaining lines formatted as code-block</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">code_block_handler</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation-handler">
+<span id="text2code-documentation-handler"></span><h5><a class="toc-backref" href="#id53">documentation_handler</a><a class="headerlink" href="#documentation-handler" title="Permalink to this headline">¶</a></h5>
+<p>The ‘documentation’ handler processes everything that is not recognised as
+“code_block”. Documentation is quoted with <cite>self.comment_string</cite>
+(or filtered with <cite>–strip=True</cite>).</p>
+<p>If end-of-documentation marker is detected,</p>
+<ul class="simple">
+<li>set state to ‘code_block’</li>
+<li>set <cite>self._textindent</cite> (needed by <a class="reference internal" href="#text2code-set-state">Text2Code.set_state</a> to find the
+next “documentation” block)</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">documentation_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert documentation blocks from text to code format</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="c1"># test lines following the code-block marker for false positives</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;code_block&quot;</span> <span class="ow">and</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">directive_option_regexp</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;documentation&quot;</span>
+        <span class="c1"># test for end of documentation block</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_regexp</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;code_block&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_textindent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_indent</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="c1"># yield lines</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="c1"># do not comment blank lines preceding a code block</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;code_block&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">line</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Avoid a trailing space on a comment-only line.</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">():</span>
+                <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment_string</span> <span class="o">+</span> <span class="n">line</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">stripped_comment_string</span> <span class="o">+</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="code-block-handler">
+<span id="text2code-code-block-handler"></span><h5><a class="toc-backref" href="#id54">code_block_handler</a><a class="headerlink" href="#code-block-handler" title="Permalink to this headline">¶</a></h5>
+<p>The “code_block” handler is called with an indented literal block. It
+removes leading whitespace up to the indentation of the first code line in
+the file (this deviation from Docutils behaviour allows indented blocks of
+Python code).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">code_block_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert indented literal blocks to source code format</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>If still unset, determine the indentation of code blocks from first non-blank
+code line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_codeindent</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_codeindent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_indent</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Yield unindented lines after check whether we can safely unindent. If the
+line is less indented then <cite>_codeindent</cite>, something got wrong.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">block</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_indent</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_codeindent</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;code block contains line less indented &quot;</span> \
+              <span class="s2">&quot;than </span><span class="si">{0:d}</span><span class="s2"> spaces </span><span class="se">\n</span><span class="si">{1!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_codeindent</span><span class="p">,</span> <span class="n">block</span><span class="p">))</span>
+    <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_codeindent</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="code2text">
+<h4><a class="toc-backref" href="#id55">Code2Text</a><a class="headerlink" href="#code2text" title="Permalink to this headline">¶</a></h4>
+<p>The <cite>Code2Text</cite> converter does the opposite of <a class="reference internal" href="#text2code">Text2Code</a> – it processes
+a source in “code format” (i.e. in a programming language), extracts
+documentation from comment blocks, and puts program code in literal blocks.</p>
+<p>The class inherits the interface and helper functions from
+<a class="reference internal" href="#textcodeconverter">TextCodeConverter</a> and adds functions specific to the text-to-code  format
+conversion:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Code2Text</span><span class="p">(</span><span class="n">TextCodeConverter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert code source to text source</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="section" id="id7">
+<h5><a class="toc-backref" href="#id56">set_state</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h5>
+<p>Check if block is “header”, “documentation”, or “code_block”:</p>
+<p>A paragraph is “documentation”, if every non-blank line starts with a
+matching comment string (including whitespace except for commented blank
+lines)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Determine state of `block`.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">block</span><span class="p">:</span>
+        <span class="c1"># skip documentation lines (commented, blank or blank comment)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comment_string</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment_string</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+           <span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="c1"># non-commented line found:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;header&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;code_block&quot;</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># no code line found</span>
+        <span class="c1"># keep state if the block is just a blank line</span>
+        <span class="c1"># if len(block) == 1 and self._is_blank_codeline(line):</span>
+        <span class="c1">#     return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;documentation&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h5><a class="toc-backref" href="#id57">header_handler</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h5>
+<p>Handle a leading code block. (See <a class="reference internal" href="#text2code-header-handler">Text2Code.header_handler</a> for a
+discussion of the “header” state.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">header_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Format leading code block&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="c1"># get iterator over the lines that formats them as code-block</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code_block_handler</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+    <span class="c1"># prepend header string to first line</span>
+    <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_string</span> <span class="o">+</span> <span class="nb">next</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+    <span class="c1"># yield remaining lines</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="code2text-documentation-handler">
+<span id="id9"></span><h5><a class="toc-backref" href="#id58">documentation_handler</a><a class="headerlink" href="#code2text-documentation-handler" title="Permalink to this headline">¶</a></h5>
+<p>The <em>documentation state</em> handler converts a comment to a documentation
+block by stripping the leading <cite>comment string</cite> from every line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">documentation_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Uncomment documentation blocks in source code</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Strip comment strings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">uncomment_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">block</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If the code block is stripped, the literal marker would lead to an
+error when the text is converted with Docutils. Strip it as well.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip_marker</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">strip_code_block_marker</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Otherwise, check for the <a class="reference internal" href="#code-block-marker">code_block_marker</a> at the end of the
+documentation block (skipping directive options that might follow it):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_missing_marker</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_regexp</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_code_block_marker</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="ow">and</span>
+            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">directive_option_regexp</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_code_block_marker</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_code_block_marker</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>Yield lines:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+    <span class="k">yield</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="uncomment-line">
+<h5><a class="toc-backref" href="#id59">uncomment_line</a><a class="headerlink" href="#uncomment-line" title="Permalink to this headline">¶</a></h5>
+<p>Return documentation line after stripping comment string. Consider the
+case that a blank line has a comment string without trailing whitespace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">uncomment_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return uncommented documentation line&quot;&quot;&quot;</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comment_string</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">stripped_comment_string</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stripped_comment_string</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="code2text-code-block-handler">
+<span id="id10"></span><h5><a class="toc-backref" href="#id60">code_block_handler</a><a class="headerlink" href="#code2text-code-block-handler" title="Permalink to this headline">¶</a></h5>
+<p>The <cite>code_block</cite> handler returns the code block as indented literal
+block (or filters it, if <code class="docutils literal notranslate"><span class="pre">self.strip</span> <span class="pre">==</span> <span class="pre">True</span></code>). The amount of the code
+indentation is controlled by <cite>self.codeindent</cite> (default 2).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">code_block_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Covert code blocks to text format (indent or strip)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="c1"># eventually insert transition marker</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_code_block_marker</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;documentation&quot;</span>
+        <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">code_block_marker</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">yield</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_code_block_marker</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;code_block&quot;</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="c1"># Avoid a trailing space on a blank line.</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="s2">&quot; &quot;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">codeindent</span> <span class="o">+</span> <span class="n">line</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="strip-code-block-marker">
+<h5><a class="toc-backref" href="#id61">strip_code_block_marker</a><a class="headerlink" href="#strip-code-block-marker" title="Permalink to this headline">¶</a></h5>
+<p>Replace the literal marker with the equivalent of Docutils replace rules</p>
+<ul class="simple">
+<li>strip <code class="docutils literal notranslate"><span class="pre">::</span></code>-line (and preceding blank line) if on a line on its own</li>
+<li>strip <code class="docutils literal notranslate"><span class="pre">::</span></code> if it is preceded by whitespace.</li>
+<li>convert <code class="docutils literal notranslate"><span class="pre">::</span></code> to a single colon if preceded by text</li>
+</ul>
+<p><cite>lines</cite> is a list of documentation lines (with a trailing blank line).
+It is modified in-place:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">strip_code_block_marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="c1"># just one line (no trailing blank line)</span>
+
+    <span class="c1"># match with regexp: `match` is None or has groups</span>
+    <span class="c1"># \1 leading text, \2 code_block_marker, \3 remainder</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_regexp</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>                 <span class="c1"># no code_block_marker present</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>        <span class="c1"># `code_block_marker` on an extra line</span>
+        <span class="k">del</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+        <span class="c1"># delete preceding line if it is blank</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">lines</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">():</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># &#39;::&#39; follows whitespace</span>
+        <span class="n">lines</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">+</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>                         <span class="c1"># &#39;::&#39; follows text</span>
+        <span class="n">lines</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="filters">
+<h3><a class="toc-backref" href="#id62">Filters</a><a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h3>
+<p>Filters allow pre- and post-processing of the data to bring it in a format
+suitable for the “normal” text&lt;-&gt;code conversion. An example is conversion
+of <cite>C</cite> <code class="docutils literal notranslate"><span class="pre">/*</span></code> <code class="docutils literal notranslate"><span class="pre">*/</span></code> comments into C++ <code class="docutils literal notranslate"><span class="pre">//</span></code> comments (and back).
+Another example is the conversion of <cite>C</cite> <code class="docutils literal notranslate"><span class="pre">/*</span></code> <code class="docutils literal notranslate"><span class="pre">*/</span></code> comments into C++
+<code class="docutils literal notranslate"><span class="pre">//</span></code> comments (and back).</p>
+<p>Filters are generator functions that return an iterator acting on a
+<cite>data</cite> iterable and yielding processed <cite>data</cite> lines.</p>
+<div class="section" id="identity-filter">
+<h4><a class="toc-backref" href="#id63">identity_filter</a><a class="headerlink" href="#identity-filter" title="Permalink to this headline">¶</a></h4>
+<p>The most basic filter is the identity filter, that returns its argument as
+iterator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">identity_filter</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return data iterator without any processing&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expandtabs-filter">
+<h4><a class="toc-backref" href="#id64">expandtabs_filter</a><a class="headerlink" href="#expandtabs-filter" title="Permalink to this headline">¶</a></h4>
+<p>Expand hard-tabs in every line of <cite>data</cite> (cf. <cite>str.expandtabs</cite>).</p>
+<p>This filter is applied to the input data by <a class="reference internal" href="#textcodeconverter-convert">TextCodeConverter.convert</a> as
+hard tabs can lead to errors when the indentation is changed.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">expandtabs_filter</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Yield data tokens with hard-tabs expanded&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">expandtabs</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="collect-blocks">
+<h4><a class="toc-backref" href="#id65">collect_blocks</a><a class="headerlink" href="#collect-blocks" title="Permalink to this headline">¶</a></h4>
+<p>A filter to aggregate “paragraphs” (blocks separated by blank
+lines). Yields lists of lines:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">collect_blocks</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;collect lines in a list</span>
+
+<span class="sd">    yield list for each paragraph, i.e. block of lines separated by a</span>
+<span class="sd">    blank line (whitespace only).</span>
+
+<span class="sd">    Trailing blank lines are collected as well.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">blank_line_reached</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">blank_line_reached</span> <span class="ow">and</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">block</span>
+            <span class="n">blank_line_reached</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">block</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="p">]</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">():</span>
+            <span class="n">blank_line_reached</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">block</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dumb-c-preprocessor">
+<h4><a class="toc-backref" href="#id66">dumb_c_preprocessor</a><a class="headerlink" href="#dumb-c-preprocessor" title="Permalink to this headline">¶</a></h4>
+<p>This is a basic filter to convert <cite>C</cite> to <cite>C++</cite> comments. Works line-wise and
+only converts lines that</p>
+<ul class="simple">
+<li>start with “/* ” and end with ” */” (followed by whitespace only)</li>
+</ul>
+<p>A more sophisticated version would also</p>
+<ul class="simple">
+<li>convert multi-line comments<ul>
+<li>Keep indentation or strip 3 leading spaces?</li>
+</ul>
+</li>
+<li>account for nested comments</li>
+<li>only convert comments that are separated from code by a blank line</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dumb_c_preprocessor</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;change `C` ``/* `` `` */`` comments into C++ ``// `` comments&quot;&quot;&quot;</span>
+    <span class="n">comment_string</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">comment_strings</span><span class="p">[</span><span class="s2">&quot;c++&quot;</span><span class="p">]</span>
+    <span class="n">boc_string</span> <span class="o">=</span> <span class="s2">&quot;/* &quot;</span>
+    <span class="n">eoc_string</span> <span class="o">=</span> <span class="s2">&quot; */&quot;</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">boc_string</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">eoc_string</span><span class="p">)</span>
+           <span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">boc_string</span><span class="p">,</span> <span class="n">comment_string</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="n">eoc_string</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">yield</span> <span class="n">line</span>
+</pre></div>
+</div>
+<p>Unfortunately, the <cite>replace</cite> method of strings does not support negative
+numbers for the <cite>count</cite> argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;foo */ baz */ bar&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; */&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;foo */ baz bar&quot;</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>However, there is the <cite>rsplit</cite> method, that can be used together with <cite>join</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;foo */ baz */ bar&quot;</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot; */&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;foo */ baz bar&quot;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dumb-c-postprocessor">
+<h4><a class="toc-backref" href="#id67">dumb_c_postprocessor</a><a class="headerlink" href="#dumb-c-postprocessor" title="Permalink to this headline">¶</a></h4>
+<p>Undo the preparations by the dumb_c_preprocessor and re-insert valid comment
+delimiters</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dumb_c_postprocessor</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;change C++ ``// `` comments into `C` ``/* `` `` */`` comments&quot;&quot;&quot;</span>
+    <span class="n">comment_string</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">comment_strings</span><span class="p">[</span><span class="s2">&quot;c++&quot;</span><span class="p">]</span>
+    <span class="n">boc_string</span> <span class="o">=</span> <span class="s2">&quot;/* &quot;</span>
+    <span class="n">eoc_string</span> <span class="o">=</span> <span class="s2">&quot; */&quot;</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">==</span> <span class="n">comment_string</span><span class="o">.</span><span class="n">rstrip</span><span class="p">():</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">comment_string</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">comment_string</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">comment_string</span><span class="p">,</span> <span class="n">boc_string</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">+</span> <span class="n">eoc_string</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">yield</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-filters">
+<h4><a class="toc-backref" href="#id68">register filters</a><a class="headerlink" href="#register-filters" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaults</span><span class="o">.</span><span class="n">preprocessors</span><span class="p">[</span><span class="s1">&#39;c2text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dumb_c_preprocessor</span>
+<span class="n">defaults</span><span class="o">.</span><span class="n">preprocessors</span><span class="p">[</span><span class="s1">&#39;css2text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dumb_c_preprocessor</span>
+<span class="n">defaults</span><span class="o">.</span><span class="n">postprocessors</span><span class="p">[</span><span class="s1">&#39;text2c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dumb_c_postprocessor</span>
+<span class="n">defaults</span><span class="o">.</span><span class="n">postprocessors</span><span class="p">[</span><span class="s1">&#39;text2css&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dumb_c_postprocessor</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="command-line-use">
+<h3><a class="toc-backref" href="#id69">Command line use</a><a class="headerlink" href="#command-line-use" title="Permalink to this headline">¶</a></h3>
+<p>Using this script from the command line will convert a file according to its
+extension. This default can be overridden by a couple of options.</p>
+<div class="section" id="dual-source-handling">
+<h4><a class="toc-backref" href="#id70">Dual source handling</a><a class="headerlink" href="#dual-source-handling" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="how-to-determine-which-source-is-up-to-date">
+<h5><a class="toc-backref" href="#id71">How to determine which source is up-to-date?</a><a class="headerlink" href="#how-to-determine-which-source-is-up-to-date" title="Permalink to this headline">¶</a></h5>
+<ul>
+<li><p class="first">set modification date of <cite>outfile</cite> to the one of <cite>infile</cite></p>
+<p>Points out that the source files are ‘synchronised’.</p>
+<ul>
+<li><p class="first">Are there problems to expect from “backdating” a file? Which?</p>
+<p>Looking at <a class="reference external" href="http://www.unix.com/showthread.php?t=20526">http://www.unix.com/showthread.php?t=20526</a>, it seems
+perfectly legal to set <cite>mtime</cite> (while leaving <cite>ctime</cite>) as <cite>mtime</cite> is a
+description of the “actuality” of the data in the file.</p>
+</li>
+<li><p class="first">Should this become a default or an option?</p>
+</li>
+</ul>
+</li>
+<li><p class="first">alternatively move input file to a backup copy (with option: <cite>–replace</cite>)</p>
+</li>
+<li><p class="first">check modification date before overwriting
+(with option: <cite>–overwrite=update</cite>)</p>
+</li>
+<li><p class="first">check modification date before editing (implemented as <a class="reference external" href="http://www.jedsoft.org/jed/">Jed editor</a>
+function <cite>pylit_check()</cite> in <a class="reference external" href="http://jedmodes.sourceforge.net/mode/pylit/">pylit.sl</a>)</p>
+</li>
+</ul>
+</div>
+<div class="section" id="recognised-filename-extensions">
+<h5><a class="toc-backref" href="#id72">Recognised Filename Extensions</a><a class="headerlink" href="#recognised-filename-extensions" title="Permalink to this headline">¶</a></h5>
+<p>Instead of defining a new extension for “pylit” literate programs,
+by default <code class="docutils literal notranslate"><span class="pre">.txt</span></code> will be appended for the text source and stripped by
+the conversion to the code source. I.e. for a Python program foo:</p>
+<ul class="simple">
+<li>the code source is called <code class="docutils literal notranslate"><span class="pre">foo.py</span></code></li>
+<li>the text source is called <code class="docutils literal notranslate"><span class="pre">foo.py.txt</span></code></li>
+<li>the html rendering is called <code class="docutils literal notranslate"><span class="pre">foo.py.html</span></code></li>
+</ul>
+</div>
+</div>
+<div class="section" id="optionvalues">
+<h4><a class="toc-backref" href="#id73">OptionValues</a><a class="headerlink" href="#optionvalues" title="Permalink to this headline">¶</a></h4>
+<p>The following class adds <a class="reference internal" href="#as-dict">as_dict</a>, <a class="reference internal" href="#complete">complete</a> and <a class="reference internal" href="#getattr">__getattr__</a>
+methods to <cite>optparse.Values</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">OptionValues</span><span class="p">(</span><span class="n">optparse</span><span class="o">.</span><span class="n">Values</span><span class="p">):</span>
+</pre></div>
+</div>
+<div class="section" id="as-dict">
+<span id="optionvalues-as-dict"></span><h5><a class="toc-backref" href="#id74">as_dict</a><a class="headerlink" href="#as-dict" title="Permalink to this headline">¶</a></h5>
+<p>For use as keyword arguments, it is handy to have the options in a
+dictionary. <cite>as_dict</cite> returns a copy of the instances object dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return options as dictionary object&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="complete">
+<span id="optionvalues-complete"></span><h5><a class="toc-backref" href="#id75">complete</a><a class="headerlink" href="#complete" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Complete the option values with keyword arguments.</span>
+
+<span class="sd">    Do not overwrite existing values. Only use arguments that do not</span>
+<span class="sd">    have a corresponding attribute in `self`,</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keyw</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">keyw</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getattr">
+<span id="optionvalues-getattr"></span><h5><a class="toc-backref" href="#id76">__getattr__</a><a class="headerlink" href="#getattr" title="Permalink to this headline">¶</a></h5>
+<p>To replace calls using <code class="docutils literal notranslate"><span class="pre">options.ensure_value(&quot;OPTION&quot;,</span> <span class="pre">None)</span></code> with the
+more concise <code class="docutils literal notranslate"><span class="pre">options.OPTION</span></code>, we define <cite>__getattr__</cite> <a class="footnote-reference" href="#id12" id="id11">[4]</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return default value for non existing options&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id11">[4]</a></td><td>The special method <cite>__getattr__</cite> is only called when an attribute
+look-up has not found the attribute in the usual places (i.e. it is
+not an instance attribute nor is it found in the class tree for
+self).</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="pylitoptions">
+<h4><a class="toc-backref" href="#id77">PylitOptions</a><a class="headerlink" href="#pylitoptions" title="Permalink to this headline">¶</a></h4>
+<p>The <cite>PylitOptions</cite> class comprises an option parser and methods for parsing
+and completion of command line options:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PylitOptions</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Storage and handling of command line options for pylit&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="section" id="instantiation">
+<h5><a class="toc-backref" href="#id78">Instantiation</a><a class="headerlink" href="#instantiation" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set up an `OptionParser` instance for pylit command line options</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">main</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">_version</span><span class="p">)</span>
+
+    <span class="c1"># Conversion settings</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--code2txt&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;txt2code&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;convert code source to text source&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;--txt2code&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;convert text source to code source&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--language&quot;</span><span class="p">,</span>
+                 <span class="n">choices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">languages</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use LANGUAGE native comment style&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--comment-string&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;comment_string&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;documentation block marker in code source &quot;</span>
+                 <span class="s2">&quot;(including trailing whitespace, &quot;</span>
+                 <span class="s2">&quot;default: language dependent)&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;--code-block-marker&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;code_block_marker&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;syntax token starting a code block. (default &#39;::&#39;)&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--codeindent&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of spaces to indent code blocks with &quot;</span>
+                 <span class="s2">&quot;text2code (default </span><span class="si">{0:d}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">codeindent</span><span class="p">))</span>
+
+    <span class="c1"># Output file handling</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--overwrite&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+                 <span class="n">choices</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;update&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">],</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;overwrite output file (default &#39;update&#39;)&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--replace&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;move infile to a backup copy (appending &#39;~&#39;)&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;--strip&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&quot;export&quot; by stripping documentation or code&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Special actions</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--diff&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;test for differences to existing file&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;--doctest&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;run doctest.testfile() on the text version&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;-e&quot;</span><span class="p">,</span> <span class="s2">&quot;--execute&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;execute code (Python only)&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">p</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parse-args">
+<span id="pylitoptions-parse-args"></span><h5><a class="toc-backref" href="#id79">parse_args</a><a class="headerlink" href="#parse-args" title="Permalink to this headline">¶</a></h5>
+<p>The <cite>parse_args</cite> method calls the <cite>optparse.OptionParser</cite> on command
+line or provided args and returns the result as <cite>PylitOptions.Values</cite>
+instance. Defaults can be provided as keyword arguments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="o">**</span><span class="n">keyw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;parse command line arguments using `optparse.OptionParser`</span>
+
+<span class="sd">       parse_args(args, **keyw) -&gt; OptionValues instance</span>
+
+<span class="sd">        args --  list of command line arguments.</span>
+<span class="sd">        keyw --  keyword arguments or dictionary of option defaults</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># parse arguments</span>
+    <span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">OptionValues</span><span class="p">(</span><span class="n">keyw</span><span class="p">))</span>
+    <span class="c1"># Convert FILE and OUTFILE positional args to option values</span>
+    <span class="c1"># (other positional arguments are ignored)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">infile</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">outfile</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="complete-values">
+<span id="pylitoptions-complete-values"></span><h5><a class="toc-backref" href="#id80">complete_values</a><a class="headerlink" href="#complete-values" title="Permalink to this headline">¶</a></h5>
+<p>Complete an OptionValues instance <cite>values</cite>.  Use module-level defaults and
+context information to set missing option values to sensible defaults (if
+possible)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">complete_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;complete option values with module and context sensible defaults</span>
+
+<span class="sd">    x.complete_values(values) -&gt; values</span>
+<span class="sd">    values -- OptionValues instance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Complete with module-level <a class="reference internal" href="#defaults">defaults</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">values</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="o">**</span><span class="n">defaults</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ensure infile is a string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">values</span><span class="o">.</span><span class="n">ensure_value</span><span class="p">(</span><span class="s2">&quot;infile&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Guess conversion direction from <cite>infile</cite> filename:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">txt2code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">in_extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">infile</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">in_extension</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">text_extensions</span><span class="p">:</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">txt2code</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">in_extension</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">languages</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">txt2code</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Auto-determine the output file name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">values</span><span class="o">.</span><span class="n">ensure_value</span><span class="p">(</span><span class="s2">&quot;outfile&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_outfile_name</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Second try: Guess conversion direction from outfile filename:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">txt2code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">out_extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">outfile</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">values</span><span class="o">.</span><span class="n">txt2code</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">out_extension</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">text_extensions</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set the language of the code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">txt2code</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">code_extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">outfile</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">elif</span> <span class="n">values</span><span class="o">.</span><span class="n">txt2code</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+    <span class="n">code_extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">infile</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">values</span><span class="o">.</span><span class="n">ensure_value</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">languages</span><span class="p">[</span><span class="n">code_extension</span><span class="p">])</span>
+
+<span class="k">return</span> <span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-outfile-name">
+<h5><a class="toc-backref" href="#id81">_get_outfile_name</a><a class="headerlink" href="#get-outfile-name" title="Permalink to this headline">¶</a></h5>
+<p>Construct a matching filename for the output file. The output filename is
+constructed from <cite>infile</cite> by the following rules:</p>
+<ul class="simple">
+<li>‘-‘ (stdin) results in ‘-‘ (stdout)</li>
+<li>strip the <a class="reference internal" href="#text-extension">text_extension</a> (txt2code) or</li>
+<li>add the <a class="reference internal" href="#text-extension">text_extension</a> (code2txt)</li>
+<li>fallback: if no guess can be made, add “.out”</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_get_outfile_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a matching output filename for `infile`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># if input is stdin, default output is stdout</span>
+    <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">infile</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;-&#39;</span>
+
+    <span class="c1"># Derive from `infile` name: strip or add text extension</span>
+    <span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">ext</span><span class="p">)</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">infile</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">text_extensions</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">base</span> <span class="c1"># strip</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">languages</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="n">values</span><span class="o">.</span><span class="n">txt2code</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">values</span><span class="o">.</span><span class="n">infile</span> <span class="o">+</span> <span class="n">values</span><span class="o">.</span><span class="n">text_extensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># add</span>
+    <span class="c1"># give up</span>
+    <span class="k">return</span> <span class="n">values</span><span class="o">.</span><span class="n">infile</span> <span class="o">+</span> <span class="s2">&quot;.out&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pylitoptions-call">
+<span id="id13"></span><h5><a class="toc-backref" href="#id82">__call__</a><a class="headerlink" href="#pylitoptions-call" title="Permalink to this headline">¶</a></h5>
+<p>The special <cite>__call__</cite> method allows to use PylitOptions instances as
+<em>callables</em>: Calling an instance parses the argument list to extract option
+values and completes them based on “context-sensitive defaults”.  Keyword
+arguments are passed to <a class="reference internal" href="#pylitoptions-parse-args">PylitOptions.parse_args</a> as default values.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="o">**</span><span class="n">keyw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;parse and complete command line args return option values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">complete_values</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="helper-functions">
+<h4><a class="toc-backref" href="#id83">Helper functions</a><a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="open-streams">
+<h5><a class="toc-backref" href="#id84">open_streams</a><a class="headerlink" href="#open-streams" title="Permalink to this headline">¶</a></h5>
+<p>Return file objects for in- and output. If the input path is missing,
+write usage and abort. (An alternative would be to use stdin as default.
+However,  this leaves the uninitiated user with a non-responding application
+if (s)he just tries the script without any arguments)</p>
+<p>Note that the output file encoding is important in Python3. Taking the
+default may not match the encoding in the file comments.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">open_streams</span><span class="p">(</span><span class="n">infile</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Open and return the input and output stream</span>
+
+<span class="sd">    open_streams(infile, outfile) -&gt; (in_stream, out_stream)</span>
+
+<span class="sd">    in_stream   --  open(infile) or sys.stdin</span>
+<span class="sd">    out_stream  --  open(outfile) or sys.stdout</span>
+<span class="sd">    overwrite   --  &#39;yes&#39;: overwrite eventually existing `outfile`,</span>
+<span class="sd">                    &#39;update&#39;: fail if the `outfile` is newer than `infile`,</span>
+<span class="sd">                    &#39;no&#39;: fail if `outfile` exists.</span>
+
+<span class="sd">                    Irrelevant if `outfile` == &#39;-&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">infile</span><span class="p">:</span>
+        <span class="n">strerror</span> <span class="o">=</span> <span class="s2">&quot;Missing input file name (&#39;-&#39; for stdin; -h for help)&quot;</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">strerror</span><span class="p">,</span> <span class="n">infile</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">infile</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+        <span class="n">in_stream</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">in_stream</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">outfile</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+        <span class="n">out_stream</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+    <span class="k">elif</span> <span class="n">overwrite</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Output file exists!&quot;</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">overwrite</span> <span class="o">==</span> <span class="s1">&#39;update&#39;</span> <span class="ow">and</span> <span class="n">is_newer</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">infile</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Output file is newer than input file!&quot;</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">out_stream</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="p">(</span><span class="n">in_stream</span><span class="p">,</span> <span class="n">out_stream</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">infile</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span> <span class="n">in_stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">outfile</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span> <span class="n">out_stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The previous version was unpleasant since two open file contexts can’t easily be wrapped
+in a simple <code class="docutils literal notranslate"><span class="pre">with</span></code> statement. Here we’ve used <code class="docutils literal notranslate"><span class="pre">&#64;contextlib.contextmanager</span></code> to turn
+this function into a proper context.</p>
+<p>It  properly closes the files, eliminating the <code class="docutils literal notranslate"><span class="pre">out_stream.close()</span></code> below.</p>
+</div>
+<div class="section" id="is-newer">
+<h5><a class="toc-backref" href="#id85">is_newer</a><a class="headerlink" href="#is-newer" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_newer</span><span class="p">(</span><span class="n">path1</span><span class="p">,</span> <span class="n">path2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check if `path1` is newer than `path2` (using mtime)</span>
+
+<span class="sd">    Compare modification time of files at path1 and path2.</span>
+
+<span class="sd">    Non-existing files are considered oldest: Return False if path1 does not</span>
+<span class="sd">    exist and True if path2 does not exist.</span>
+
+<span class="sd">    Return None for equal modification time. (This evaluates to False in a</span>
+<span class="sd">    Boolean context but allows a test for equality.)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mtime1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">path1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="n">mtime1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mtime2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">path2</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="n">mtime2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="c1"># print &quot;mtime1&quot;, mtime1, path1, &quot;\n&quot;, &quot;mtime2&quot;, mtime2, path2</span>
+
+    <span class="k">if</span> <span class="n">mtime1</span> <span class="o">==</span> <span class="n">mtime2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">mtime1</span> <span class="o">&gt;</span> <span class="n">mtime2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-converter">
+<h5><a class="toc-backref" href="#id86">get_converter</a><a class="headerlink" href="#get-converter" title="Permalink to this headline">¶</a></h5>
+<p>Get an instance of the converter state machine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_converter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">txt2code</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">txt2code</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Text2Code</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Code2Text</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="use-cases">
+<h4><a class="toc-backref" href="#id87">Use cases</a><a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="run-doctest">
+<h5><a class="toc-backref" href="#id88">run_doctest</a><a class="headerlink" href="#run-doctest" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_doctest</span><span class="p">(</span><span class="n">infile</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">txt2code</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">globs</span><span class="o">=</span><span class="p">{},</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">optionflags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;run doctest on the text source</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Allow imports from the current working dir by prepending an empty string to
+sys.path (see doc of sys.path()):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Import classes from the doctest module:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">doctest</span> <span class="k">import</span> <span class="n">DocTestParser</span><span class="p">,</span> <span class="n">DocTestRunner</span>
+</pre></div>
+</div>
+<p>Read in source. Make sure it is in text format, as tests in comments are not
+found by doctest:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">open_streams</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">files</span><span class="p">:</span>
+    <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">out_stream</span><span class="p">)</span> <span class="o">=</span> <span class="n">files</span>
+    <span class="k">if</span> <span class="n">txt2code</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">keyw</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;add_missing_marker&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="n">Code2Text</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">)</span>
+        <span class="n">docstring</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">converter</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">docstring</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The issue here is that older Python files may be in non-text format,
+and we <strong>must</strong> read the coding comment and then decode the bytes.
+This means that we (retroactively) should have known to open the file in
+“b” mode and decode the bytes.</p>
+<p>Newer Python files are properly handled by the OS and the <code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> module.
+The coding comment is redundant.</p>
+<p>Decode doc string if there is a “magic comment” in the first or second line
+(<a class="reference external" href="http://docs.python.org/reference/lexical_analysis.html#encoding-declarations">http://docs.python.org/reference/lexical_analysis.html#encoding-declarations</a>)
+If the magic comment matches the encoding, there’s nothing else to do.
+If the magic comment does not match the encoding, we have issues.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">firstlines</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">docstring</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[:</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;coding[=:]\s*([-\w.]+)&#39;</span><span class="p">,</span> <span class="n">firstlines</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+    <span class="n">docencoding</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">encoding</span> <span class="o">==</span> <span class="n">docencoding</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span> <span class="s2">&quot;data encoding=</span><span class="si">{0}</span><span class="s2"> != docencoding=</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span> <span class="n">docencoding</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">b_string</span> <span class="o">=</span> <span class="n">docstring</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="n">docstring</span> <span class="o">=</span> <span class="n">b_string</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">docencoding</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use the doctest Advanced API to run all doctests in the source text:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">=</span> <span class="n">DocTestParser</span><span class="p">()</span><span class="o">.</span><span class="n">get_doctest</span><span class="p">(</span><span class="n">docstring</span><span class="p">,</span> <span class="n">globs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                                   <span class="n">filename</span><span class="o">=</span><span class="n">infile</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">runner</span> <span class="o">=</span> <span class="n">DocTestRunner</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="n">optionflags</span><span class="p">)</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">summarize</span>
+<span class="c1"># give feedback also if no failures occurred</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">runner</span><span class="o">.</span><span class="n">failures</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;</span><span class="si">{0:d}</span><span class="s2"> failures in </span><span class="si">{1:d}</span><span class="s2"> tests&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runner</span><span class="o">.</span><span class="n">failures</span><span class="p">,</span> <span class="n">runner</span><span class="o">.</span><span class="n">tries</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">return</span> <span class="n">runner</span><span class="o">.</span><span class="n">failures</span><span class="p">,</span> <span class="n">runner</span><span class="o">.</span><span class="n">tries</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="diff">
+<h5><a class="toc-backref" href="#id89">diff</a><a class="headerlink" href="#diff" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="n">infile</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">txt2code</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Report differences between converted infile and existing outfile</span>
+
+<span class="sd">    If outfile does not exist or is &#39;-&#39;, do a round-trip conversion and</span>
+<span class="sd">    report differences.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">import</span> <span class="nn">difflib</span>
+
+    <span class="n">instream</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+    <span class="c1"># for diffing, we need a copy of the data as list::</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">instream</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="c1"># convert</span>
+    <span class="n">converter</span> <span class="o">=</span> <span class="n">get_converter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">txt2code</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">)</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="n">converter</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">outfile</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">):</span>
+        <span class="n">outstream</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+        <span class="n">old</span> <span class="o">=</span> <span class="n">outstream</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">oldname</span> <span class="o">=</span> <span class="n">outfile</span>
+        <span class="n">newname</span> <span class="o">=</span> <span class="s2">&quot;&lt;conversion of </span><span class="si">{0!s}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">oldname</span> <span class="o">=</span> <span class="n">infile</span>
+        <span class="c1"># back-convert the output data</span>
+        <span class="n">converter</span> <span class="o">=</span> <span class="n">get_converter</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="ow">not</span> <span class="n">txt2code</span><span class="p">)</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">converter</span><span class="p">()</span>
+        <span class="n">newname</span> <span class="o">=</span> <span class="s2">&quot;&lt;round-conversion of </span><span class="si">{0!s}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+
+    <span class="c1"># find and print the differences</span>
+    <span class="n">is_different</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="c1"># print type(old), old</span>
+    <span class="c1"># print type(new), new</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">unified_diff</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span>
+    <span class="c1"># delta = difflib.unified_diff([&quot;heute\n&quot;, &quot;schon\n&quot;], [&quot;heute\n&quot;, &quot;noch\n&quot;],</span>
+                                      <span class="n">fromfile</span><span class="o">=</span><span class="n">oldname</span><span class="p">,</span> <span class="n">tofile</span><span class="o">=</span><span class="n">newname</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">delta</span><span class="p">:</span>
+        <span class="n">is_different</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="nb">print</span><span class="p">(</span> <span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span> <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_different</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span> <span class="n">oldname</span> <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span> <span class="n">newname</span> <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;no differences found&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">is_different</span>
+</pre></div>
+</div>
+<p>TODO: Use proper <code class="docutils literal notranslate"><span class="pre">with</span></code> statements for the open fie contexts.</p>
+</div>
+<div class="section" id="execute">
+<h5><a class="toc-backref" href="#id90">execute</a><a class="headerlink" href="#execute" title="Permalink to this headline">¶</a></h5>
+<p>Works only for python code.</p>
+<p>Does not work with <cite>eval</cite>, as code is not just one expression.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">infile</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">txt2code</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Execute the input file. Convert first, if it is a text source.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">txt2code</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Text2Code</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">keyw</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="c1"># print( &quot;executing &quot; + infile, &quot;data=&quot;, repr(data) )</span>
+    <span class="n">exec</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>TODO: Use a proper <code class="docutils literal notranslate"><span class="pre">with</span></code> statement for the open file context.</p>
+</div>
+</div>
+<div class="section" id="main">
+<h4><a class="toc-backref" href="#id91">main</a><a class="headerlink" href="#main" title="Permalink to this headline">¶</a></h4>
+<p>If this script is called from the command line, the <cite>main</cite> function will
+convert the input (file or stdin) between text and code formats.</p>
+<p>Option default values for the conversion can be given as keyword arguments
+to <a class="reference internal" href="#main">main</a>.  The option defaults will be updated by command line options and
+extended with “intelligent guesses” by <a class="reference internal" href="#pylitoptions">PylitOptions</a> and passed on to
+helper functions and the converter instantiation.</p>
+<p>This allows easy customisation for programmatic use – just call <cite>main</cite>
+with the appropriate keyword options, e.g. <code class="docutils literal notranslate"><span class="pre">pylit.main(comment_string=&quot;##</span> <span class="pre">&quot;)</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="o">**</span><span class="n">defaults</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;%prog [options] INFILE [OUTFILE]</span>
+
+<span class="sd">    Convert between (reStructured) text source with embedded code,</span>
+<span class="sd">    and code source with embedded documentation (comment blocks)</span>
+
+<span class="sd">    The special filename &#39;-&#39; stands for standard in and output.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Parse and complete the options:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="o">=</span> <span class="n">PylitOptions</span><span class="p">()(</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">defaults</span><span class="p">)</span>
+<span class="c1"># print &quot;infile&quot;, repr(options.infile)</span>
+</pre></div>
+</div>
+<p>Special actions with early return:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">doctest</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">run_doctest</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">diff</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">diff</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">execute</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">execute</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Open in- and output streams for processing,
+get the converter instance, and
+convert and write to out_stream.
+The str(converter) usees the special method <code class="docutils literal notranslate"><span class="pre">__str__</span></code>, which does the
+real work of the conversion.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+
+    <span class="k">with</span> <span class="n">open_streams</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span> <span class="k">as</span> <span class="n">files</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">out_stream</span><span class="p">)</span> <span class="o">=</span> <span class="n">files</span>
+
+        <span class="n">converter</span> <span class="o">=</span> <span class="n">get_converter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span>
+
+        <span class="n">out_stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">converter</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">out_stream</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;extract written to&quot;</span><span class="p">,</span> <span class="n">out_stream</span><span class="o">.</span><span class="n">name</span> <span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;IOError: </span><span class="si">{0:s}</span><span class="s2"> </span><span class="si">{1:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ex</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">ex</span><span class="o">.</span><span class="n">strerror</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">ex</span><span class="o">.</span><span class="n">errno</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If input and output are from files, set the modification time (<cite>mtime</cite>) of
+the output file to the one of the input file to indicate that the contained
+information is equal. <a class="footnote-reference" href="#id15" id="id14">[5]</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">try</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">utime</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">outfile</span><span class="p">,</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getatime</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">outfile</span><span class="p">),</span>
+                                   <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">infile</span><span class="p">))</span>
+                <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="c1">## print &quot;mtime&quot;, os.path.getmtime(options.infile),  options.infile</span>
+<span class="c1">## print &quot;mtime&quot;, os.path.getmtime(options.outfile), options.outfile</span>
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="id15" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id14">[5]</a></td><td>Make sure the corresponding file object (here <cite>out_stream</cite>) is
+closed, as otherwise the change will be overwritten when <cite>close</cite> is
+called afterwards (either explicitly or at program exit).</td></tr>
+</tbody>
+</table>
+<p>Rename the infile to a backup copy if <code class="docutils literal notranslate"><span class="pre">--replace</span></code> is set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">replace</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">infile</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">infile</span> <span class="o">+</span> <span class="s2">&quot;~&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run main, if called from the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="open-questions">
+<h3><a class="toc-backref" href="#id92">Open questions</a><a class="headerlink" href="#open-questions" title="Permalink to this headline">¶</a></h3>
+<p>Open questions and ideas for further development</p>
+<div class="section" id="clean-code">
+<h4><a class="toc-backref" href="#id93">Clean code</a><a class="headerlink" href="#clean-code" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>can we gain from using “shutils” over “os.path” and “os”?</li>
+<li>use pylint or pyChecker to enforce a consistent style?</li>
+</ul>
+</div>
+<div class="section" id="options">
+<h4><a class="toc-backref" href="#id94">Options</a><a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Use templates for the “intelligent guesses” (with Python syntax for string
+replacement with dicts: <code class="docutils literal notranslate"><span class="pre">&quot;hello</span> <span class="pre">{what:s}&quot;.format(</span> <span class="pre">{'what':</span> <span class="pre">'world'}</span> <span class="pre">)</span></code></li>
+<li>Is it sensible to offer the <cite>header_string</cite> option also as command line
+option?</li>
+</ul>
+</div>
+<div class="section" id="treatment-of-blank-lines">
+<h4><a class="toc-backref" href="#id95">treatment of blank lines</a><a class="headerlink" href="#treatment-of-blank-lines" title="Permalink to this headline">¶</a></h4>
+<p>Alternatives: Keep blank lines blank</p>
+<ul>
+<li><dl class="first docutils">
+<dt>“never” (current setting) -&gt; “visually merges” all documentation</dt>
+<dd><p class="first last">if there is no interjacent code</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">“always” -&gt; disrupts documentation blocks,</p>
+</li>
+<li><p class="first">“if empty” (no whitespace). Comment if there is whitespace.</p>
+<p>This would allow non-obstructing markup but unfortunately this is (in
+most editors) also non-visible markup.</p>
+</li>
+<li><p class="first">“if double” (if there is more than one consecutive blank line)</p>
+<p>With this handling, the “visual gap” remains in both, text and code
+source.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="parsing-problems">
+<h4><a class="toc-backref" href="#id96">Parsing Problems</a><a class="headerlink" href="#parsing-problems" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first">Ignore “matching comments” in literal strings?</p>
+<p>Too complicated: Would need a specific detection algorithm for every
+language that supports multi-line literal strings (C++, PHP, Python)</p>
+</li>
+<li><p class="first">Warn if a comment in code will become documentation after round-trip?</p>
+</li>
+</ul>
+</div>
+<div class="section" id="docstrings-in-code-blocks">
+<h4><a class="toc-backref" href="#id97">docstrings in code blocks</a><a class="headerlink" href="#docstrings-in-code-blocks" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>How to handle docstrings in code blocks? (it would be nice to convert them
+to rst-text if <code class="docutils literal notranslate"><span class="pre">__docformat__</span> <span class="pre">==</span> <span class="pre">restructuredtext</span></code>)</li>
+</ul>
+<p>TODO: Ask at Docutils users|developers</p>
+</div>
+<div class="section" id="plug-ins">
+<h4><a class="toc-backref" href="#id98">Plug-ins</a><a class="headerlink" href="#plug-ins" title="Permalink to this headline">¶</a></h4>
+<p>Specify a path for user additions and plug-ins. This would require to
+convert Pylit from a pure module to a package…</p>
+<blockquote>
+<div><p>6.4.3 Packages in Multiple Directories</p>
+<p>Packages support one more special attribute, __path__. This is initialized
+to be a list containing the name of the directory holding the package’s
+__init__.py before the code in that file is executed. This
+variable can be modified; doing so affects future searches for modules and
+subpackages contained in the package.</p>
+<p>While this feature is not often needed, it can be used to extend the set
+of modules found in a package.</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/pylit-bold-framed.svg" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../../../index.html">PyLit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../features.html">Features</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../literate-programming.html">Literate Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filename-extensions.html">Finding a Filename Extension for Literate Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../updates.html">Updates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../download/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../download/index.html#download">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../download/index.html#installation">Installation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ <p class="thanks">
+  Thanks to
+  <a href="http://developer.berlios.de">
+    <img src="http://developer.berlios.de/bslogo.php?group_id=0"
+    width="124" height="32" border="0" alt="BerliOS" />
+  </a>
+  for hosting this site.
+ </p>
+
+  </body>
+</html>

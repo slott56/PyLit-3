@@ -1,1 +1,7 @@
 *.pyc
+.idea/*
+.tox/*
+*.pickle
+*.buildinfo
+*.doctrees
+*.komodo*

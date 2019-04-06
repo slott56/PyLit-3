@@ -1,0 +1,252 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>listings-python-options.sty &#8212; PyLit</title>
+    <link rel="stylesheet" href="../_static/pylit-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="listings-tex-options.sty" href="listings-tex-options.sty.html" />
+    <link rel="prev" title="Extending Iterators for use as Queue" href="iterqueue.py.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="listings-python-options-sty">
+<h1>listings-python-options.sty<a class="headerlink" href="#listings-python-options-sty" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="configure-listings-to-highlight-python-code">
+<h2>Configure <cite>listings</cite> to highlight Python code<a class="headerlink" href="#configure-listings-to-highlight-python-code" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Günter Milde</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Contact:</th><td class="field-body"><a class="reference external" href="mailto:milde&#37;&#52;&#48;users&#46;berlios&#46;de">milde<span>&#64;</span>users<span>&#46;</span>berlios<span>&#46;</span>de</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Revision:</th><td class="field-body">$Revision: 5534 $</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">$Date: 2005-06-28$</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Copyright:</th><td class="field-body">© 2007, 2009 G. Milde,
+Released  without warranties or conditions of any kind
+under the terms of the Apache License, Version 2.0
+<a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></td>
+</tr>
+</tbody>
+</table>
+<p>To use the listings package for syntax highlighting with Docutils, pass the
+<code class="docutils literal notranslate"><span class="pre">--stylesheet=listings-python-options.sty</span> <span class="pre">--literal-block-env=lstlisting</span></code>
+options to <code class="docutils literal notranslate"><span class="pre">rst2latex.py</span></code>.</p>
+<p>For full documentation see <a class="reference external" href="ftp://dante.ctan.org/tex-archive/macros/latex/contrib/listings/listings.pdf">listings.pdf</a>.</p>
+<div class="section" id="implementation">
+<h3>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h3>
+<p>Identification:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\ProvidesPackage</span><span class="nb">{</span>listings-python-options<span class="nb">}</span>
+[2009/03/02 v0.1 highlight Python with lstlistings]
+</pre></div>
+</div>
+<p>Of course, we need to load the listings package itself:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\RequirePackage</span><span class="nb">{</span>listings<span class="nb">}</span>
+</pre></div>
+</div>
+<p>In a document with lots of lists and listings, separating paragraphs by
+vertical seems appropriate:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\RequirePackage</span><span class="nb">{</span>parskip<span class="nb">}</span>
+</pre></div>
+</div>
+<div class="section" id="font-settings">
+<h4>Font settings<a class="headerlink" href="#font-settings" title="Permalink to this headline">¶</a></h4>
+<p>Textfont:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="c">% \RequirePackage{mathptmx} % Times</span>
+<span class="k">\RequirePackage</span><span class="nb">{</span>mathpazo<span class="nb">}</span> <span class="c">% Palatino</span>
+</pre></div>
+</div>
+<p>We need a “rich” monospaced font. <cite>txfonts</cite>’ typewriter font comes
+with bold, slanted, and small-caps variants and without the problems of
+<cite>txfonts</cite>’ math fonts:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\renewcommand</span><span class="nb">{</span><span class="k">\ttdefault</span><span class="nb">}{</span>txtt<span class="nb">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="default-language">
+<h4>Default language<a class="headerlink" href="#default-language" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="c">%\lstset{language={}}</span>
+</pre></div>
+</div>
+<p>Highlight literal blocks as Python,
+add missing keywords:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\lstset</span><span class="nb">{</span>language=Python,
+        morekeywords=[1]<span class="nb">{</span>yield<span class="nb">}</span>
+<span class="nb">}</span>
+
+<span class="c">% pre-load the language</span>
+<span class="k">\lstloadlanguages</span><span class="nb">{</span>Python<span class="nb">}</span> <span class="c">%  comma separated list of languages</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="style">
+<h4>Style<a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h4>
+<p>Typeface settings:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\lstset</span><span class="nb">{</span>
+  basicstyle=<span class="k">\ttfamily</span>,           <span class="c">% print whole listing in tt</span>
+  <span class="c">% basicstyle=\ttfamily\small,   % and, maybe small</span>
+  keywordstyle=<span class="k">\bfseries</span>,
+  <span class="c">% identifierstyle=\slshape,     % object names</span>
+  commentstyle=<span class="k">\rmfamily\itshape</span>, <span class="c">% italic comments</span>
+  stringstyle=<span class="k">\slshape</span>,           <span class="c">% strings</span>
+<span class="nb">}</span>
+</pre></div>
+</div>
+<p>Visible whitespace:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\lstset</span><span class="nb">{</span>showstringspaces=false<span class="nb">}</span>  <span class="c">% no visible spaces in strings</span>
+<span class="c">%\lstset{showspaces=true,</span>
+<span class="c">%        showtabs=true,</span>
+<span class="c">%        tab=\rightarrowfill}</span>
+</pre></div>
+</div>
+<p>Line numbers:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="c">%\lstset{numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt}</span>
+</pre></div>
+</div>
+<p>Frames around listings:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="c">%\lstset{frame=single}</span>
+</pre></div>
+</div>
+<p>Extended characters in listings:</p>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="c">%extendedchars=true</span>
+<span class="c">%extendedchars=false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="column-alignment">
+<h4>Column alignment<a class="headerlink" href="#column-alignment" title="Permalink to this headline">¶</a></h4>
+<p>(for typesetting with variable width fonts)</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">columns=[c|l|r]</span> <span class="pre">&lt;alignment&gt;</span></code></dt>
+<dd><p class="first">&lt;alignment&gt; in [fixed, flexible, spaceflexible, or fullflexible]
+The optional c, l, or r controls the horizontal orientation of smallest
+output units (keywords, identifiers, etc.).</p>
+<p class="last">default: [c]fixed</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">basewidth={fixed,</span> <span class="pre">flexible}</span></code></dt>
+<dd><p class="first">sets the width of a single character box for fixed and flexible column
+mode (both to the same value or individually).</p>
+<p class="last">default: {0.6em,0.45em}</p>
+</dd>
+</dl>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\lstset</span><span class="nb">{</span>columns=fullflexible, basewidth=<span class="nb">{</span>0.5em,0.4em<span class="nb">}}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/pylit-bold-framed.svg" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">PyLit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literate-programming.html">Literate Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filename-extensions.html">Finding a Filename Extension for Literate Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#download">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html#installation">Installation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Examples</a><ul>
+      <li>Previous: <a href="iterqueue.py.html" title="previous chapter">Extending Iterators for use as Queue</a></li>
+      <li>Next: <a href="listings-tex-options.sty.html" title="next chapter">listings-tex-options.sty</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ <p class="thanks">
+  Thanks to
+  <a href="http://developer.berlios.de">
+    <img src="http://developer.berlios.de/bslogo.php?group_id=0"
+    width="124" height="32" border="0" alt="BerliOS" />
+  </a>
+  for hosting this site.
+ </p>
+
+  </body>
+</html>

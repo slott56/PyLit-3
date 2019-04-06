@@ -1,0 +1,105 @@
+conf.py.txt:126: [broken] http://pygments.org/demo/1444/: HTTP Error 404: NOT FOUND
+download/index.txt:23: [local] pylit
+download/index.txt:69: [local] pylit
+download/index.txt:77: [local] ../usage/index.html#command-line-use
+download/index.txt:78: [local] ../usage/index.html#defaults
+download/index.txt:31: [redirected] http://sphinx.pocoo.org/ to http://sphinx-doc.org/
+download/index.txt:59: [broken] http://docs.python.org/tut/node8.html#SECTION008110000000000000000: Can't convert 'bytes' object to str implicitly
+examples/index.txt:71: [broken] http://codespeak.net/py/dist/doc/test.html: HTTP Error 404: Not Found
+examples/index.txt:46: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+examples/index.txt:110: [broken] http://swiginac.berlios.de/ginac-tutorial.py.html: HTTP Error 404: Not Found
+examples/index.txt:106: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+examples/index.txt:151: [redirected] http://docutils.sf.net/sandbox/stylesheets/listings-tex-options.sty to http://docutils.sourceforge.net/sandbox/stylesheets/listings-tex-options.sty
+examples/index.txt:151: [redirected] http://docutils.sf.net/sandbox/stylesheets/listings-python-options.sty to http://docutils.sourceforge.net/sandbox/stylesheets/listings-python-options.sty
+examples/index.txt:151: [redirected] http://docutils.sf.net/sandbox/stylesheets/palatino-helvetica-courier.sty to http://docutils.sourceforge.net/sandbox/stylesheets/palatino-helvetica-courier.sty
+examples/index.txt:142: [redirected] http://dante.ctan.org/CTAN/macros/latex/contrib/isomath/isomath.sty.html to http://dante.ctan.org/tex-archive/macros/latex/contrib/isomath/isomath.sty.html
+examples/index.txt:71: [redirected] http://somethingaboutorange.com/mrl/projects/nose/ to https://nose.readthedocs.org/en/latest/
+examples/iterqueue.py.txt:58: [broken] http://docs.python.org/library/stdtypes.html#iterator-types: Can't convert 'bytes' object to str implicitly
+examples/iterqueue.py.txt:526: [broken] http://www.interlink.com.au/anthony/tech/talks/OSCON2005/effective_r27.pdf: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+examples/iterqueue.py.txt:183: [redirected] http://docs.python.org/library/itertools.html to http://docs.python.org/2/library/itertools.html
+examples/iterqueue.py.txt:126: [broken] http://docs.python.org/tutorial/classes.html#iterators: Can't convert 'bytes' object to str implicitly
+examples/iterqueue.py.txt:359: [broken] http://mail.python.org/pipermail/python-list/2006-January/360162.html: HTTP Error 404: Not Found
+examples/iterqueue.py.txt:427: [redirected] http://mail.python.org/pipermail/python-3000/2006-March/000058.html to https://mail.python.org/pipermail/python-3000/2006-March/000058.html
+examples/iterqueue.py.txt:784: [broken] http://www.codecomments.com/message423138.html: <urlopen error timed out>
+examples/iterqueue.py.txt:979: [redirected] http://sourceforge.net/tracker/index.php?func=detail&aid=756253&group_id=5470&atid=305470 to http://sourceforge.net/projects/python/
+examples/literate-doctests.txt:12: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+examples/literate-doctests.txt:48: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+examples/literate-doctests.txt:51: [local] ../tutorial/index.html#doctests
+examples/literate-doctests.txt:55: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+examples/literate-doctests.txt:89: [local] testmod_literate.py.html
+examples/literate-doctests.txt:78: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+examples/literate-doctests.txt:89: [local] testmod_literate.py
+examples/literate-doctests.txt:89: [local] testmod_literate.py.txt
+examples/literate-doctests.txt:108: [local] testfile_literate.py.html
+examples/literate-doctests.txt:92: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+examples/literate-doctests.txt:9: [broken] http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#doctest-blocks: Can't convert 'bytes' object to str implicitly
+examples/literate-doctests.txt:65: [broken] http://docs.python.org/library/doctest.html#doctestparser-objects: Can't convert 'bytes' object to str implicitly
+examples/pylit.py.txt:127: [local] file:///Library/Frameworks/Python.framework/Versions/3.2/Resources/English.lproj/Documentation/library/argparse.html#upgrading-optparse-code
+examples/pylit.py.txt:164: [broken] http://code.activestate.com/recipes/389639/: HTTP Error 405: METHOD NOT ALLOWED
+examples/pylit.py.txt:282: [broken] http://docutils.sf.net/docs/ref/rst/restructuredtext.html#literal-blocks: Can't convert 'bytes' object to str implicitly
+examples/pylit.py.txt:403: [broken] http://docutils.sf.net/docs/ref/rst/restructuredtext.html#indented-literal-blocks: Can't convert 'bytes' object to str implicitly
+examples/pylit.py.txt:667: [broken] http://docutils.sf.net/docs/ref/rst/restructuredtext.html#quoted-literal-blocks: Can't convert 'bytes' object to str implicitly
+examples/pylit.py.txt:667: [broken] http://docutils.sf.net/docs/ref/rst/restructuredtext.html#indented-literal-blocks: Can't convert 'bytes' object to str implicitly
+examples/pylit.py.txt:667: [broken] http://docutils.sf.net/docs/ref/rst/directives.html#parsed-literal-block: Can't convert 'bytes' object to str implicitly
+examples/pylit.py.txt:304: [broken] http://sphinx.pocoo.org: <urlopen error timed out>
+examples/pylit.py.txt:1215: [broken] http://www.unix.com/showthread.php?t=20526: <urlopen error timed out>
+examples/pylit.py.txt:1631: [broken] http://docs.python.org/reference/lexical_analysis.html#encoding-declarations: <urlopen error [Errno 65] No route to host>
+examples/pylit.py.txt:667: [broken] http://docutils.sf.net/docs/ref/rst/restructuredtext.html#doctest-blocks: Can't convert 'bytes' object to str implicitly
+examples/pylit_test.py.txt:31: [local] file:///home/milde/Texte/Doc/Programmierung/Software-Carpentry/lec/unit.html
+examples/pylit_test.py.txt:695: [broken] http://jedmodes.sf.net/mode/pylit.sl: HTTP Error 404: Not Found
+examples/simplestates_test.py.txt:123: [redirected] http://somethingaboutorange.com/mrl/projects/nose/ to https://nose.readthedocs.org/en/latest/
+features.txt:15: [local] literate-programming.html#existing-frameworks
+features.txt:29: [redirected] http://sphinx.pocoo.org/ to http://sphinx-doc.org/
+features.txt:58: [local] examples/pylit.py.html#dual-source-handling
+features.txt:64: [local] tutorial/index.html
+features.txt:85: [local] literate-programming/index.html#semi-literate
+features.txt:116: [redirected] http://sphinx.pocoo.org/ to http://sphinx-doc.org/
+features.txt:127: [local] tutorial/index.html
+features.txt:127: [local] examples/index.html
+features.txt:133: [redirected] http://sphinx.pocoo.org/ to http://sphinx-doc.org/
+features.txt:64: [broken] http://docutils.sourceforge.net/docs/ref/rst/directives.html#including-an-external-document-fragment: Can't convert 'bytes' object to str implicitly
+features.txt:154: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+features.txt:154: [local] tutorial/index.html#doctests
+features.txt:154: [local] examples/literate-doctests.html
+features.txt:82: [broken] http://python.org/doc/2.2.3/dist/simple-example.html#SECTION000220000000000000000: Can't convert 'bytes' object to str implicitly
+filename-extensions.txt:17: [local] http//:www.zetadev.com/software/pytest/
+index.txt:6: [local] literate-programming.html
+index.txt:16: [local] features.html#dual-source
+index.txt:72: [local] examples/pylit.py.html#changelog
+index.txt:76: [local] examples/pylit.py.html
+index.txt:76: [local] examples/pylit.py.html#open-questions
+index.txt:111: [redirected] http://sphinx.pocoo.org/ to http://sphinx-doc.org/
+index.txt:118: [broken] http://www.ibm.com/developerworks/library/l-pyth7.html: timed out
+literate-programming.txt:59: [broken] http://www.ibm.com/developerworks/library/l-pyth7.html: timed out
+literate-programming.txt:143: [redirected] http://sphinx.pocoo.org/ to http://sphinx-doc.org/
+literate-programming.txt:150: [local] /features/index.html#dual-source
+literate-programming.txt:124: [broken] http://en.wikipedia.org/wiki/Literate_programming#Embedded_documentation: Can't convert 'bytes' object to str implicitly
+literate-programming.txt:126: [redirected] http://www.perl.com/pub/a/tchrist/litprog.html to http://www.perl.com/pub/tchrist/litprog.html
+literate-programming.txt:231: [local] /features/index.html
+literate-programming.txt:234: [redirected] http://www.perl.com/pub/a/tchrist/litprog.html to http://www.perl.com/pub/tchrist/litprog.html
+literate-programming.txt:195: [redirected] http://www.cs.aau.dk/~normark/litpro/issues-and-problems.html to http://people.cs.aau.dk/~normark/litpro/issues-and-problems.html
+literate-programming.txt:212: [redirected] http://www.cs.aau.dk/~normark/litpro/issues-and-problems.html to http://people.cs.aau.dk/~normark/litpro/issues-and-problems.html
+literate-programming.txt:395: [redirected] http://portal.acm.org/citation.cfm?id=1035054 to http://dl.acm.org/citation.cfm?id=1035054
+tutorial/index.txt:11: [local] www.python.org
+tutorial/index.txt:3: [local] www.python.org
+tutorial/index.txt:153: [broken] http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#doctest-blocks: Can't convert 'bytes' object to str implicitly
+tutorial/index.txt:159: [local] ../features/syntax-highlight.html
+tutorial/index.txt:38: [broken] http://docutils.sourceforge.net/docs/user/rst/quickref.html#literal-blocks: Can't convert 'bytes' object to str implicitly
+tutorial/index.txt:162: [broken] http://docutils.sourceforge.net/docs/ref/rst/directives.html#parsed-literal-block: Can't convert 'bytes' object to str implicitly
+tutorial/index.txt:232: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+tutorial/index.txt:234: [broken] http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#doctest-blocks: Can't convert 'bytes' object to str implicitly
+tutorial/index.txt:247: [redirected] http://docs.python.org/library/doctest.html to http://docs.python.org/2/library/doctest.html
+tutorial/index.txt:267: [local] ../examples/literate-doctests/index.html
+tutorial/index.txt:282: [broken] http://docutils.sourceforge.net/docs/ref/rst/directives.html#including-an-external-document-fragment: Can't convert 'bytes' object to str implicitly
+tutorial/index.txt:162: [broken] http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#inline-literals: Can't convert 'bytes' object to str implicitly
+tutorial/index.txt:220: [broken] http://docutils.sourceforge.net/docs/ref/rst/directives.html#parsed-literal-block: Can't convert 'bytes' object to str implicitly
+tutorial/index.txt:187: [redirected] http://docs.python.org/tutorial/interpreter.html to http://docs.python.org/2/tutorial/interpreter.html
+tutorial/index.txt:247: [broken] http://docs.python.org/library/doctest.html#doctest-advanced-api: Can't convert 'bytes' object to str implicitly
+usage.txt:20: [local] tutorial/index.html
+usage.txt:59: [local] filename-extensions.html
+usage.txt:71: [local] examples/pylit.py.html#helper-functions
+usage.txt:71: [local] examples/pylit.py.html
+usage.txt:80: [local] examples/pylit.py.html#defaults
+usage.txt:80: [local] download/pylit
+usage.txt:94: [local] examples/pylit.py.html#PylitOptions
+usage.txt:94: [local] examples/pylit.py.html#main

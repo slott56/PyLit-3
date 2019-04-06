@@ -1,16 +1,16 @@
 # Makefile for Sphinx documentation
-# Modified to include examples/* and tutorial/* files from rstdocs to build/html
+# Modified to include examples/* and tutorial/* files from docs to _build/html
 #
 
 # You can set these variables from the command line.
 SPHINXOPTS    = -q
 SPHINXBUILD   = sphinx-build
 
-INDIR	      = rstdocs
-HTMLDIR	      = build/html
+INDIR	      = docs
+HTMLDIR	      = _build/html
 
 # Internal variables.
-ALLSPHINXOPTS   = -d build/doctrees $(SPHINXOPTS) $(INDIR)
+ALLSPHINXOPTS   = -d _build/doctrees $(SPHINXOPTS) $(INDIR)
 
 .PHONY: help clean html web pickle htmlhelp latex changes linkcheck
 
@@ -24,92 +24,92 @@ help:
 	@echo "  changes   to make an overview over all changed/added/deprecated items"
 	@echo "  linkcheck to check all external links for integrity"
 
-rstdocs/conf.py.txt: rstdocs/conf.py
-	python3 src/pylit.py rstdocs/conf.py
+docs/conf.py.txt: docs/conf.py
+	python3 src/pylit.py docs/conf.py
 
-rstdocs/examples/setup.py.txt: src/setup.py
-	python3 src/pylit.py src/setup.py rstdocs/examples/setup.py.txt
+docs/examples/setup.py.txt: setup.py
+	python3 src/pylit.py setup.py docs/examples/setup.py.txt
 
-rstdocs/examples/pylit.py.txt: src/pylit.py
-	python3 src/pylit.py src/pylit.py rstdocs/examples/pylit.py.txt
+docs/examples/pylit.py.txt: src/pylit.py
+	python3 src/pylit.py src/pylit.py docs/examples/pylit.py.txt
 
-rstdocs/examples/pylit_test.py.txt: test/pylit_test.py
-	python3 src/pylit.py --comment-string='## ' test/pylit_test.py rstdocs/examples/pylit_test.py.txt
+docs/examples/pylit_test.py.txt: test/pylit_test.py
+	python3 src/pylit.py --comment-string='## ' test/pylit_test.py docs/examples/pylit_test.py.txt
 
-rstdocs/tutorial/hello.py.txt: rstdocs/tutorial/hello.py
-	python3 src/pylit.py rstdocs/tutorial/hello.py
+docs/tutorial/hello.py.txt: docs/tutorial/hello.py
+	python3 src/pylit.py docs/tutorial/hello.py
 
-rstdocs/tutorial/hello_2.py: rstdocs/tutorial/hello_2.py.txt
-	python3 src/pylit.py rstdocs/tutorial/hello_2.py.txt
+docs/tutorial/hello_2.py: docs/tutorial/hello_2.py.txt
+	python3 src/pylit.py docs/tutorial/hello_2.py.txt
 
-rstdocs/tutorial/hello_with_header.py: rstdocs/tutorial/hello_with_header.py.txt
-	python3 src/pylit.py rstdocs/tutorial/hello_with_header.py.txt
+docs/tutorial/hello_with_header.py: docs/tutorial/hello_with_header.py.txt
+	python3 src/pylit.py docs/tutorial/hello_with_header.py.txt
 
-rstdocs/tutorial/hello_with_doctest.py.txt: rstdocs/tutorial/hello_with_doctest.py
-	python3 src/pylit.py --doctest rstdocs/tutorial/hello_with_doctest.py
-	python3 src/pylit.py rstdocs/tutorial/hello_with_doctest.py
+docs/tutorial/hello_with_doctest.py.txt: docs/tutorial/hello_with_doctest.py
+	python3 src/pylit.py --doctest docs/tutorial/hello_with_doctest.py
+	python3 src/pylit.py docs/tutorial/hello_with_doctest.py
 
-rstdocs/tutorial/hello_with_doctest_2.py.txt: rstdocs/tutorial/hello_with_doctest_2.py
-	python3 src/pylit.py --doctest rstdocs/tutorial/hello_with_doctest_2.py
-	python3 src/pylit.py rstdocs/tutorial/hello_with_doctest_2.py
+docs/tutorial/hello_with_doctest_2.py.txt: docs/tutorial/hello_with_doctest_2.py
+	python3 src/pylit.py --doctest docs/tutorial/hello_with_doctest_2.py
+	python3 src/pylit.py docs/tutorial/hello_with_doctest_2.py
 
-rstdocs/tutorial/greeting.py.txt: rstdocs/tutorial/greeting.py
-	python3 src/pylit.py rstdocs/tutorial/greeting.py
+docs/tutorial/greeting.py.txt: docs/tutorial/greeting.py
+	python3 src/pylit.py docs/tutorial/greeting.py
 
-rstdocs/tutorial/hello_multifile.py.txt: rstdocs/tutorial/hello_multifile.py rstdocs/tutorial/greeting.py.txt
-	python3 src/pylit.py rstdocs/tutorial/hello_multifile.py
+docs/tutorial/hello_multifile.py.txt: docs/tutorial/hello_multifile.py docs/tutorial/greeting.py.txt
+	python3 src/pylit.py docs/tutorial/hello_multifile.py
 
-rstdocs/examples/simplestates.py: rstdocs/examples/simplestates.py.txt
-	python3 src/pylit.py rstdocs/examples/simplestates.py.txt
+docs/examples/simplestates.py: docs/examples/simplestates.py.txt
+	python3 src/pylit.py docs/examples/simplestates.py.txt
 
-rstdocs/examples/simplestates_test.py: rstdocs/examples/simplestates_test.py.txt
-	python3 src/pylit.py rstdocs/examples/simplestates_test.py.txt
-	(cd rstdocs/examples; python3 simplestates_test.py)
+docs/examples/simplestates_test.py: docs/examples/simplestates_test.py.txt
+	python3 src/pylit.py docs/examples/simplestates_test.py.txt
+	(cd docs/examples; python3 simplestates_test.py)
 
-rstdocs/examples/iterqueue.py: rstdocs/examples/iterqueue.py.txt
-	python3 src/pylit.py rstdocs/examples/iterqueue.py.txt
-	(cd rstdocs/examples; python3 ../../src/pylit.py --doctest iterqueue.py.txt)
+docs/examples/iterqueue.py: docs/examples/iterqueue.py.txt
+	python3 src/pylit.py docs/examples/iterqueue.py.txt
+	(cd docs/examples; python3 ../../src/pylit.py --doctest iterqueue.py.txt)
 
-rstdocs/examples/iterqueue_test.py: rstdocs/examples/iterqueue_test.py.txt
-	python3 src/pylit.py rstdocs/examples/iterqueue_test.py.txt
-	(cd rstdocs/examples; python3 iterqueue_test.py)
+docs/examples/iterqueue_test.py: docs/examples/iterqueue_test.py.txt
+	python3 src/pylit.py docs/examples/iterqueue_test.py.txt
+	(cd docs/examples; python3 iterqueue_test.py)
 
-rstdocs/examples/iterqueue_speed_test.py: rstdocs/examples/iterqueue_speed_test.py.txt
-	python3 src/pylit.py rstdocs/examples/iterqueue_speed_test.py.txt
-	(cd rstdocs/examples; python3 iterqueue_speed_test.py)
+docs/examples/iterqueue_speed_test.py: docs/examples/iterqueue_speed_test.py.txt
+	python3 src/pylit.py docs/examples/iterqueue_speed_test.py.txt
+	(cd docs/examples; python3 iterqueue_speed_test.py)
 
-rstdocs/examples/testfile_literate.py: rstdocs/examples/testfile_literate.py.txt
-	python3 src/pylit.py rstdocs/examples/testfile_literate.py.txt
-	(cd rstdocs/examples; python3 -m doctest -v testfile_literate.py.txt )
+docs/examples/testfile_literate.py: docs/examples/testfile_literate.py.txt
+	python3 src/pylit.py docs/examples/testfile_literate.py.txt
+	(cd docs/examples; python3 -m doctest -v testfile_literate.py.txt )
 
-rstdocs/examples/testmod_literate.py: rstdocs/examples/testmod_literate.py.txt
-	python3 src/pylit.py rstdocs/examples/testmod_literate.py.txt
-	(cd rstdocs/examples; PYTHONPATH=../../src python3 testmod_literate.py )
+docs/examples/testmod_literate.py: docs/examples/testmod_literate.py.txt
+	python3 src/pylit.py docs/examples/testmod_literate.py.txt
+	(cd docs/examples; PYTHONPATH=../../src python3 testmod_literate.py )
 
-OTHERS = rstdocs/conf.py.txt \
-	rstdocs/examples/pylit.py.txt \
-	rstdocs/examples/setup.py.txt \
-	rstdocs/examples/pylit_test.py.txt \
-	rstdocs/examples/simplestates.py \
-	rstdocs/examples/simplestates_test.py \
-	rstdocs/examples/iterqueue.py \
-	rstdocs/examples/iterqueue_test.py \
-	rstdocs/examples/iterqueue_speed_test.py \
-	rstdocs/examples/testfile_literate.py \
-	rstdocs/examples/testmod_literate.py \
-	rstdocs/tutorial/hello.py.txt \
-	rstdocs/tutorial/hello_2.py \
-	rstdocs/tutorial/hello_with_header.py \
-	rstdocs/tutorial/hello_with_doctest.py.txt \
-	rstdocs/tutorial/hello_with_doctest_2.py.txt \
-	rstdocs/tutorial/greeting.py.txt \
-	rstdocs/tutorial/hello_multifile.py.txt
+OTHERS = docs/conf.py.txt \
+	docs/examples/pylit.py.txt \
+	docs/examples/setup.py.txt \
+	docs/examples/pylit_test.py.txt \
+	docs/examples/simplestates.py \
+	docs/examples/simplestates_test.py \
+	docs/examples/iterqueue.py \
+	docs/examples/iterqueue_test.py \
+	docs/examples/iterqueue_speed_test.py \
+	docs/examples/testfile_literate.py \
+	docs/examples/testmod_literate.py \
+	docs/tutorial/hello.py.txt \
+	docs/tutorial/hello_2.py \
+	docs/tutorial/hello_with_header.py \
+	docs/tutorial/hello_with_doctest.py.txt \
+	docs/tutorial/hello_with_doctest_2.py.txt \
+	docs/tutorial/greeting.py.txt \
+	docs/tutorial/hello_multifile.py.txt
 
 clean:
-	-rm -rf build/*
+	-rm -rf _build/*
 
 html: $(OTHERS)
-	mkdir -p $(HTMLDIR) build/doctrees
+	mkdir -p $(HTMLDIR) _build/doctrees
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(HTMLDIR)
 	@echo
 	@echo "Copying some source files"
@@ -125,43 +125,43 @@ html: $(OTHERS)
 	@echo "Build finished. The HTML pages are in $(HTMLDIR)."
 
 pickle: $(OTHERS)
-	mkdir -p build/pickle build/doctrees
-	$(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) build/pickle
+	mkdir -p _build/pickle _build/doctrees
+	$(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) _build/pickle
 	@echo
 	@echo "Build finished; now you can process the pickle files."
 
 web: pickle
 
 json: $(OTHERS)
-	mkdir -p build/json build/doctrees
-	$(SPHINXBUILD) -b json $(ALLSPHINXOPTS) build/json
+	mkdir -p _build/json _build/doctrees
+	$(SPHINXBUILD) -b json $(ALLSPHINXOPTS) _build/json
 	@echo
 	@echo "Build finished; now you can process the JSON files."
 
 htmlhelp:
-	mkdir -p build/htmlhelp build/doctrees
-	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) build/htmlhelp
+	mkdir -p _build/htmlhelp _build/doctrees
+	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) _build/htmlhelp
 	@echo
 	@echo "Build finished; now you can run HTML Help Workshop with the" \
-	      ".hhp project file in build/htmlhelp."
+	      ".hhp project file in _build/htmlhelp."
 
 latex: $(OTHERS)
-	mkdir -p build/latex build/doctrees
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) build/latex
+	mkdir -p _build/latex _build/doctrees
+	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
 	@echo
-	@echo "Build finished; the LaTeX files are in build/latex."
+	@echo "Build finished; the LaTeX files are in _build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
 	      "run these through (pdf)latex."
 
 changes: $(OTHERS)
-	mkdir -p build/changes build/doctrees
-	$(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) build/changes
+	mkdir -p _build/changes _build/doctrees
+	$(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) _build/changes
 	@echo
-	@echo "The overview file is in build/changes."
+	@echo "The overview file is in _build/changes."
 
 linkcheck:
-	mkdir -p build/linkcheck build/doctrees
-	$(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) build/linkcheck
+	mkdir -p _build/linkcheck _build/doctrees
+	$(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) _build/linkcheck
 	@echo
 	@echo "Link check complete; look for any errors in the above output " \
-	      "or in build/linkcheck/output.txt."
+	      "or in _build/linkcheck/output.txt."
