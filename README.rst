@@ -2,18 +2,14 @@
 PyLit 3.1
 ############
 
-This is a rewrite of PyLit from Python 2 to Python 3.
-
-The output is almost identical to Python 2, with minor tweaks to remave tailing
-spaces.
 
 See http://slott56.github.io/PyLit-3/index.html for the complete documentation.
 
 The ``Makefile`` is used via ``make html`` to rebuild the code and documentation.
 
-The ``rstdocs`` directory contains the documentation, plus many examples.
+The ``docs`` directory contains the documentation, plus many examples.
 
-The ``src`` directory contains the installable module plus a ``setup.py`` file.
+The ``src`` directory contains the installable module.
 
 The ``test`` directory contains the unit test suite.
 

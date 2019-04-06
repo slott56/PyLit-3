@@ -3,7 +3,7 @@
 Requirements
 ============
 
-* Python_ version 3.2 or newer.
+* Python_ version 3.5 or newer.
 
   If it is missing on your machine, you can get it from
   http://www.python.org/download/

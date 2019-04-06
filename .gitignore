@@ -3,7 +3,9 @@
 .tox/*
 *.pickle
 *.buildinfo
-*.doctrees
+*.doctree
 *.komodo*
 .buildinfo
 objects.inv
+_build/doctrees/*.doctree
+_build/doctrees/*.pickle

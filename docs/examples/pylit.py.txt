@@ -126,7 +126,7 @@ To Do List
 
 *   Replace optparse with argparse.
 
-    `Documentation/library/argparse.html#upgrading-optparse-code <file:///Library/Frameworks/Python.framework/Versions/3.2/Resources/English.lproj/Documentation/library/argparse.html#upgrading-optparse-code>`_
+*   Use ``pathlib``.
 
 ::
 

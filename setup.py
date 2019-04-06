@@ -33,9 +33,9 @@ setup(
       description='Python Literate Programming',
       author='S.Lott',
       author_email='slott56@gmail.com',
-      python_requires=">=3.4",
+      python_requires=">=3.5",
       project_urls={
-            "Documentation": 'http://developer.berlios.de/svn/?group_id=7974',
+            "Documentation": 'https://slott56.github.io/PyLit-3/index.html',
             "Source Code": 'https://github.com/slott56/PyLit-3',
             "Bug Tracker": 'https://github.com/slott56/PyLit-3/issues',
       },
