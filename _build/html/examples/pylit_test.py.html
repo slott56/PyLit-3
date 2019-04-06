@@ -38,87 +38,45 @@
             
   <div class="section" id="pylit-test-py">
 <h1><a class="toc-backref" href="#id3">pylit_test.py</a><a class="headerlink" href="#pylit-test-py" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="test-pylit-py-python-module">
-<h2><a class="toc-backref" href="#id4">Test pylit.py Python Module</a><a class="headerlink" href="#test-pylit-py-python-module" title="Permalink to this headline">¶</a></h2>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">$Date: 2007-05-17 $</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">SVN-Revision $Revision: 45 $</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">URL:</th><td class="field-body">$URL: svn+ssh://svn.berlios.de/svnroot/repos/pylit/trunk/test/pylit_test.py $</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Copyright:</th><td class="field-body">2006 Günter Milde.
-Released under the terms of the GNU General Public License
-(v. 2 or later)</td>
-</tr>
-</tbody>
-</table>
-<div class="section" id="changelog">
-<h3><a class="toc-backref" href="#id5">Changelog</a><a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h3>
-<table border="1" class="borderless docutils">
-<colgroup>
-<col width="8%" />
-<col width="13%" />
-<col width="79%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>0.1</td>
-<td>2007-05-17</td>
-<td>Initial version.</td>
-</tr>
-<tr class="row-even"><td>3.0</td>
-<td>2013-09-30</td>
-<td>Rewrite for Python 3, replace nose</td>
-</tr>
-</tbody>
-</table>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
 <li><a class="reference internal" href="#pylit-test-py" id="id3">pylit_test.py</a><ul>
-<li><a class="reference internal" href="#test-pylit-py-python-module" id="id4">Test pylit.py Python Module</a><ul>
-<li><a class="reference internal" href="#changelog" id="id5">Changelog</a></li>
-<li><a class="reference internal" href="#a-catalogue-of-errors" id="id6">A catalogue of errors</a></li>
-<li><a class="reference internal" href="#test-defaultdict" id="id7">Test DefaultDict</a></li>
-<li><a class="reference internal" href="#text-code-conversion" id="id8">Text &lt;-&gt; Code conversion</a></li>
-<li><a class="reference internal" href="#test-strings" id="id9">Test strings</a></li>
-<li><a class="reference internal" href="#textcodeconverter" id="id10">TextCodeConverter</a></li>
-<li><a class="reference internal" href="#text2code" id="id11">Text2Code</a><ul>
-<li><a class="reference internal" href="#special-cases" id="id12">Special Cases</a><ul>
-<li><a class="reference internal" href="#code-follows-text-block-without-blank-line" id="id13">Code follows text block without blank line</a></li>
-<li><a class="reference internal" href="#text-follows-code-block-without-blank-line" id="id14">Text follows code block without blank line</a></li>
-<li><a class="reference internal" href="#options-follow-code-block-directive" id="id15">Options follow code-block directive</a></li>
-<li><a class="reference internal" href="#a-double-colon-on-a-line-on-its-own" id="id16">A double colon on a line on its own</a></li>
-<li><a class="reference internal" href="#header-samples" id="id17">header samples</a></li>
+<li><a class="reference internal" href="#a-catalogue-of-errors" id="id4">A catalogue of errors</a></li>
+<li><a class="reference internal" href="#test-defaultdict" id="id5">Test DefaultDict</a></li>
+<li><a class="reference internal" href="#text-code-conversion" id="id6">Text &lt;-&gt; Code conversion</a></li>
+<li><a class="reference internal" href="#test-strings" id="id7">Test strings</a></li>
+<li><a class="reference internal" href="#textcodeconverter" id="id8">TextCodeConverter</a></li>
+<li><a class="reference internal" href="#text2code" id="id9">Text2Code</a><ul>
+<li><a class="reference internal" href="#special-cases" id="id10">Special Cases</a><ul>
+<li><a class="reference internal" href="#code-follows-text-block-without-blank-line" id="id11">Code follows text block without blank line</a></li>
+<li><a class="reference internal" href="#text-follows-code-block-without-blank-line" id="id12">Text follows code block without blank line</a></li>
+<li><a class="reference internal" href="#options-follow-code-block-directive" id="id13">Options follow code-block directive</a></li>
+<li><a class="reference internal" href="#a-double-colon-on-a-line-on-its-own" id="id14">A double colon on a line on its own</a></li>
+<li><a class="reference internal" href="#header-samples" id="id15">header samples</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#code2text" id="id18">Code2Text</a><ul>
-<li><a class="reference internal" href="#id1" id="id19">Special cases</a><ul>
-<li><a class="reference internal" href="#blank-comment-line" id="id20">blank comment line</a></li>
-<li><a class="reference internal" href="#no-blank-line-after-text" id="id21">No blank line after text</a></li>
-<li><a class="reference internal" href="#missing-literal-block-marker" id="id22">missing literal block marker</a></li>
-<li><a class="reference internal" href="#id2" id="id23">header samples</a></li>
+<li><a class="reference internal" href="#code2text" id="id16">Code2Text</a><ul>
+<li><a class="reference internal" href="#id1" id="id17">Special cases</a><ul>
+<li><a class="reference internal" href="#blank-comment-line" id="id18">blank comment line</a></li>
+<li><a class="reference internal" href="#no-blank-line-after-text" id="id19">No blank line after text</a></li>
+<li><a class="reference internal" href="#missing-literal-block-marker" id="id20">missing literal block marker</a></li>
+<li><a class="reference internal" href="#id2" id="id21">header samples</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#filter-tests" id="id24">Filter tests</a></li>
-<li><a class="reference internal" href="#the-main-program" id="id25">The Main Program</a></li>
-<li><a class="reference internal" href="#documentation-notes" id="id26">Documentation Notes</a></li>
+<li><a class="reference internal" href="#filter-tests" id="id22">Filter tests</a></li>
+<li><a class="reference internal" href="#the-main-program" id="id23">The Main Program</a></li>
+<li><a class="reference internal" href="#documentation-notes" id="id24">Documentation Notes</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-</div>
 </div>
 <div class="section" id="a-catalogue-of-errors">
-<h3><a class="toc-backref" href="#id6">A catalogue of errors</a><a class="headerlink" href="#a-catalogue-of-errors" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id4">A catalogue of errors</a><a class="headerlink" href="#a-catalogue-of-errors" title="Permalink to this headline">¶</a></h2>
 <p>from <a class="reference external" href="file:///home/milde/Texte/Doc/Programmierung/Software-Carpentry/lec/unit.html">file:///home/milde/Texte/Doc/Programmierung/Software-Carpentry/lec/unit.html</a></p>
 <ul class="simple">
 <li>Numbers: zero, largest, smallest magnitude, most negative</li>
@@ -147,7 +105,7 @@ everything matches
 </div>
 </div>
 <div class="section" id="test-defaultdict">
-<h3><a class="toc-backref" href="#id7">Test DefaultDict</a><a class="headerlink" href="#test-defaultdict" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id5">Test DefaultDict</a><a class="headerlink" href="#test-defaultdict" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Test_DefaultDict</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test the DefaultDict dictionary with custom default&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -182,10 +140,10 @@ everything matches
 </div>
 </div>
 <div class="section" id="text-code-conversion">
-<h3><a class="toc-backref" href="#id8">Text &lt;-&gt; Code conversion</a><a class="headerlink" href="#text-code-conversion" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id6">Text &lt;-&gt; Code conversion</a><a class="headerlink" href="#text-code-conversion" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="test-strings">
-<h3><a class="toc-backref" href="#id9">Test strings</a><a class="headerlink" href="#test-strings" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id7">Test strings</a><a class="headerlink" href="#test-strings" title="Permalink to this headline">¶</a></h2>
 <p>Example of text, code and stripped code with typical features”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;..  #!/usr/bin/env python3</span>
 <span class="s2">  # -*- coding: iso-8859-1 -*-</span>
@@ -377,7 +335,7 @@ pprint(stripped_code.splitlines(True))</p>
 </div>
 </div>
 <div class="section" id="textcodeconverter">
-<h3><a class="toc-backref" href="#id10">TextCodeConverter</a><a class="headerlink" href="#textcodeconverter" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id8">TextCodeConverter</a><a class="headerlink" href="#textcodeconverter" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Test_TextCodeConverter</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test the TextCodeConverter parent class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -449,7 +407,7 @@ pprint(stripped_code.splitlines(True))</p>
 </div>
 </div>
 <div class="section" id="text2code">
-<h3><a class="toc-backref" href="#id11">Text2Code</a><a class="headerlink" href="#text2code" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id9">Text2Code</a><a class="headerlink" href="#text2code" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Test_Text2Code</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test the Text2Code class converting rst-&gt;code&quot;&quot;&quot;</span>
 </pre></div>
@@ -658,9 +616,9 @@ pprint(stripped_code.splitlines(True))</p>
 </pre></div>
 </div>
 <div class="section" id="special-cases">
-<h4><a class="toc-backref" href="#id12">Special Cases</a><a class="headerlink" href="#special-cases" title="Permalink to this headline">¶</a></h4>
+<h3><a class="toc-backref" href="#id10">Special Cases</a><a class="headerlink" href="#special-cases" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="code-follows-text-block-without-blank-line">
-<h5><a class="toc-backref" href="#id13">Code follows text block without blank line</a><a class="headerlink" href="#code-follows-text-block-without-blank-line" title="Permalink to this headline">¶</a></h5>
+<h4><a class="toc-backref" href="#id11">Code follows text block without blank line</a><a class="headerlink" href="#code-follows-text-block-without-blank-line" title="Permalink to this headline">¶</a></h4>
 <p>End of text block detected (‘::’) but no paragraph separator (blank line)
 follows</p>
 <p>It is an reStructuredText syntax error, if a “literal block
@@ -681,7 +639,7 @@ pylit could fix this and issue a warning:</p>
 </div>
 </div>
 <div class="section" id="text-follows-code-block-without-blank-line">
-<h5><a class="toc-backref" href="#id14">Text follows code block without blank line</a><a class="headerlink" href="#text-follows-code-block-without-blank-line" title="Permalink to this headline">¶</a></h5>
+<h4><a class="toc-backref" href="#id12">Text follows code block without blank line</a><a class="headerlink" href="#text-follows-code-block-without-blank-line" title="Permalink to this headline">¶</a></h4>
 <p>End of code block detected (a line not more indented than the preceding text
 block)</p>
 <p>reStructuredText syntax demands a paragraph separator (blank line) before
@@ -705,7 +663,7 @@ issues a warning:</p>
 </div>
 </div>
 <div class="section" id="options-follow-code-block-directive">
-<h5><a class="toc-backref" href="#id15">Options follow code-block directive</a><a class="headerlink" href="#options-follow-code-block-directive" title="Permalink to this headline">¶</a></h5>
+<h4><a class="toc-backref" href="#id13">Options follow code-block directive</a><a class="headerlink" href="#options-follow-code-block-directive" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">textsamples</span><span class="p">[</span><span class="s2">&quot;code-block directive options&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
 <span class="sd">&quot;&quot;&quot;\</span>
 <span class="sd">::</span>
@@ -737,7 +695,7 @@ issues a warning:</p>
 </div>
 </div>
 <div class="section" id="a-double-colon-on-a-line-on-its-own">
-<h5><a class="toc-backref" href="#id16">A double colon on a line on its own</a><a class="headerlink" href="#a-double-colon-on-a-line-on-its-own" title="Permalink to this headline">¶</a></h5>
+<h4><a class="toc-backref" href="#id14">A double colon on a line on its own</a><a class="headerlink" href="#a-double-colon-on-a-line-on-its-own" title="Permalink to this headline">¶</a></h4>
 <p>As a double colon is added by the Code2Text conversion after a text block
 (if not already present), it could be removed by the Text2Code conversion
 to keep the source small and pretty.</p>
@@ -759,7 +717,7 @@ support with the <cite>pylit_buffer()</cite> function in
 </div>
 </div>
 <div class="section" id="header-samples">
-<h5><a class="toc-backref" href="#id17">header samples</a><a class="headerlink" href="#header-samples" title="Permalink to this headline">¶</a></h5>
+<h4><a class="toc-backref" href="#id15">header samples</a><a class="headerlink" href="#header-samples" title="Permalink to this headline">¶</a></h4>
 <p>Convert a leading reStructured text comment  (variant: only if there is
 content on the first line) to a leading code block.  Return an empty list,
 if there is no header.</p>
@@ -823,7 +781,7 @@ if there is no header.</p>
 </div>
 </div>
 <div class="section" id="code2text">
-<h3><a class="toc-backref" href="#id18">Code2Text</a><a class="headerlink" href="#code2text" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id16">Code2Text</a><a class="headerlink" href="#code2text" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Test_Code2Text</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1012,9 +970,9 @@ if there is no header.</p>
 </pre></div>
 </div>
 <div class="section" id="id1">
-<h4><a class="toc-backref" href="#id19">Special cases</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<h3><a class="toc-backref" href="#id17">Special cases</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="blank-comment-line">
-<h5><a class="toc-backref" href="#id20">blank comment line</a><a class="headerlink" href="#blank-comment-line" title="Permalink to this headline">¶</a></h5>
+<h4><a class="toc-backref" href="#id18">blank comment line</a><a class="headerlink" href="#blank-comment-line" title="Permalink to this headline">¶</a></h4>
 <p>Normally, whitespace in the comment string is significant, i.e. with
 <code class="docutils literal notranslate"><span class="pre">comment_string</span> <span class="pre">=</span> <span class="pre">&quot;#</span> <span class="pre">&quot;</span></code>, a line <code class="docutils literal notranslate"><span class="pre">&quot;#something\n&quot;</span></code> will count as code.</p>
 <p>However, if a comment line is blank, trailing whitespace in the comment
@@ -1038,7 +996,7 @@ string should be ignored, i.e. <code class="docutils literal notranslate"><span 
 </div>
 </div>
 <div class="section" id="no-blank-line-after-text">
-<h5><a class="toc-backref" href="#id21">No blank line after text</a><a class="headerlink" href="#no-blank-line-after-text" title="Permalink to this headline">¶</a></h5>
+<h4><a class="toc-backref" href="#id19">No blank line after text</a><a class="headerlink" href="#no-blank-line-after-text" title="Permalink to this headline">¶</a></h4>
 <p>If a matching comment precedes or follows a code line (i.e. any line
 without matching comment) without a blank line in between, it counts as code
 line.</p>
@@ -1121,7 +1079,7 @@ comment string (the whole block will be kept as commented code)</p>
 </div>
 </div>
 <div class="section" id="missing-literal-block-marker">
-<h5><a class="toc-backref" href="#id22">missing literal block marker</a><a class="headerlink" href="#missing-literal-block-marker" title="Permalink to this headline">¶</a></h5>
+<h4><a class="toc-backref" href="#id20">missing literal block marker</a><a class="headerlink" href="#missing-literal-block-marker" title="Permalink to this headline">¶</a></h4>
 <p>If text (with matching comment string) is followed by code (line(s) without
 matching comment string), but there is no double colon at the end, back
 conversion would not recognise the end of text!</p>
@@ -1180,7 +1138,7 @@ insertion will use the save form, feel free to correct this by hand.):</p>
 </div>
 </div>
 <div class="section" id="id2">
-<h5><a class="toc-backref" href="#id23">header samples</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h5>
+<h4><a class="toc-backref" href="#id21">header samples</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>Convert a header (leading code block) to a reStructured text comment.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">codesamples</span><span class="p">[</span><span class="s2">&quot;no matching comment, just code&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
 <span class="sd">&quot;&quot;&quot;print(&#39;hello world&#39;)</span>
@@ -1240,7 +1198,7 @@ insertion will use the save form, feel free to correct this by hand.):</p>
 </div>
 </div>
 <div class="section" id="filter-tests">
-<h3><a class="toc-backref" href="#id24">Filter tests</a><a class="headerlink" href="#filter-tests" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id22">Filter tests</a><a class="headerlink" href="#filter-tests" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">css_code</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/* import the default Docutils style sheet */</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
             <span class="s1">&#39;/* --------------------------------------- */</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
             <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
@@ -1279,7 +1237,7 @@ insertion will use the save form, feel free to correct this by hand.):</p>
 </div>
 </div>
 <div class="section" id="the-main-program">
-<h3><a class="toc-backref" href="#id25">The Main Program</a><a class="headerlink" href="#the-main-program" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id23">The Main Program</a><a class="headerlink" href="#the-main-program" title="Permalink to this headline">¶</a></h2>
 <p>The overall main parts of the test program.
 We need to build the suite from the various tests.
 We can’t trust to default test discovery because of the two functions
@@ -1308,14 +1266,13 @@ tests from source code dictionaries.</p>
 </div>
 </div>
 <div class="section" id="documentation-notes">
-<h3><a class="toc-backref" href="#id26">Documentation Notes</a><a class="headerlink" href="#documentation-notes" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id24">Documentation Notes</a><a class="headerlink" href="#documentation-notes" title="Permalink to this headline">¶</a></h2>
 <p>This requires a different comment string.
 The shell command looks like this.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">src</span><span class="o">/</span><span class="n">pylit</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">comment</span><span class="o">-</span><span class="n">string</span><span class="o">=</span><span class="s1">&#39;## &#39;</span> <span class="n">test</span><span class="o">/</span><span class="n">pylit_test</span><span class="o">.</span><span class="n">py</span> <span class="n">docs</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">pylit_test</span><span class="o">.</span><span class="n">py</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 <p>The use of ## comments makes it possible to handle “::” in the code.</p>
-</div>
 </div>
 </div>
 

@@ -1,27 +1,9 @@
 ..  #!/usr/bin/env python3
   # -*- coding: utf-8 -*-
 
+*************
 pylit_test.py
 *************
-Test pylit.py Python Module
-+++++++++++++++++++++++++++
-
-:Date:      $Date: 2007-05-17 $
-:Version:   SVN-Revision $Revision: 45 $
-:URL:       $URL: svn+ssh://svn.berlios.de/svnroot/repos/pylit/trunk/test/pylit_test.py $
-:Copyright: 2006 Günter Milde.
-            Released under the terms of the GNU General Public License
-            (v. 2 or later)
-
-Changelog
-=========
-
-.. class:: borderless
-
-======  ==========  ===========================================================
-0.1     2007-05-17  Initial version.
-3.0     2013-09-30  Rewrite for Python 3, replace nose
-======  ==========  ===========================================================
 
 .. contents::
 

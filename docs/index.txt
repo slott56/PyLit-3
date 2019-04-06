@@ -57,36 +57,19 @@ https://github.com/slott56/PyLit-3
 Legacy
 ---------
 
-The original PyLit project is still hosted at `BerliOS`_. The `project page`_
-provides project statistics and info as well as links to the
+The original PyLit project was hosted at `BerliOS`_.
 
-* Bugtracker_,
-* `Feature Requests`_,
-* pylit-users `Mail List`_, and
-* the `SVN repository`_.
-
-.. _`project page`: http://developer.berlios.de/projects/pylit/
-.. _BerliOS: http://www.berlios.de
-.. _Bugtracker: http://developer.berlios.de/bugs/?group_id=7974
-.. _`Feature requests`: http://developer.berlios.de/feature/?group_id=7974
-.. _`Mail List`: http://developer.berlios.de/mail/?group_id=7974
-.. _`SVN repository`: http://svn.berlios.de/wsvn/pylit
+.. _BerliOS:  http://developer.berlios.de/projects/pylit/
 
 
 Changes
 ~~~~~~~~~
 
-PyLit `versions`_ and `SVN log`_.
+The `PyLit source`_ has `change history`_ and  chapter on `open questions`_ and ideas.
 
-Usage, behaviour, and API are not fixed yet.  Ideas and feedback welcome.
-
-The `PyLit source`_ has a chapter on `open questions`_ and ideas.
-
-.. _versions: examples/pylit.py.html#changelog
-.. _SVN log: http://svn.berlios.de/wsvn/pylit/?op=log
-
-.. _PyLit source: examples/pylit.py.html
-.. _open questions: examples/pylit.py.html#open-questions
+.. _`PyLit source`: https://slott56.github.io/PyLit-3/_build/html/examples/pylit.py.html
+.. _`change history`: https://slott56.github.io/PyLit-3/_build/html/examples/pylit.py.html#changelog
+.. _`open questions`: https://slott56.github.io/PyLit-3/_build/html/examples/pylit.py.html#open-questions
 
 Copyright
 ~~~~~~~~~~
