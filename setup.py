@@ -17,7 +17,7 @@
 
 """pylit: bidirectional text <-> code converter
 
-Covert between a *text source* with embedded computer code and a *code source*
+Convert between a *text source* with embedded computer code and a *code source*
 with embedded documentation.
 """
 
@@ -46,8 +46,9 @@ setup(
             "Operating System :: OS Independent",
             "Programming Language :: Python :: 3 :: Only",
             "Topic :: Software Development :: Build Tools",
-      ]
-)
+      ],
+      license='GNU General Public License (v. 2 or later)',
+     )
 
 # And that's it. This will be installed into the site-packages directory.
 

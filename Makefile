@@ -115,14 +115,14 @@ html: $(OTHERS)
 	@echo "Copying some source files"
 	cp $(INDIR)/download/pylit $(HTMLDIR)/download/
 	cp $(INDIR)/examples/*.txt $(HTMLDIR)/examples/
+	cp $(INDIR)/tutorial/*.py  $(HTMLDIR)/tutorial/
+	cp $(INDIR)/tutorial/*.py.txt $(HTMLDIR)/tutorial/
 	# cp $(INDIR)/examples/*.py  $(HTMLDIR)/examples/
 	# cp $(INDIR)/examples/*.sty $(HTMLDIR)/examples/
 	# cp $(INDIR)/examples/*.css $(HTMLDIR)/examples/
-	cp $(INDIR)/tutorial/*.py  $(HTMLDIR)/tutorial/
-	cp $(INDIR)/tutorial/*.py.txt $(HTMLDIR)/tutorial/
 
 	@echo
-	@echo "Build finished. The HTML pages are in $(HTMLDIR)."
+	@echo "Build finished: HTML pages are in $(HTMLDIR)"
 
 pickle: $(OTHERS)
 	mkdir -p _build/pickle _build/doctrees

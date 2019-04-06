@@ -5,3 +5,5 @@
 *.buildinfo
 *.doctrees
 *.komodo*
+.buildinfo
+objects.inv
