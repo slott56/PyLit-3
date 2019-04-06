@@ -118,9 +118,8 @@ About this site
 The PyLit site is created from `reStructuredText`_ sources with Sphinx_.
 (Earlier versions used the rest2web_ site builder.)
 
-It is located at http://pylit.berlios.de/ on `BerliOS`_, a free
-(and ad-free!) service to Open Source developers by the Fraunhofer-Institut
-für Offene Kommunikationssysteme (FOKUS) in Berlin.
+It is located at https://github.com/slott56/PyLit-3.
+Documentation is located at http://slott56.github.io/PyLit-3/.
 
 .. [1]  John Max Skaller in a `Charming Python interview`_
 

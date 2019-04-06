@@ -2,7 +2,7 @@
 #
 # >>> with open("docs/tutorial/hello_with_doctest.py") as source:
 # ...     exec( compile( source.read(), source.name, 'exec' ) )
-# Hello world
+# Hello world.
 #
 # ::
 

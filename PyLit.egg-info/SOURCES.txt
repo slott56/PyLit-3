@@ -1,4 +1,4 @@
-README
+README.rst
 setup.py
 PyLit.egg-info/PKG-INFO
 PyLit.egg-info/SOURCES.txt
