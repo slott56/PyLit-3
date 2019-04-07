@@ -23,7 +23,7 @@ import pathlib
 # Module Definition::
 
 setup(
-      name='pylit',
+      name='pylit3',
       version='3.1.1',
       description='Python Literate Programming',
       long_description=pathlib.Path('README.rst').read_text(),
@@ -36,7 +36,6 @@ setup(
             "Source Code": 'https://github.com/slott56/PyLit-3',
             "Bug Tracker": 'https://github.com/slott56/PyLit-3/issues',
       },
-      provides='pylit',
       py_modules=['pylit'],
       classifiers=[
             "Development Status :: 6 - Mature",

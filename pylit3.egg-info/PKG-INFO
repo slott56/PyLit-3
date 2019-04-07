@@ -1,0 +1,38 @@
+Metadata-Version: 1.2
+Name: pylit3
+Version: 3.1.1
+Summary: Python Literate Programming
+Home-page: https://github.com/slott56/PyLit-3
+Author: S.Lott
+Author-email: slott56@gmail.com
+License: GNU General Public License (v. 2 or later)
+Project-URL: Documentation, https://slott56.github.io/PyLit-3/index.html
+Project-URL: Source Code, https://github.com/slott56/PyLit-3
+Project-URL: Bug Tracker, https://github.com/slott56/PyLit-3/issues
+Description: ############
+        PyLit 3.1
+        ############
+        
+        
+        See http://slott56.github.io/PyLit-3/index.html for the complete documentation.
+        
+        The ``Makefile`` is used via ``make html`` to rebuild the code and documentation.
+        
+        The ``docs`` directory contains the documentation, plus many examples.
+        
+        The ``pylit.py`` is the module.  Once you've installed it, use ``python -m pylit`` to run it.
+        
+        The ``test`` directory contains the unit test suite.
+        
+        The ``contribs`` directory are old contributed modules which have not yet been
+        converted to Python3.
+        
+        The code repository is: https://github.com/slott56/PyLit-3
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 6 - Mature
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Software Development :: Build Tools
+Requires-Python: >=3.5
